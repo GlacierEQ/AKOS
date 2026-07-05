@@ -1,0 +1,47 @@
+cycle_id: ACE-CYCLE-EXAMPLE-001
+agent_id: AGENT-EXAMPLE
+version: 0.1.0
+status: draft
+created_at: "YYYY-MM-DD"
+
+purpose: >
+  State why this evolution cycle exists.
+
+observe:
+  signal: null
+  source: null
+
+orient:
+  active_context: null
+  constraints: []
+
+retrieve:
+  artifacts: []
+  prior_decisions: []
+
+propose:
+  candidate_change: null
+  expected_benefit: null
+
+simulate:
+  expected_effects: []
+  possible_risks: []
+
+verify:
+  pro_code_status: draft
+  metadata_status: draft
+  review_required: true
+
+act:
+  action_taken: null
+  tool_scope: null
+
+reflect:
+  learned: []
+  open_loops: []
+
+record:
+  ledger_entry: null
+  files_changed: []
+
+final_status: draft
