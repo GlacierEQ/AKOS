@@ -1,0 +1,71 @@
+canonical_id: SYS-AKOS-001
+name: AKOS
+full_name: Apex Knowledge Operating System
+version: 0.1.0
+status: foundational_build
+created_at: "2026-07-04"
+updated_at: "2026-07-04"
+owner: GlacierEQ
+repository: GlacierEQ/AKOS
+default_branch: main
+
+purpose: >
+  Canonical architecture repository for AKOS: the system that governs
+  knowledge identity, provenance, memory, cognition, contracts, manifests,
+  Pro-Code gates, and recursive operational evolution.
+
+primary_layer: Genome
+secondary_layers:
+  - Cognitive Kernel
+  - Canonical Object Model
+  - Metadata Standard
+  - Contracts
+  - Methodology
+  - Manifests
+  - Ledger
+
+active_specs:
+  - AKOS-CK-001
+  - AKOS-COM-001
+  - AKOS-META-001
+  - AKOS-REPO-CONTRACT-001
+  - AKOS-PROCODE-001
+
+required_principles:
+  - identity_first
+  - provenance_required
+  - append_only_history
+  - metadata_before_promotion
+  - pro_code_before_canonical
+  - one_truth_many_views
+  - spiral_engine_evolution
+
+canonical_locations:
+  docs: docs/
+  specs: specs/
+  contracts: contracts/
+  schemas: schemas/
+  manifests: manifests/
+  templates: templates/
+  methodologies: methodologies/
+  adr: adr/
+  ledger: ledger/
+
+relationships:
+  supersedes: []
+  mirrors:
+    - GlacierEQ/mastermind:akos/
+  depends_on: []
+
+metadata:
+  confidence: working_canonical
+  verification_status: draft
+  hash: null
+  last_reviewed: "2026-07-04"
+
+next_actions:
+  - complete foundational specs
+  - add repository contract
+  - add Pro-Code methodology
+  - add family manifests
+  - add build ledger
