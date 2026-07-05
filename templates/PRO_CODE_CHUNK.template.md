@@ -5,9 +5,11 @@ Title:
 Class:
 Status: draft
 Created:
+Updated:
 Owner / Source:
 Target Path:
 Parent Layer:
+Related Spec:
 
 ## Purpose
 
@@ -23,6 +25,16 @@ Out of scope:
 
 - TBD
 
+## Delta
+
+What this chunk changes:
+
+- TBD
+
+What this chunk does not change:
+
+- TBD
+
 ## Required Fields
 
 - chunk_id
@@ -32,23 +44,45 @@ Out of scope:
 - target_path
 - parent_layer
 - purpose
+- delta
+- review_result
 - next_action
 
-## Pro-Code Checks
+## Pro-Code Gates
+
+| Gate | Result | Notes |
+|---|---|---|
+| Naming | TBD | |
+| Architecture | TBD | |
+| Failure Handling | TBD | |
+| Maintainability | TBD | |
+| Authenticity | TBD | |
+| Observability | TBD | |
+| Documentation | TBD | |
+
+## Chunk Power Checks
 
 | Check | Result | Notes |
 |---|---|---|
-| Naming | TBD | |
-| Scope | TBD | |
-| Placement | TBD | |
-| Parent Link | TBD | |
-| Handoff | TBD | |
-| Status | TBD | |
-| Next Action | TBD | |
+| Single Purpose | TBD | |
+| Small Enough to Review | TBD | |
+| Correct Location | TBD | |
+| Parent Link Present | TBD | |
+| Historical Impact Clear | TBD | |
+| Next Action Clear | TBD | |
 
 ## Result
 
 TBD
+
+## Promotion Decision
+
+- promote
+- hold
+- revise
+- mark historical
+
+Selected decision: TBD
 
 ## Next Action
 
@@ -62,6 +96,9 @@ TBD
   "status": "draft",
   "class": "TBD",
   "target_path": "TBD",
+  "parent_layer": "TBD",
+  "review_result": "TBD",
+  "promotion_decision": "TBD",
   "next_action": "TBD"
 }
 ```
