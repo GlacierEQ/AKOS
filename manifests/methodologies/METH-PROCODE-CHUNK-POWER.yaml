@@ -1,0 +1,42 @@
+canonical_id: METH-PROCODE-CHUNK-POWER
+name: Pro-Code Chunk Power
+version: 0.1.0
+status: active_seed
+created_at: "2026-07-04"
+updated_at: "2026-07-04"
+owner: GlacierEQ
+
+purpose: >
+  Define the AKOS build rhythm for elite construction through small,
+  reviewable, durable chunks that pass Pro-Code gates.
+
+parent_methodology: AKOS-PROCODE-001
+related_template: templates/PRO_CODE_CHUNK.template.md
+
+chunk_cycle:
+  - define
+  - scope
+  - build
+  - review
+  - record
+  - decide
+  - next_action
+
+quality_rules:
+  - one_chunk_one_purpose
+  - small_enough_to_review
+  - correct_location_required
+  - parent_link_required
+  - pro_code_gates_required
+  - machine_summary_required
+
+promotion_decisions:
+  - promote
+  - hold
+  - revise
+  - mark_historical
+
+next_actions:
+  - apply to Agentic Cognitive Evolution files
+  - add build chunks for current AKOS foundation
+  - include chunk review in future repository adoption
