@@ -1,7 +1,7 @@
 # AKOS Current State
 
 Status: Active
-Version: 0.1.0
+Version: 0.1.1
 Updated: 2026-07-04
 
 ## Purpose
@@ -20,7 +20,7 @@ GlacierEQ/AKOS
 
 AKOS has moved from concept into repository-backed architecture.
 
-The repo now contains root definitions, operating documents, foundational specs, connector discipline, and handoff rules.
+The repo now contains root definitions, operating documents, foundational specs, connector discipline, handoff rules, and the first folder-based integration pack.
 
 ## Current Build Layer
 
@@ -30,7 +30,7 @@ Active layer:
 Connector-first implementation planning
 ```
 
-This means the next build work should define how connected systems map to AKOS objects before automations are created.
+This means connected systems must map back to AKOS object identity before automation expands.
 
 ## Locked Stack Priority
 
@@ -70,10 +70,30 @@ Read in this order:
 - Metadata standard seed
 - Repository contract seed
 - Pro-Code seed
+- Integration index
+- Connector interface contract
+- Connector readiness gates
+- ClickUp folder pack
+
+## ClickUp Integration Status
+
+```text
+Ready for Manual Test
+```
+
+Completed ClickUp files:
+
+- `docs/integrations/clickup/README.md`
+- `docs/integrations/clickup/ROLE.md`
+- `docs/integrations/clickup/FIELDS.md`
+- `docs/integrations/clickup/LISTS.md`
+- `docs/integrations/clickup/MANUAL_TEST.md`
+- `docs/integrations/clickup/READINESS_REVIEW.md`
 
 ## Open Loops
 
-- Add integration specs for ClickUp, Supabase, Make, and GitHub.
+- Run ClickUp manual test and record result.
+- Add integration specs for Supabase, Make, and GitHub.
 - Add schemas for shared AKOS objects.
 - Add templates for connector records.
 - Add session ledger entries.
@@ -81,17 +101,18 @@ Read in this order:
 
 ## Highest-Leverage Next Action
 
-Finish the `docs/integrations/` folder, then create templates for shared object mapping.
+Run the ClickUp manual test, then build the Supabase integration pack using the same folder-based pattern.
 
 ## Machine Summary
 
 ```json
 {
   "document": "CURRENT_STATE",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "status": "active",
   "current_layer": "connector-first implementation planning",
   "priority_order": ["ClickUp", "Supabase", "Make", "GitHub"],
-  "highest_leverage_next_action": "finish docs/integrations and object mapping templates"
+  "clickup_status": "ready_for_manual_test",
+  "highest_leverage_next_action": "run ClickUp manual test, then build Supabase integration pack"
 }
 ```
