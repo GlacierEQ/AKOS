@@ -1,0 +1,45 @@
+canonical_id: FAM-SPACEX
+name: SpaceX Family
+version: 0.1.0
+status: draft
+created_at: "2026-07-04"
+updated_at: "2026-07-04"
+owner: GlacierEQ
+
+purpose: >
+  Classify SpaceX-themed repositories as a hard-systems architecture family
+  within AKOS.
+
+akos_role: hard_systems_family
+primary_layers:
+  - Pillar
+  - Piston
+  - Gene
+  - Synapse
+
+repositories:
+  - spacex-telemetry
+  - spacex-autonomy
+  - spacex-cryogenics
+  - spacex-propulsion-monitor
+  - spacex-ground-network
+  - spacex-orbital-mechanics
+  - spacex-mission-control
+  - spacex-launch-sequencer
+  - spacex-satellite-mesh
+  - spacex-recovery-dynamics
+  - spacex-orbital-assembly
+  - spacex-thermal-protection
+
+contracts:
+  - AKOS-REPO-CONTRACT-001
+  - AKOS-PROCODE-001
+
+metadata:
+  confidence: working
+  review_status: draft
+
+next_actions:
+  - add AKOS_MANIFEST.yaml to representative repo
+  - add CONTRACT.yaml to representative repo
+  - run Pro-Code review
