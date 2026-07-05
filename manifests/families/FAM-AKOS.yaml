@@ -1,0 +1,25 @@
+canonical_id: FAM-AKOS
+name: AKOS Core Family
+version: 0.1.0
+status: active_seed
+created_at: "2026-07-04"
+updated_at: "2026-07-04"
+owner: GlacierEQ
+
+purpose: >
+  Organize the core architecture artifacts that define AKOS itself.
+
+akos_role: Core architecture family
+
+members:
+  - AKOS-CK-001
+  - AKOS-COM-001
+  - AKOS-META-001
+  - AKOS-REPO-CONTRACT-001
+  - AKOS-PROCODE-001
+
+next_actions:
+  - add schemas
+  - add ADRs
+  - add build ledger
+  - add family manifests
