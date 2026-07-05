@@ -1,0 +1,21 @@
+canonical_id: RPO-EXAMPLE-001
+family_id: FAM-EXAMPLE
+name: example-repository
+version: 0.1.0
+status: draft
+created_at: "YYYY-MM-DD"
+updated_at: "YYYY-MM-DD"
+owner: GlacierEQ
+repository: GlacierEQ/example-repository
+
+purpose: >
+  State the repository purpose clearly.
+
+primary_layer: Gene
+secondary_layers: []
+
+dependencies: []
+interfaces: []
+quality_gates: []
+metadata: {}
+next_actions: []
