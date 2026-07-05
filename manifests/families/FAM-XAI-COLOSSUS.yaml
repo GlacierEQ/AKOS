@@ -1,0 +1,49 @@
+canonical_id: FAM-XAI-COLOSSUS
+name: xAI Colossus Family
+version: 0.1.0
+status: draft
+created_at: "2026-07-04"
+updated_at: "2026-07-04"
+owner: GlacierEQ
+
+purpose: >
+  Classify xAI Colossus-themed repositories as an infrastructure-organism
+  architecture family within AKOS.
+
+akos_role: infrastructure_organism_family
+primary_layers:
+  - Genome
+  - Pillar
+  - Gene
+  - Runtime
+  - Synapse
+
+repositories:
+  - xai-colossus-security
+  - xai-legal-intelligence
+  - xai-colossus-nanosphere
+  - xai-colossus-waterplant
+  - Pro-xAI
+  - xai-colossus-servers
+  - xai-colossal-cooling
+  - xai-colossus-community
+  - xai-colossus-cooling
+  - xai-colossus-build
+  - xai-colossus-microcode
+  - xai-colossus-2
+  - xai-colossus-energy
+  - xai-colossus-cooling-alpha
+  - xai-colossus-cooling-omega
+
+contracts:
+  - AKOS-REPO-CONTRACT-001
+  - AKOS-PROCODE-001
+
+metadata:
+  confidence: working
+  review_status: draft
+
+next_actions:
+  - add AKOS_MANIFEST.yaml to representative repo
+  - add CONTRACT.yaml to representative repo
+  - run Pro-Code review
