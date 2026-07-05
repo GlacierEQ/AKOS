@@ -1,7 +1,7 @@
 # AKOS Build Index
 
 Status: Active
-Version: 0.1.1
+Version: 0.1.2
 Updated: 2026-07-04
 
 ## Purpose
@@ -37,7 +37,7 @@ It records what exists, what is canonical, what is historical, and what still ne
 | `schemas/` | Machine-readable validation schemas |
 | `manifests/` | System, family, agent, and methodology manifests |
 | `templates/` | Reusable starter files |
-| `methodologies/` | Operating methods such as Pro-Code and Chunk Power |
+| `methodologies/` | Operating methods such as Pro-Code, Chunk Power, and Agentic Evolution |
 | `adr/` | Architecture decision records |
 | `ledger/` | Append-only build and sync records |
 | `audits/` | Review and quality gate records |
@@ -53,6 +53,7 @@ It records what exists, what is canonical, what is historical, and what still ne
 | AKOS-REPO-CONTRACT-001 | Repository Contract | `contracts/AKOS-REPO-CONTRACT-001.md` | active seed |
 | AKOS-PROCODE-001 | Pro-Code Methodology | `methodologies/pro_code/AKOS-PROCODE-001.md` | active seed |
 | AKOS-ACE-001 | Agentic Cognitive Evolution | `specs/AKOS-ACE-001_AGENTIC_COGNITIVE_EVOLUTION.md` | active seed |
+| AKOS-ACE-002 | Evolution Governance Model | `specs/AKOS-ACE-002_EVOLUTION_GOVERNANCE_MODEL.md` | active seed |
 | AKOS-AGENT-CONTRACT-001 | Agent Contract | `contracts/AKOS-AGENT-CONTRACT-001.md` | active seed |
 | METH-PROCODE-CHUNK-POWER | Pro-Code Chunk Power | `methodologies/pro_code_chunk_power/README.md` | active seed |
 
@@ -63,6 +64,13 @@ It records what exists, what is canonical, what is historical, and what still ne
 | Memory Curator | `manifests/agents/AGENT-MEMORY-CURATOR.yaml` | active seed |
 | Repository Steward | `manifests/agents/AGENT-REPOSITORY-STEWARD.yaml` | active seed |
 | Pro-Code Reviewer | `manifests/agents/AGENT-PROCODE-REVIEWER.yaml` | active seed |
+
+## ACE Templates
+
+| Template | Path | Status |
+|---|---|---|
+| Evolution Proposal | `templates/EVOLUTION_PROPOSAL.template.yaml` | active seed |
+| Memory Delta | `templates/MEMORY_DELTA.template.yaml` | active seed |
 
 ## Construction Order
 
@@ -95,6 +103,10 @@ No file becomes canonical until it has:
 ## Chunk Power Rule
 
 Build AKOS in small reviewable chunks. Each chunk must have a clear purpose, boundary, target path, review result, and next action.
+
+## ACE Governance Rule
+
+Agents may propose evolution. AKOS governs promotion.
 
 ## Current Priority
 
