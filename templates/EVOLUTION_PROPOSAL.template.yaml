@@ -1,0 +1,44 @@
+proposal_id: EVO-YYYYMMDD-001
+status: draft
+created_at: "YYYY-MM-DD"
+updated_at: "YYYY-MM-DD"
+agent_id: AGENT-EXAMPLE
+
+observed_problem: >
+  State the observed drift, gap, weakness, opportunity, or failure.
+
+affected_artifacts:
+  - path: example/path.md
+    current_version: 0.1.0
+
+proposed_change: >
+  State the proposed improvement clearly.
+
+expected_benefit: >
+  State what gets better if accepted.
+
+risk_notes:
+  - TBD
+
+review_required: true
+
+pro_code_review:
+  naming: TBD
+  architecture: TBD
+  failure_handling: TBD
+  maintainability: TBD
+  authenticity: TBD
+  observability: TBD
+  documentation: TBD
+
+memory_delta:
+  durable_facts: []
+  working_assumptions: []
+  superseded_items: []
+  conflicts: []
+  archive_candidates: []
+
+result:
+  decision: pending
+  reviewer: null
+  notes: null
