@@ -1,0 +1,22 @@
+delta_id: MEMDELTA-YYYYMMDD-001
+status: draft
+created_at: "YYYY-MM-DD"
+source_event: EVO-YYYYMMDD-001
+agent_id: AGENT-EXAMPLE
+
+summary: >
+  State what changed in memory.
+
+durable_facts: []
+working_assumptions: []
+superseded_items: []
+conflicts: []
+duplicate_candidates: []
+archive_candidates: []
+promotion_candidates: []
+
+metadata:
+  confidence: working
+  verification_status: draft
+  reviewed_by: null
+  reviewed_at: null
