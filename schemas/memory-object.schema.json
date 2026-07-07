@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AKOS Memory Object",
+  "type": "object",
+  "required": ["canonical_id", "memory_layer", "title", "status", "source", "created_at"],
+  "properties": {
+    "canonical_id": {"type": "string"},
+    "memory_layer": {"type": "string", "enum": ["episodic", "semantic", "state"]},
+    "title": {"type": "string"},
+    "summary": {"type": "string"},
+    "status": {"type": "string"},
+    "source": {"type": "string"},
+    "confidence": {"type": "string"},
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"},
+    "relationships": {"type": "array", "items": {"type": "string"}},
+    "next_action": {"type": "string"}
+  },
+  "additionalProperties": true
+}
