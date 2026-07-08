@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AKOS Automation Object",
+  "type": "object",
+  "required": ["canonical_id", "title", "status", "purpose", "boundary", "review_path"],
+  "properties": {
+    "canonical_id": {"type": "string"},
+    "title": {"type": "string"},
+    "status": {"type": "string"},
+    "purpose": {"type": "string"},
+    "boundary": {"type": "string"},
+    "owner": {"type": "string"},
+    "source": {"type": "string"},
+    "template": {"type": "string"},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "outputs": {"type": "array", "items": {"type": "string"}},
+    "stop_conditions": {"type": "array", "items": {"type": "string"}},
+    "review_path": {"type": "string"},
+    "ledger_required": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}
