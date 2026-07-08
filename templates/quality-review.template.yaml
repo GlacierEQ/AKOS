@@ -1,0 +1,45 @@
+record_id: QG-YYYYMMDD-001
+artifact: ""
+artifact_type: ""
+source: ""
+owner: ""
+readiness_level: "Draft"
+requested_level: "Manual Ready"
+
+mission_assurance_gates:
+  - name: Identity
+    status: Working
+    notes: ""
+  - name: Purpose
+    status: Working
+    notes: ""
+  - name: Source
+    status: Working
+    notes: ""
+  - name: Boundary
+    status: Working
+    notes: ""
+  - name: Interface
+    status: Working
+    notes: ""
+  - name: Validation
+    status: Working
+    notes: ""
+  - name: Failure Handling
+    status: Working
+    notes: ""
+  - name: Record
+    status: Working
+    notes: ""
+  - name: Review
+    status: Working
+    notes: ""
+  - name: Promotion
+    status: Working
+    notes: ""
+
+known_limitations: []
+failure_modes: []
+result: ""
+next_action: ""
+ledger_location: ""
