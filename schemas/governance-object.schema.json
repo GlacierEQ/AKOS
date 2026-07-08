@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AKOS Governance Object",
+  "type": "object",
+  "required": ["canonical_id", "pillar", "title", "status", "control_rule"],
+  "properties": {
+    "canonical_id": {"type": "string"},
+    "pillar": {"type": "string", "enum": ["automated_governance", "quality_assurance", "monitoring_observability"]},
+    "title": {"type": "string"},
+    "status": {"type": "string"},
+    "control_rule": {"type": "string"},
+    "piston": {"type": "string"},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "outputs": {"type": "array", "items": {"type": "string"}},
+    "review_state": {"type": "string"},
+    "escalation_rule": {"type": "string"},
+    "source": {"type": "string"}
+  },
+  "additionalProperties": true
+}
