@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AKOS Quality Gate Record",
+  "type": "object",
+  "required": ["record_id", "artifact", "readiness_level", "gates", "result"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "artifact": {"type": "string"},
+    "artifact_type": {"type": "string"},
+    "source": {"type": "string"},
+    "owner": {"type": "string"},
+    "readiness_level": {"type": "string"},
+    "requested_level": {"type": "string"},
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["Pass", "Working", "Blocked", "Fail", "Not Applicable"]},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "known_limitations": {"type": "array", "items": {"type": "string"}},
+    "failure_modes": {"type": "array", "items": {"type": "string"}},
+    "result": {"type": "string"},
+    "next_action": {"type": "string"}
+  },
+  "additionalProperties": true
+}
