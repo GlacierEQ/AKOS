@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AKOS Execution Record",
+  "type": "object",
+  "required": ["record_id", "timestamp", "actor", "action", "result", "source"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "actor": {"type": "string"},
+    "action": {"type": "string"},
+    "input": {"type": "string"},
+    "decision": {"type": "string"},
+    "result": {"type": "string"},
+    "source": {"type": "string"},
+    "target": {"type": "string"},
+    "validation": {"type": "string"},
+    "ledger_status": {"type": "string"},
+    "next_action": {"type": "string"}
+  },
+  "additionalProperties": true
+}
