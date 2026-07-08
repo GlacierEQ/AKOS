@@ -1,9 +1,9 @@
 # ClickUp Manual Test
 
 Status: Active Draft
-Version: 0.1.1
+Version: 0.1.2
 Created: 2026-07-04
-Updated: 2026-07-05
+Updated: 2026-07-07
 
 ## Purpose
 
@@ -80,7 +80,56 @@ Not Run / Pass / Fail / Blocked
 Current result:
 
 ```text
-Not Run
+Pass
+```
+
+## Result Record
+
+Date run: 2026-07-07
+
+Result: Pass
+
+ClickUp task ID:
+
+```text
+86ajea1uj
+```
+
+ClickUp task URL:
+
+```text
+https://app.clickup.com/t/86ajea1uj
+```
+
+ClickUp location:
+
+```text
+Team Space / AKOS / AKOS Integrations
+```
+
+What passed:
+
+- AKOS folder was created in Team Space.
+- AKOS Integrations list was created inside the AKOS folder.
+- Test task was created in the AKOS Integrations list.
+- Task preserves source file context: `GlacierEQ/AKOS/CURRENT_STATE.md`.
+- Task preserves review state: Draft.
+- Task preserves next action: complete integration specs in `docs/integrations`.
+- Task states that GitHub remains canonical for AKOS architecture.
+
+What failed:
+
+- No pass criteria failed.
+
+Limitations:
+
+- Custom ClickUp fields were not created by this test.
+- Required AKOS fields were preserved in the task description rather than native custom fields.
+
+Next action:
+
+```text
+Build Supabase integration pack using the same folder-based pattern.
 ```
 
 ## Result Recording Rule
@@ -98,22 +147,25 @@ After the manual test is run, update this file with:
 
 | Gate | Result |
 |---|---|
-| Naming | Test object and task title are explicit |
-| Architecture | ClickUp points back to GitHub source |
-| Failure Handling | Fail criteria are defined |
-| Maintainability | Test is manual and repeatable |
-| Authenticity | Test proves only source preservation, not full automation |
-| Observability | Result field is explicit |
-| Documentation | Test lives in AKOS repo |
+| Naming | Pass |
+| Architecture | Pass |
+| Failure Handling | Pass |
+| Maintainability | Pass |
+| Authenticity | Pass |
+| Observability | Pass with limitation: fields are in description, not native custom fields |
+| Documentation | Pass |
 
 ## Machine Summary
 
 ```json
 {
   "document": "clickup-manual-test",
-  "version": "0.1.1",
-  "status": "not_run",
-  "test_source": "CURRENT_STATE.md",
-  "test_task": "AKOS: finish integration specs"
+  "version": "0.1.2",
+  "status": "pass",
+  "date_run": "2026-07-07",
+  "task_id": "86ajea1uj",
+  "task_url": "https://app.clickup.com/t/86ajea1uj",
+  "location": "Team Space / AKOS / AKOS Integrations",
+  "next_action": "build Supabase integration pack"
 }
 ```
