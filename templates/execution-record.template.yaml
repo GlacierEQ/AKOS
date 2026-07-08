@@ -1,0 +1,33 @@
+record_id: EXE-YYYYMMDD-001
+timestamp: "YYYY-MM-DDTHH:MM:SS"
+actor: ""
+action: ""
+
+input:
+  goal: ""
+  source: ""
+  target_system: ""
+  expected_result: ""
+
+decision:
+  result: "allowed | blocked | deferred | requires_review"
+  reason: ""
+  boundary: ""
+
+action_result:
+  happened: false
+  result: ""
+  target_location: ""
+
+validation:
+  source_preserved: false
+  correct_target: false
+  drift_detected: false
+  notes: ""
+
+ledger:
+  required: true
+  status: "not_recorded | recorded"
+  location: ""
+
+next_action: ""
