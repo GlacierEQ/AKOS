@@ -1,0 +1,107 @@
+canonical_id: FAM-AIONIC-TREE
+name: Aionic Tree
+version: 0.1.0
+status: active_draft
+created_at: "2026-07-08"
+updated_at: "2026-07-08"
+repository: GlacierEQ/AKOS
+path: manifests/families/FAM-AIONIC-TREE.yaml
+
+purpose: >
+  Bind the Aionic Tree mythic source memory into AKOS as a persona
+  toolbelt family with durable identities, functions, constraints,
+  invocation surfaces, and ledgered outputs.
+
+canonical_source:
+  primary_spec: specs/AKOS-PER-001_PERSONA_TOOLBELT_MODEL.md
+  bridge_doc: docs/persona-systems/AIONIC_TREE_TO_AKOS_TOOLBELT.md
+  source_memory_status: recovered_from_chat_history_and_project_memory
+
+akos_bindings:
+  laws:
+    - AKOS-LAW-001
+  kernel:
+    - AKOS-CK-001
+  object_model:
+    - AKOS-COM-001
+  metadata:
+    - AKOS-META-001
+  methodology:
+    - AKOS-PROCODE-001
+
+family_rules:
+  - purpose_before_persona
+  - provenance_required
+  - metadata_before_promotion
+  - one_truth_many_views
+  - append_only_history
+  - pro_code_before_canonical
+  - story_is_source_memory_not_proof
+
+personas:
+  - id: AIONIC-ARCHITECT
+    title: Architect
+    object_pattern: Actor + System + Decision
+    primary_function: Strategy, doctrine, system shape
+    status: seed
+  - id: AIONIC-ENGINEER
+    title: Engineer
+    object_pattern: Actor + Automation + Piston
+    primary_function: Build, deployment, operational execution
+    status: seed
+  - id: AIONIC-IRON-QUILL
+    title: Iron Quill
+    object_pattern: Prompt + Document + Claim
+    primary_function: Drafting, legal text, structured writing
+    status: seed
+  - id: AIONIC-PHANTOM-CORE
+    title: Phantom Core
+    object_pattern: Gene + Decision + Claim
+    primary_function: Simulation, prediction, downstream consequence mapping
+    status: seed
+  - id: AIONIC-OBSIDIAN-LOOP
+    title: Obsidian Loop
+    object_pattern: Gene + Quality Gate + Claim
+    primary_function: Contradiction detection, stress testing, weakness exposure
+    status: seed
+  - id: AIONIC-NEXUS-SHIFT
+    title: Nexus Shift
+    object_pattern: Synapse + Router + Decision
+    primary_function: Reframing, rerouting, adaptive strategy
+    status: seed
+  - id: AIONIC-TEMPORAL-ANCHOR
+    title: Temporal Anchor
+    object_pattern: Event + Evidence + Timeline Piston
+    primary_function: Chronology, docket sequence, date integrity
+    status: seed
+  - id: AIONIC-VORTEX-FLUX
+    title: Vortex Flux
+    object_pattern: Gene + Risk Model + Claim
+    primary_function: Chaos modeling, anomaly handling, uncertainty mapping
+    status: seed
+  - id: AIONIC-DATA-WRAITH
+    title: Data Wraith
+    object_pattern: Evidence + Retrieval Gene + Source Card
+    primary_function: Archive recovery, metadata, lost context retrieval
+    status: seed
+  - id: AIONIC-DRAGON-HUNTER-CIRCUIT
+    title: Dragon Hunter Circuit
+    object_pattern: Gene + Escalation Piston + Decision
+    primary_function: Counterstrike logic, tactical response, pressure conversion
+    status: seed
+
+promotion_requirements:
+  - stable_identity
+  - source_trace
+  - persona_manifest
+  - runtime_constraints
+  - inputs_outputs
+  - failure_modes
+  - pro_code_review
+  - ledger_entry
+
+next_actions:
+  - create individual agent manifests for each persona
+  - create persona invocation template
+  - create quality gate schema for persona promotion
+  - cross-link with AKOS build index
