@@ -1,8 +1,8 @@
 # AKOS Build Index
 
 Status: Active
-Version: 0.1.2
-Updated: 2026-07-04
+Version: 0.1.3
+Updated: 2026-07-08
 
 ## Purpose
 
@@ -55,6 +55,7 @@ It records what exists, what is canonical, what is historical, and what still ne
 | AKOS-ACE-001 | Agentic Cognitive Evolution | `specs/AKOS-ACE-001_AGENTIC_COGNITIVE_EVOLUTION.md` | active seed |
 | AKOS-ACE-002 | Evolution Governance Model | `specs/AKOS-ACE-002_EVOLUTION_GOVERNANCE_MODEL.md` | active seed |
 | AKOS-AGENT-CONTRACT-001 | Agent Contract | `contracts/AKOS-AGENT-CONTRACT-001.md` | active seed |
+| AKOS-PER-001 | Persona Toolbelt Model | `specs/AKOS-PER-001_PERSONA_TOOLBELT_MODEL.md` | active draft |
 | METH-PROCODE-CHUNK-POWER | Pro-Code Chunk Power | `methodologies/pro_code_chunk_power/README.md` | active seed |
 
 ## Active Agentic Seeds
@@ -64,6 +65,18 @@ It records what exists, what is canonical, what is historical, and what still ne
 | Memory Curator | `manifests/agents/AGENT-MEMORY-CURATOR.yaml` | active seed |
 | Repository Steward | `manifests/agents/AGENT-REPOSITORY-STEWARD.yaml` | active seed |
 | Pro-Code Reviewer | `manifests/agents/AGENT-PROCODE-REVIEWER.yaml` | active seed |
+
+## Active Persona Families
+
+| Family | Manifest | Status |
+|---|---|---|
+| Aionic Tree | `manifests/families/FAM-AIONIC-TREE.yaml` | active draft |
+
+## Active Persona Bridge Documents
+
+| Document | Path | Status |
+|---|---|---|
+| Aionic Tree to AKOS Toolbelt | `docs/persona-systems/AIONIC_TREE_TO_AKOS_TOOLBELT.md` | active draft |
 
 ## ACE Templates
 
@@ -85,8 +98,9 @@ It records what exists, what is canonical, what is historical, and what still ne
 9. Agentic Cognitive Evolution
 10. Templates
 11. Family Manifests
-12. Review/Audit Records
-13. Adoption into external repos
+12. Persona Toolbelt Manifests
+13. Review/Audit Records
+14. Adoption into external repos
 
 ## Canonical Promotion Rule
 
@@ -110,4 +124,4 @@ Agents may propose evolution. AKOS governs promotion.
 
 ## Current Priority
 
-Use Pro-Code Chunk Power to harden the current active seeds before expanding runtime automation.
+Harden AKOS-PER-001, create a reusable persona manifest template, and promote the Aionic Tree family into individual agent manifests only after Pro-Code review.
