@@ -1,0 +1,85 @@
+canonical_id: AGENT-<FAMILY>-<PERSONA>
+name: <Persona Name>
+version: 0.1.0
+status: seed
+created_at: "YYYY-MM-DD"
+updated_at: "YYYY-MM-DD"
+owner: GlacierEQ
+repository: GlacierEQ/AKOS
+path: manifests/agents/AGENT-<FAMILY>-<PERSONA>.yaml
+
+family:
+  id: FAM-<FAMILY>
+  name: <Family Name>
+
+purpose: >
+  <One sentence describing the purpose of this persona as an AKOS operating object.>
+
+akos_layer: Persona Toolbelt
+spec: AKOS-PER-001
+contract: AKOS-AGENT-CONTRACT-001
+
+source_memory:
+  mythic_source: <story, archetype, or source memory>
+  chat_origin: <known chat/source pointer or unknown>
+  repo_origin: <repo path or unknown>
+  verification_status: unverified | draft | reviewed | canonical
+
+object_pattern:
+  actor: true
+  prompt: true
+  gene: []
+  pillar: []
+  piston: []
+  synapse: []
+  automation: []
+
+allowed_inputs:
+  - <input type>
+
+allowed_outputs:
+  - <output type>
+
+allowed_tools:
+  - <tool or source type>
+
+forbidden_actions:
+  - promote unsupported claims as canonical
+  - hide source uncertainty
+  - bypass ledger logging
+
+runtime_rules:
+  must:
+    - state purpose before persona style
+    - preserve provenance
+    - label confidence
+  must_not:
+    - treat mythic source memory as evidence
+    - exceed the requested output scope
+
+failure_modes:
+  - name: persona_over_purpose
+    mitigation: re-run from purpose_before_persona
+  - name: unsupported_certainty
+    mitigation: lower confidence and require source trace
+  - name: output_fog
+    mitigation: require concrete artifact target
+
+review_required_for:
+  - canonical promotion
+  - runtime automation
+  - external repo adoption
+
+pro_code_gates:
+  - naming
+  - architecture
+  - failure_handling
+  - maintainability
+  - authenticity
+  - observability
+  - documentation
+
+next_actions:
+  - complete source trace
+  - define invocation prompt
+  - run Pro-Code review
