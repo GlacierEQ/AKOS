@@ -1,10 +1,10 @@
 canonical_id: SYS-AKOS-001
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.1.0
+version: 0.1.1
 status: foundational_build
 created_at: "2026-07-04"
-updated_at: "2026-07-04"
+updated_at: "2026-07-08"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
@@ -12,7 +12,7 @@ default_branch: main
 purpose: >
   Canonical architecture repository for AKOS: the system that governs
   knowledge identity, provenance, memory, cognition, contracts, manifests,
-  Pro-Code gates, and recursive operational evolution.
+  Pro-Code gates, persona toolbelts, and recursive operational evolution.
 
 primary_layer: Genome
 secondary_layers:
@@ -21,6 +21,7 @@ secondary_layers:
   - Metadata Standard
   - Contracts
   - Methodology
+  - Persona Toolbelt
   - Manifests
   - Ledger
 
@@ -30,6 +31,7 @@ active_specs:
   - AKOS-META-001
   - AKOS-REPO-CONTRACT-001
   - AKOS-PROCODE-001
+  - AKOS-PER-001
 
 required_principles:
   - identity_first
@@ -39,6 +41,7 @@ required_principles:
   - pro_code_before_canonical
   - one_truth_many_views
   - spiral_engine_evolution
+  - purpose_before_persona
 
 canonical_locations:
   docs: docs/
@@ -56,16 +59,18 @@ relationships:
   mirrors:
     - GlacierEQ/mastermind:akos/
   depends_on: []
+  implements:
+    - FAM-AIONIC-TREE
 
 metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-04"
+  last_reviewed: "2026-07-08"
 
 next_actions:
-  - complete foundational specs
-  - add repository contract
-  - add Pro-Code methodology
-  - add family manifests
-  - add build ledger
+  - harden foundational specs
+  - add persona manifest template
+  - add individual Aionic agent manifests
+  - run Pro-Code review on AKOS-PER-001
+  - add build ledger entries for each promotion
