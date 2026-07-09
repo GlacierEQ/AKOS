@@ -1,0 +1,73 @@
+canonical_id: MEM-INFUSE-<ID>
+type: MemoryInfusionCard
+version: 0.1.0
+status: draft
+created_at: "YYYY-MM-DD"
+updated_at: "YYYY-MM-DD"
+
+purpose: >
+  Bind a worker, persona, or artifact to specific memory sources without
+  treating memory as proof unless source support exists.
+
+worker:
+  persona_id:
+  family_id:
+  invocation_id:
+
+memory_sources:
+  chat_history:
+    status: unknown
+    pointers: []
+  notion:
+    status: unknown
+    pages: []
+  github:
+    status: unknown
+    repos: []
+    paths: []
+  file_library:
+    status: unknown
+    files: []
+  email:
+    status: unknown
+    threads: []
+  external:
+    status: unknown
+    links: []
+
+memory_classes:
+  canonical_truth: []
+  active_facts: []
+  actor_threads: []
+  machine_pistons: []
+  quarantine: []
+
+confidence:
+  overall: unverified | low | medium | high | verified
+  reason:
+
+allowed_use:
+  - context
+  - retrieval guidance
+  - draft support
+  - contradiction detection
+  - source discovery
+
+forbidden_use:
+  - proof without source
+  - canonical promotion without review
+  - legal conclusion without authority
+  - factual assertion without citation or exhibit
+
+refusal_gate:
+  refuse_when:
+    - memory_source_missing
+    - source_conflicts_with_memory
+    - user_requests_canon_without_provenance
+    - output_requires_legal_or_factual_support_not_present
+  response_pattern: >
+    Defers promotion. Returns source gap, confidence level, and next retrieval action.
+
+ledger:
+  target_path:
+  entry_summary:
