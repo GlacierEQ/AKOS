@@ -3,12 +3,15 @@
   "version": "0.3.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "tsx --test tests/**/*.test.ts",
-    "start": "node dist/index.js",
+    "test": "tsx --test tests/*.test.ts",
+    "ci": "npm run typecheck && npm test && npm run build",
+    "start": "node dist/src/index.js",
     "dev": "tsx src/index.ts"
   },
   "devDependencies": {
