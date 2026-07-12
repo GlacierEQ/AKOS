@@ -24,8 +24,12 @@ Private unless noted. All are live job applications.
 
 | Repo | What it does | Status |
 |---|---|---|
-| [xai-colossus-cooling](https://github.com/GlacierEQ/xai-colossus-cooling) | Thermal management for Colossus-class AI compute | ⚠️ |
-| [colossus-gateway](https://github.com/GlacierEQ/colossus-gateway) | Universal MCP bridge | ⚠️ |
+| [xai-colossus-cooling](https://github.com/GlacierEQ/xai-colossus-cooling) | Thermal management for Colossus-class AI compute | ✅ Fully embedded |
+| [colossus-gateway](https://github.com/GlacierEQ/colossus-gateway) | Universal MCP bridge | ✅ Fully embedded |
+
+### Egg notes (2026-07-12)
+- **cooling**: `alpha/xai-cooling-physics-core.py` — STEFAN_BOLTZMANN exact, ANSWER/42 target ceiling, math.e σ, 0.31415 floor, 1.21 flux, FFT 64 gpus/rack; `alpha/xai_thermal_core.py` wired same.
+- **gateway**: `src/constants.ts` — ANSWER, DOUBLE_ANSWER, FLUX, C, SESSION_IDLE_S; health + MCP version consume GATEWAY_VERSION.
 
 ## SpaceX / Aerospace
 
