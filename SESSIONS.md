@@ -5,6 +5,27 @@ Newest first.
 
 ---
 
+## 2026-07-12 — Deep-dive + AWorkers legal + Grok bridge
+
+**Decisions / work:**
+- Repo deep-dive: AKOS, mastermind, token_saver, 1FDV-FEDERAL-WARFARE mapped (local `GlacierEQ_Swarm/state/repo_deep_dive.json`)
+- AWorkers legal pack labeled Family Court / 1FDV-23-0001009 (L1 flippers: stability, token 100%, map, AEON, qual)
+- Synced AWorkers + Grok swarm bridge docs into this repo
+- Confirmed always-on: token-saver + sequential_thinking + ai-humanizer
+- Cathedrals expanded: Federal / International / Criminal scaffolds (Notion)
+- Smithery research: Exa LIVE as L1.5; Tavily pending sticky connectionId
+
+**Core instruction (still):**
+> One wheel rolls. Four wheels is a vehicle.
+> Take something already known. Make it what it needs to be.
+
+**Remaining:**
+- Wire linked views for Federal/International/Criminal cathedrals
+- Tavily connection when namespace ready
+- Easter egg pass on remaining APEX portfolio repos
+
+---
+
 ## 2026-07-04 — AKOS Created
 
 **Decisions made:**
