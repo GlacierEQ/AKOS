@@ -54,3 +54,10 @@ Newest first.
 - Flipped 41 engineering job-app repos → public (legal/case kept private).
 - Core 16: `AKOS.md` bridges, topics, homepage → AKOS.
 - `REPOS.md` rewritten as public portfolio map.
+
+## 2026-07-12 — Private-first + intelligent public
+
+- Re-privatized 43 portfolio originals (SpaceX, Colossus, token_saver, pro-code, …).
+- Policy: private default; public only via `repo-public-promotion-flipper.py` gates.
+- Legal/case never public.
+- Map: `state/ultimate_repo_map.md` · policy: `state/repo_visibility_policy.json`.
