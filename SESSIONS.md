@@ -48,3 +48,9 @@ Newest first.
 **Remaining work:**
 - Easter egg pass needed on all remaining APEX repos
 - Each repo README needs to lead with the innovation, not the architecture
+
+## 2026-07-12 — Public portfolio + pro-AKOS
+
+- Flipped 41 engineering job-app repos → public (legal/case kept private).
+- Core 16: `AKOS.md` bridges, topics, homepage → AKOS.
+- `REPOS.md` rewritten as public portfolio map.
