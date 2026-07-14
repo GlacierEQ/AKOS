@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-07-14",
+  "system": "APEX Public Action Face",
+  "decision": "Block Activation",
+  "architecture_state": "Pass",
+  "migration_state": "Pass",
+  "security_state": "Pass with runtime verification pending",
+  "execution_state": "Blocked",
+  "bound_revisions": {
+    "public_action_face": "7ec193d811fd5d25d7f7de3aac4682367f76ba33",
+    "private_control_plane": "36c9281fd10ba3c0a1934c241f1118132aed12af",
+    "akos_architecture": "e3d3ce7d22d331297fc51390452b41efc7759e2a",
+    "public_review": "e09749691c4887c9a566ede9e64d4caa47180d86"
+  },
+  "canonical_roles": {
+    "action_face": "GlacierEQ/public-actions-runner-host",
+    "control_plane": "GlacierEQ/llm-runner-teams",
+    "architecture": "GlacierEQ/AKOS"
+  },
+  "verified": [
+    "private mastermind verification workflow removed",
+    "private llm-runner-teams executable workflows retired",
+    "public action face owns fourteen execution events",
+    "public workflow uses ubuntu-latest",
+    "public visibility guard installed",
+    "private checkout does not persist credentials",
+    "control-plane secrets are step-scoped and absent from workload execution",
+    "Node CI, Python CI, and APEX verification adapters fail closed",
+    "private approval and detailed result boundaries preserved"
+  ],
+  "blocking_conditions": [
+    {
+      "id": "ACTION-FACE-VISIBILITY-001",
+      "severity": "critical",
+      "condition": "GitHub reports GlacierEQ/public-actions-runner-host visibility as private",
+      "required_state": "public",
+      "release_effect": "Block all execution activation"
+    },
+    {
+      "id": "ACTION-FACE-RUNTIME-001",
+      "severity": "high",
+      "condition": "No successful controlled public action-face smoke run has been reviewed",
+      "required_state": "one successful metadata-only apex-verification run with private result receipt",
+      "release_effect": "Block deployment reliance"
+    }
+  ],
+  "forbidden": [
+    "GitHub Actions in private repositories",
+    "direct execution dispatch to GlacierEQ/llm-runner-teams",
+    "private workflow_call ownership",
+    "public detailed results",
+    "control-plane tokens available to workload code"
+  ],
+  "next_gate": "Change GlacierEQ/public-actions-runner-host visibility to public, then run and review verify-20260714-001"
+}
