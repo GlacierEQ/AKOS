@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "manifest_id": "AKOS-CASEBRAIN-ORCHESTRATION-001",
-  "version": "1.0.0",
-  "generated_at": "2026-07-15T16:20:00Z",
+  "version": "1.1.0",
+  "generated_at": "2026-07-15T16:36:00Z",
   "controller": {
     "system": "AKOS",
     "repository": "GlacierEQ/AKOS",
@@ -37,23 +37,96 @@
       "state": "connected_with_action_inconsistency",
       "anchor_task_id": "86ajhtzgc",
       "write_policy": "task_status_and_receipts_only",
-      "blocker": "comment action advertised but previously failed at runtime"
+      "blocker": "comment action is advertised but unresolved at runtime; use GitHub issue and Notion receipt until repaired"
     },
     "supabase": {
       "role": "operational_truth_spine",
-      "state": "blocked_no_visible_project",
-      "write_policy": "migration_only_after_explicit_project_selection_and_cost_gate",
-      "required_controls": ["case_scoped_rls", "service_role_isolation", "security_advisors", "append_only_receipts"]
+      "state": "target_selected_security_gate_open",
+      "organization_id": "vercel_icfg_eWX1sAAKEYqrLzXO3GjFkyY3",
+      "primary_project": {
+        "name": "supabase-backend-ops",
+        "project_id": "dyhprklicgewmrimecey",
+        "region": "us-east-1",
+        "status": "ACTIVE_HEALTHY",
+        "selection_basis": "previously designated primary operational truth; already contains connector registry, memory cards, events, cursors, dedupe, case/document/entity structures, and RLS-enabled control tables",
+        "deployment_state": "selected_not_migrated",
+        "security_gate": {
+          "state": "repair_required_before_casebrain_migration",
+          "findings": [
+            "mutable search_path on public.set_updated_at",
+            "multiple SECURITY DEFINER RPCs executable by anon or authenticated roles",
+            "email OTP expiry exceeds recommended threshold",
+            "Postgres 17.4 security patches available"
+          ]
+        }
+      },
+      "secondary_project": {
+        "name": "supabase-glaciereq",
+        "project_id": "kjebemdgvjvuutzvhbtp",
+        "region": "us-east-1",
+        "status": "ACTIVE_HEALTHY",
+        "mode": "read_only_legacy_live_source",
+        "selection_basis": "contains live legal, evidence, connector, Everything MCP, and CASEBRAIN-adjacent records but is not safe for new canonical writes",
+        "security_gate": {
+          "state": "quarantined_for_new_casebrain_writes",
+          "findings": [
+            "SECURITY DEFINER views v_upcoming_deadlines, v_pending_review_docs, and v_case_document_summary",
+            "mutable search_path on legal and vector-match functions",
+            "pg_net installed in public schema",
+            "apex_connector_incidents has RLS enabled without a policy",
+            "apex_secrets stores 39 persistent secret values and requires separate secret-rotation and vault review"
+          ]
+        }
+      },
+      "write_policy": "migration_only_after_security_repair_PR_review_and_explicit_apply_approval",
+      "required_controls": ["case_scoped_rls", "service_role_isolation", "security_advisors", "append_only_receipts", "no_raw_secrets_in_casebrain_tables"]
     },
     "google_drive": {
       "role": "evidence_surface",
-      "state": "connected_not_yet_rooted",
-      "write_policy": "read_only_until_root_allowlist_and_preview_receipt"
+      "state": "verified_roots_read_only",
+      "case_root": {
+        "name": "LEGAL-CASE-1FDV",
+        "folder_id": "1UBkpPVSp9U9bTSSrepMK-1kz_0CeRUeH",
+        "url": "https://drive.google.com/drive/folders/1UBkpPVSp9U9bTSSrepMK-1kz_0CeRUeH",
+        "verified_children": ["Active", "Archive", "Evidence", "Motions", "0_CASE_MASTER"]
+      },
+      "evidence_root": {
+        "name": "EVIDENCE-AND-FORENSICS",
+        "folder_id": "1Wp4PJOyUtl341BeN4Tu9i8_XK_eaqAVD",
+        "url": "https://drive.google.com/drive/folders/1Wp4PJOyUtl341BeN4Tu9i8_XK_eaqAVD",
+        "verified_children": ["FORENSIC-ORGANIZER-BRIDGE", "Evidence Proofs Master", "FORENSIC_ARCHIVE_2026", "Forensic_Albums"]
+      },
+      "specialized_audio_root": {
+        "name": "PILLAR 3: EVIDENCE VAULT",
+        "folder_id": "1Ovk8RrhMBeQObcMxRN6b0YiMx3XhKm5U",
+        "url": "https://drive.google.com/drive/folders/1Ovk8RrhMBeQObcMxRN6b0YiMx3XhKm5U",
+        "verified_children": ["PISTON 1: RECORDING LIBRARY", "PISTON 2: TRANSCRIPTION PIPELINE"]
+      },
+      "write_policy": "read_only_discovery_and_hash_preview_until_per-object_apply_approval"
     },
     "dropbox": {
-      "role": "evidence_surface",
-      "state": "connected_not_yet_rooted",
-      "write_policy": "read_only_until_root_allowlist_and_preview_receipt"
+      "role": "evidence_surface_and_intake",
+      "state": "verified_roots_read_only",
+      "team_mount": {
+        "name": "Kahala Home Inspectors",
+        "path": "ns:14068303587//Kahala Home Inspectors",
+        "file_id": "id:M3qKixNrNsgAAAAAAAAACA"
+      },
+      "case_root": {
+        "name": "CASE_1FDV-23-0001009",
+        "path": "ns:14072171347//CASE_1FDV-23-0001009",
+        "path_display": "/Kahala Home Inspectors/CASE_1FDV-23-0001009",
+        "file_id": "id:M3qKixNrNsgAAAAAAATRRg",
+        "verified_children": ["00_FILING", "01_MOTIONS", "02_EVIDENCE", "03_FORENSIC", "04_LEGAL", "05_DEFENDANTS"]
+      },
+      "intake_root": {
+        "name": "FileBoss_Inbox",
+        "path": "ns:14072171347//FileBoss_Inbox",
+        "path_display": "/Kahala Home Inspectors/FileBoss_Inbox",
+        "file_id": "id:M3qKixNrNsgAAAAAAAL4zg",
+        "trust_state": "untrusted_intake_requires_hash_classify_preview"
+      },
+      "write_policy": "read_only_until_fileboss_preview_receipt_and_explicit_apply_approval"
     }
   },
   "workflow": [
@@ -85,18 +158,19 @@
   "next_actions": [
     {
       "id": "AKOS-NEXT-001",
-      "action": "select_or_create_supabase_project",
-      "state": "blocked_user_org_and_cost_confirmation"
+      "action": "prepare_security_repair_migration_for_supabase_backend_ops",
+      "state": "ready_for_PR_no_live_apply"
     },
     {
       "id": "AKOS-NEXT-002",
-      "action": "approve_google_drive_and_dropbox_intake_roots",
-      "state": "blocked_exact_paths_required"
+      "action": "run_read_only_root_manifest_and_hash_preview",
+      "state": "ready",
+      "scope": ["google_drive.case_root", "google_drive.evidence_root", "dropbox.case_root", "dropbox.intake_root"]
     },
     {
       "id": "AKOS-NEXT-003",
       "action": "run_first_read_only_case_slice",
-      "state": "ready_after_intake_root_approval"
+      "state": "ready_after_root_manifest_receipt"
     }
   ]
 }
