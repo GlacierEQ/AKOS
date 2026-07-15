@@ -1,0 +1,53 @@
+{
+  "registry_version": "1.0.0",
+  "updated_at": "2026-07-15T16:15:00Z",
+  "default_mode": "read_only",
+  "connectors": {
+    "github": {
+      "authority": "engineering_canon",
+      "write_policy": "branch_or_explicit_commit",
+      "stores": ["schemas", "migrations", "adapters", "prompts", "tests", "adrs", "automation"],
+      "receipt_required": true
+    },
+    "supabase": {
+      "authority": "operational_truth",
+      "write_policy": "migration_only",
+      "stores": ["canonical_objects", "relationships", "crosswalks", "sync_receipts", "verification_events"],
+      "project_status": "unprovisioned",
+      "receipt_required": true
+    },
+    "notion": {
+      "authority": "human_projection",
+      "write_policy": "projection_only",
+      "stores": ["dashboards", "review_views", "decision_logs", "connector_health"],
+      "forbidden": ["authoritative_evidence_bytes", "untracked_truth_copy"],
+      "receipt_required": true
+    },
+    "clickup": {
+      "authority": "execution_state",
+      "write_policy": "task_and_comment_projection",
+      "stores": ["tasks", "approvals", "blockers", "delivery_status"],
+      "receipt_required": true
+    },
+    "google_drive": {
+      "authority": "evidence_storage",
+      "write_policy": "no_mutation_without_approval",
+      "stores": ["originals", "approved_derivatives"],
+      "receipt_required": true
+    },
+    "dropbox": {
+      "authority": "evidence_storage",
+      "write_policy": "no_mutation_without_approval",
+      "stores": ["originals", "approved_derivatives"],
+      "receipt_required": true
+    }
+  },
+  "global_invariants": {
+    "stable_ids": "CBR-<TYPE>-<ULID>",
+    "idempotency_required": true,
+    "sha256_required_for_evidence": true,
+    "human_gate_for_destructive_actions": true,
+    "conflicts_preserved": true,
+    "projections_are_noncanonical": true
+  }
+}
