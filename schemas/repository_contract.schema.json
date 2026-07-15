@@ -16,88 +16,29 @@
     "quality_gates"
   ],
   "properties": {
-    "canonical_id": {
-      "type": "string",
-      "pattern": "^SYS-[A-Z0-9\\-]+-[0-9]{3}$",
-      "description": "Unique canonical identifier matching system naming standard (e.g., SYS-AKOS-001)."
-    },
-    "family_id": {
-      "type": "string",
-      "pattern": "^FAM-[A-Z0-9\\-]+$",
-      "description": "Identifier grouping this repository into a strategic project lane (e.g., FAM-COGNITION)."
-    },
-    "name": {
-      "type": "string",
-      "maxLength": 64,
-      "description": "Human-readable name of the repository or subsystem."
-    },
-    "full_name": {
-      "type": "string",
-      "maxLength": 128,
-      "description": "Detailed descriptive name of the repository."
-    },
-    "version": {
-      "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9\\.]+)?$",
-      "description": "Semantic Versioning string (e.g., 0.1.0)."
-    },
+    "canonical_id": {"type": "string", "pattern": "^SYS-[A-Z0-9\\-]+-[0-9]{3}$"},
+    "family_id": {"type": "string", "pattern": "^FAM-[A-Z0-9\\-]+$"},
+    "name": {"type": "string", "maxLength": 64},
+    "full_name": {"type": "string", "maxLength": 128},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9\\.]+)?$"},
     "status": {
       "type": "string",
-      "enum": [
-        "seed",
-        "draft",
-        "active_draft",
-        "working_canonical",
-        "canonical",
-        "historical",
-        "archived"
-      ],
-      "description": "Current lifecycle state of the repository under AKOS governance."
+      "enum": ["seed", "draft", "active_draft", "working_canonical", "canonical", "historical", "archived"]
     },
-    "purpose": {
-      "type": "string",
-      "minLength": 20,
-      "maxLength": 1000,
-      "description": "Clear statement of purpose defining repository boundaries."
-    },
-    "repository": {
-      "type": "string",
-      "pattern": "^GlacierEQ/[a-zA-Z0-9\\-_\\.]+$",
-      "description": "Canonical GitHub repository path (e.g., GlacierEQ/AKOS)."
-    },
-    "default_branch": {
-      "type": "string",
-      "default": "main",
-      "description": "The default development branch of the repository."
-    },
+    "created_at": {"type": "string", "format": "date"},
+    "updated_at": {"type": "string", "format": "date"},
+    "owner": {"type": "string"},
+    "purpose": {"type": "string", "minLength": 20, "maxLength": 1000},
+    "repository": {"type": "string", "pattern": "^GlacierEQ/[a-zA-Z0-9\\-_\\.]+$"},
+    "default_branch": {"type": "string", "default": "main"},
     "primary_layer": {
       "type": "string",
-      "enum": [
-        "Genome",
-        "Cognition",
-        "Memory",
-        "Orchestration",
-        "Security",
-        "Deployment",
-        "OS",
-        "Audit"
-      ],
-      "description": "Primary architectural layer mapping."
+      "enum": ["Genome", "Cognition", "Memory", "Orchestration", "Security", "Deployment", "OS", "Audit"]
     },
-    "secondary_layers": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "Optional secondary layers integrated into the workspace."
-    },
+    "secondary_layers": {"type": "array", "items": {"type": "string"}},
     "active_specs": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^AKOS-[A-Z]+-[0-9]{3}$"
-      },
-      "description": "Array of active AKOS specifications implemented by this repository."
+      "items": {"type": "string", "pattern": "^AKOS-[A-Z]+(?:-[A-Z]+)*-[0-9]{3}$"}
     },
     "required_principles": {
       "type": "array",
@@ -112,99 +53,55 @@
           "one_truth_many_views",
           "spiral_engine_evolution"
         ]
-      },
-      "description": "List of core engineering principles enforced in this workspace."
+      }
     },
     "canonical_locations": {
       "type": "object",
       "properties": {
-        "docs": { "type": "string" },
-        "specs": { "type": "string" },
-        "contracts": { "type": "string" },
-        "schemas": { "type": "string" },
-        "manifests": { "type": "string" },
-        "templates": { "type": "string" },
-        "methodologies": { "type": "string" },
-        "adr": { "type": "string" },
-        "ledger": { "type": "string" }
+        "docs": {"type": "string"},
+        "specs": {"type": "string"},
+        "contracts": {"type": "string"},
+        "schemas": {"type": "string"},
+        "manifests": {"type": "string"},
+        "templates": {"type": "string"},
+        "methodologies": {"type": "string"},
+        "adr": {"type": "string"},
+        "ledger": {"type": "string"}
       },
-      "additionalProperties": false,
-      "description": "Canonical directory mapping relative to root."
+      "additionalProperties": false
     },
     "relationships": {
       "type": "object",
       "properties": {
-        "depends_on": { "type": "array", "items": { "type": "string" } },
-        "derived_from": { "type": "array", "items": { "type": "string" } },
-        "supersedes": { "type": "array", "items": { "type": "string" } },
-        "superseded_by": { "type": "array", "items": { "type": "string" } },
-        "mirrors": { "type": "array", "items": { "type": "string" } }
+        "depends_on": {"type": "array", "items": {"type": "string"}},
+        "derived_from": {"type": "array", "items": {"type": "string"}},
+        "supersedes": {"type": "array", "items": {"type": "string"}},
+        "superseded_by": {"type": "array", "items": {"type": "string"}},
+        "mirrors": {"type": "array", "items": {"type": "string"}}
       },
-      "additionalProperties": false,
-      "description": "Direct topological relationships with other repositories or systems."
+      "additionalProperties": false
     },
     "quality_gates": {
       "type": "array",
+      "minItems": 7,
+      "uniqueItems": true,
       "items": {
         "type": "string",
-        "enum": [
-          "naming",
-          "architecture",
-          "failure_handling",
-          "maintainability",
-          "authenticity",
-          "observability",
-          "documentation"
-        ]
-      },
-      "description": "Pro-Code quality gates that must be passed before canonical promotion."
+        "enum": ["naming", "architecture", "failure_handling", "maintainability", "authenticity", "observability", "documentation"]
+      }
     },
     "metadata": {
       "type": "object",
-      "required": [
-        "confidence",
-        "verification_status"
-      ],
+      "required": ["confidence", "verification_status"],
       "properties": {
-        "confidence": {
-          "type": "string",
-          "enum": [
-            "draft",
-            "working_canonical",
-            "canonical",
-            "historical"
-          ]
-        },
-        "verification_status": {
-          "type": "string",
-          "enum": [
-            "draft",
-            "verified",
-            "waived"
-          ]
-        },
-        "hash": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "Cryptographic signature or checksum of the canonical state."
-        },
-        "last_reviewed": {
-          "type": "string",
-          "format": "date",
-          "description": "ISO 8601 date of the last formal review."
-        }
+        "confidence": {"type": "string", "enum": ["draft", "working_canonical", "canonical", "historical"]},
+        "verification_status": {"type": "string", "enum": ["draft", "verified", "waived"]},
+        "hash": {"type": ["string", "null"]},
+        "last_reviewed": {"type": "string", "format": "date"}
       },
-      "description": "Audit and review metadata standard fields."
+      "additionalProperties": false
     },
-    "next_actions": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "List of next actionable engineering moves."
-    }
+    "next_actions": {"type": "array", "items": {"type": "string"}}
   },
   "additionalProperties": false
 }

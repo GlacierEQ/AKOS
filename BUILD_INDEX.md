@@ -1,22 +1,23 @@
 # AKOS Build Index
 
-Status: Active
-Version: 0.1.2
-Updated: 2026-07-04
+Status: Active Draft  
+Version: 0.2.0  
+Updated: 2026-07-14
 
 ## Purpose
 
-This file is the navigation index for the AKOS architecture repository.
-
-It records what exists, what is canonical, what is historical, and what still needs construction.
+This file is the navigation index for the AKOS architecture repository. It
+records what exists, what is canonical, what is historical and what still needs
+construction.
 
 ## Canonical Root Files
 
 | File | Role | Status |
 |---|---|---|
 | `README.md` | Root definition and boot rule | active |
-| `AKOS_MANIFEST.yaml` | System manifest | active |
-| `BUILD_INDEX.md` | Repository navigation index | active |
+| `AKOS_MANIFEST.yaml` | System manifest | active draft; validation repair proposed |
+| `BUILD_INDEX.md` | Repository navigation index | active draft |
+| `CURRENT_STATE.md` | Read-first operational state | active draft |
 | `GOVERNANCE.md` | Promotion and review rules | active |
 | `ROADMAP.md` | Build sequence | active |
 
@@ -24,8 +25,8 @@ It records what exists, what is canonical, what is historical, and what still ne
 
 | File | Status | Note |
 |---|---|---|
-| `REPOS.md` | historical / portfolio context | APEX portfolio inventory, not AKOS architecture canon |
-| `SESSIONS.md` | historical / session context | Session record retained for provenance |
+| `REPOS.md` | historical / portfolio context | APEX portfolio inventory, not architecture canon |
+| `SESSIONS.md` | historical / session context | retained for provenance |
 
 ## Canonical Areas
 
@@ -35,12 +36,12 @@ It records what exists, what is canonical, what is historical, and what still ne
 | `specs/` | Formal AKOS specifications |
 | `contracts/` | Compatibility and interface contracts |
 | `schemas/` | Machine-readable validation schemas |
-| `manifests/` | System, family, agent, and methodology manifests |
+| `manifests/` | System, family, agent and methodology manifests |
 | `templates/` | Reusable starter files |
-| `methodologies/` | Operating methods such as Pro-Code, Chunk Power, and Agentic Evolution |
+| `methodologies/` | Pro-Code, Chunk Power and Agentic Evolution methods |
 | `adr/` | Architecture decision records |
 | `ledger/` | Append-only build and sync records |
-| `audits/` | Review and quality gate records |
+| `audits/` | Review and quality-gate records |
 
 ## Active Specification Series
 
@@ -51,11 +52,19 @@ It records what exists, what is canonical, what is historical, and what still ne
 | AKOS-COM-001 | Canonical Object Model | `specs/AKOS-COM-001_CANONICAL_OBJECT_MODEL.md` | active seed |
 | AKOS-META-001 | Metadata Standard | `specs/AKOS-META-001_METADATA_STANDARD.md` | active seed |
 | AKOS-REPO-CONTRACT-001 | Repository Contract | `contracts/AKOS-REPO-CONTRACT-001.md` | active seed |
-| AKOS-PROCODE-001 | Pro-Code Methodology | `methodologies/pro_code/AKOS-PROCODE-001.md` | active seed |
-| AKOS-ACE-001 | Agentic Cognitive Evolution | `specs/AKOS-ACE-001_AGENTIC_COGNITIVE_EVOLUTION.md` | active seed |
-| AKOS-ACE-002 | Evolution Governance Model | `specs/AKOS-ACE-002_EVOLUTION_GOVERNANCE_MODEL.md` | active seed |
+| AKOS-PROCODE-001 | Pro-Code Methodology | `methodologies/pro_code/AKOS-PROCODE-001.md` | working canon |
 | AKOS-AGENT-CONTRACT-001 | Agent Contract | `contracts/AKOS-AGENT-CONTRACT-001.md` | active seed |
-| METH-PROCODE-CHUNK-POWER | Pro-Code Chunk Power | `methodologies/pro_code_chunk_power/README.md` | active seed |
+| AKOS-FEDERATION-CONTRACT-001 | CASEBRAIN repository federation | `contracts/AKOS-FEDERATION-CONTRACT-001.md` | review ready |
+
+## CASEBRAIN Federation Pack
+
+| Artifact | Path | Status |
+|---|---|---|
+| Federation contract | `contracts/AKOS-FEDERATION-CONTRACT-001.md` | review ready |
+| Registry schema | `schemas/CASEBRAIN_POWERUP_FEDERATION.schema.json` | validated draft |
+| Repository/worker registry | `manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json` | validated draft |
+| Operator guide | `docs/federation/CASEBRAIN_POWERUP_FEDERATION.md` | review ready |
+| Build ledger | `ledger/2026-07-14_CASEBRAIN_POWERUP_FEDERATION.md` | proposed receipt |
 
 ## Active Agentic Seeds
 
@@ -65,49 +74,34 @@ It records what exists, what is canonical, what is historical, and what still ne
 | Repository Steward | `manifests/agents/AGENT-REPOSITORY-STEWARD.yaml` | active seed |
 | Pro-Code Reviewer | `manifests/agents/AGENT-PROCODE-REVIEWER.yaml` | active seed |
 
-## ACE Templates
-
-| Template | Path | Status |
-|---|---|---|
-| Evolution Proposal | `templates/EVOLUTION_PROPOSAL.template.yaml` | active seed |
-| Memory Delta | `templates/MEMORY_DELTA.template.yaml` | active seed |
+The federation registry adds design-stage Source Intake/Hasher, Timeline
+Normalizer, Contradiction Candidate, Memory Distiller, Notion Review Mirror and
+Operator Control workers. No worker is marked `verified_live`.
 
 ## Construction Order
 
-1. Governance
-2. Foundational Laws
-3. Cognitive Kernel
-4. Canonical Object Model
-5. Metadata Standard
-6. Repository Contract
-7. Pro-Code Methodology
-8. Pro-Code Chunk Power
-9. Agentic Cognitive Evolution
-10. Templates
-11. Family Manifests
-12. Review/Audit Records
-13. Adoption into external repos
+1. Governance and valid manifest
+2. Foundational laws and truth contracts
+3. Canonical Object Model and metadata
+4. Repository and federation contracts
+5. Pro-Code review
+6. Commit-pinned manifests and schemas
+7. Credential rotation and storage hardening
+8. One audited read-only integration slice
+9. Worker dry run with immutable receipt
+10. Human-reviewed promotion
 
 ## Canonical Promotion Rule
 
-No file becomes canonical until it has:
+No file, repository, connector or worker becomes canonical/live until it has:
 
-- identity
-- purpose
-- version
-- status
-- source or origin
-- review status
-- clear relationship to the AKOS stack
-
-## Chunk Power Rule
-
-Build AKOS in small reviewable chunks. Each chunk must have a clear purpose, boundary, target path, review result, and next action.
-
-## ACE Governance Rule
-
-Agents may propose evolution. AKOS governs promotion.
+- identity, purpose, version and source revision;
+- explicit claim and authority boundaries;
+- Pro-Code review and passing schema validation;
+- a deployment/run receipt where runtime behavior is claimed;
+- human approval for promotion.
 
 ## Current Priority
 
-Use Pro-Code Chunk Power to harden the current active seeds before expanding runtime automation.
+Review the CASEBRAIN federation pack, rotate exposed credentials and validate
+one source-to-recall path. Do not expand runtime automation before that receipt.

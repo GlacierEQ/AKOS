@@ -1,14 +1,15 @@
 # AKOS Current State
 
-Status: Active
-Version: 0.1.1
-Updated: 2026-07-04
+Status: Active Draft  
+Version: 0.2.0  
+Updated: 2026-07-14
 
 ## Purpose
 
 This is the single read-first state file for AKOS sessions.
 
-A future AKOS-aware session should read this file after `README.md`, `AKOS_MANIFEST.yaml`, and `BUILD_INDEX.md` before making changes.
+Read it after `README.md`, `AKOS_MANIFEST.yaml`, and `BUILD_INDEX.md` before
+making changes.
 
 ## Canonical Repository
 
@@ -18,101 +19,92 @@ GlacierEQ/AKOS
 
 ## Current Position
 
-AKOS has moved from concept into repository-backed architecture.
+AKOS is the proposed governance root for the CASEBRAIN powerup federation.
+It owns identities, contracts, lifecycle, quality gates and promotion—not case
+facts, evidence originals or runtime truth.
 
-The repo now contains root definitions, operating documents, foundational specs, connector discipline, handoff rules, and the first folder-based integration pack.
+The federation is review ready on a branch. It is not production live.
 
 ## Current Build Layer
 
-Active layer:
-
 ```text
-Connector-first implementation planning
+Truth-safe repository federation and read-only integration planning
 ```
 
-This means connected systems must map back to AKOS object identity before automation expands.
+## Locked System Roles
 
-## Locked Stack Priority
-
-1. ClickUp
-2. Supabase
-3. Make
-4. GitHub
+1. GitHub: canonical contracts, schemas and code.
+2. CASEBRAIN: validated source-linked memory index.
+3. Notion: navigation, worker review queues and receipt pointers.
+4. ClickUp: manual execution visibility.
+5. Drive/source systems: source and preparation pointers, not automatic truth
+   canon.
+6. Supabase: optional staging/query projection after hardening.
 
 ## Active Read Path
-
-Read in this order:
 
 1. `README.md`
 2. `AKOS_MANIFEST.yaml`
 3. `BUILD_INDEX.md`
 4. `CURRENT_STATE.md`
-5. `docs/akos-operating-model.md`
-6. `docs/stack-priority.md`
-7. `docs/connector-registry.md`
+5. `contracts/AKOS-FEDERATION-CONTRACT-001.md`
+6. `manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json`
+7. `docs/federation/CASEBRAIN_POWERUP_FEDERATION.md`
 8. Relevant integration spec
 
-## Current Completed Pack
+## CASEBRAIN Federation Status
 
-- Root README
-- AKOS manifest
-- Build index
-- Governance seed
-- Roadmap
-- Operating model
-- Stack priority
-- Connector registry
-- Handoff protocol
-- APEX linkage
-- Foundational laws
-- Cognitive Kernel seed
-- Canonical Object Model seed
-- Metadata standard seed
-- Repository contract seed
-- Pro-Code seed
-- Integration index
-- Connector interface contract
-- Connector readiness gates
-- ClickUp folder pack
+```text
+Review Ready — Production Writes Blocked
+```
+
+Completed in the proposed pack:
+
+- self-validating AKOS manifest repair;
+- strict federation registry schema;
+- commit-pinned repository and worker registry;
+- transport, resource, dispatch, result, storage and human-gate contracts;
+- repository quarantine and activation boundaries;
+- Notion worker-control-plane mapping;
+- append-only build ledger entry.
 
 ## ClickUp Integration Status
 
 ```text
-Ready for Manual Test
+Manual Stage Complete — Automation Candidate Blocked
 ```
 
-Completed ClickUp files:
+ClickUp may reflect execution state. It may not overwrite GitHub canon, bulk
+generate tasks or automatically mutate connected systems.
 
-- `docs/integrations/clickup/README.md`
-- `docs/integrations/clickup/ROLE.md`
-- `docs/integrations/clickup/FIELDS.md`
-- `docs/integrations/clickup/LISTS.md`
-- `docs/integrations/clickup/MANUAL_TEST.md`
-- `docs/integrations/clickup/READINESS_REVIEW.md`
+## Critical Blockers
 
-## Open Loops
-
-- Run ClickUp manual test and record result.
-- Add integration specs for Supabase, Make, and GitHub.
-- Add schemas for shared AKOS objects.
-- Add templates for connector records.
-- Add session ledger entries.
-- Apply AKOS manifests to representative external repos.
+- Rotate the memory credential exposed in AEON history.
+- Reconcile CASEBRAIN project discovery and indexing.
+- Resolve overlapping AEON pull requests without weakening PR 51 truth rules.
+- Reconcile SUPERLUMINAL pull requests 51 and 52.
+- Replace Aspen local paths and simulated health with receipt-backed probes.
+- Harden Aspen Supabase RLS, case scoping, hashing and service-role boundaries.
+- Bring lowercase `pro-code` dispatch/auth/tracing implementation up to its
+  documented contract.
+- Rotate plaintext credentials exposed in Notion pages.
 
 ## Highest-Leverage Next Action
 
-Run the ClickUp manual test, then build the Supabase integration pack using the same folder-based pattern.
+Review and merge the federation contract, rotate the exposed credentials, then
+run one hashed court record through a read-only Casebuilder adapter into a
+hardened staging projection and verify the recalled hash.
 
 ## Machine Summary
 
 ```json
 {
   "document": "CURRENT_STATE",
-  "version": "0.1.1",
-  "status": "active",
-  "current_layer": "connector-first implementation planning",
-  "priority_order": ["ClickUp", "Supabase", "Make", "GitHub"],
-  "clickup_status": "ready_for_manual_test",
-  "highest_leverage_next_action": "run ClickUp manual test, then build Supabase integration pack"
+  "version": "0.2.0",
+  "status": "active_draft",
+  "current_layer": "truth-safe repository federation",
+  "casebrain_federation": "review_ready_production_writes_blocked",
+  "clickup_status": "manual_stage_complete_automation_candidate_blocked",
+  "highest_leverage_next_action": "review contract, rotate credentials, run one audited read-only source-to-recall probe"
 }
 ```

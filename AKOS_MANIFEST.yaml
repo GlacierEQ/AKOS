@@ -1,18 +1,19 @@
 canonical_id: SYS-AKOS-001
+family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.1.0
-status: foundational_build
+version: 0.2.0
+status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-04"
+updated_at: "2026-07-14"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
 
 purpose: >
-  Canonical architecture repository for AKOS: the system that governs
-  knowledge identity, provenance, memory, cognition, contracts, manifests,
-  Pro-Code gates, and recursive operational evolution.
+  Canonical governance repository for AKOS and the CASEBRAIN federation. It
+  owns identities, repository roles, lifecycle state, review gates, promotion
+  records, and adapter contracts; it does not own case facts or evidence.
 
 primary_layer: Genome
 secondary_layers:
@@ -30,6 +31,7 @@ active_specs:
   - AKOS-META-001
   - AKOS-REPO-CONTRACT-001
   - AKOS-PROCODE-001
+  - AKOS-FEDERATION-CONTRACT-001
 
 required_principles:
   - identity_first
@@ -55,17 +57,26 @@ relationships:
   supersedes: []
   mirrors:
     - GlacierEQ/mastermind:akos/
-  depends_on: []
+  depends_on:
+    - GlacierEQ/AEON-777@df519315759c077e32de64869998d0d5983af5d4:BRAIN/contracts/CASEBRAIN_UNIFIED_CONTRACT.md
+
+quality_gates:
+  - naming
+  - architecture
+  - failure_handling
+  - maintainability
+  - authenticity
+  - observability
+  - documentation
 
 metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-04"
+  last_reviewed: "2026-07-14"
 
 next_actions:
-  - complete foundational specs
-  - add repository contract
-  - add Pro-Code methodology
-  - add family manifests
-  - add build ledger
+  - review and merge the CASEBRAIN federation contract
+  - rotate the exposed AEON memory credential before production writes
+  - repair Aspen projection and Supabase access controls before connection
+  - run one audited read-only source-to-recall integration slice
