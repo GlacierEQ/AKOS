@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "manifest_id": "AKOS-CASEBRAIN-ORCHESTRATION-001",
+  "version": "1.0.0",
+  "generated_at": "2026-07-15T16:20:00Z",
+  "controller": {
+    "system": "AKOS",
+    "repository": "GlacierEQ/AKOS",
+    "branch": "main",
+    "mode": "governed_federation",
+    "case_scope": ["1FDV-23-0001009"]
+  },
+  "canon": {
+    "federation_contract": "architecture/federation-contract.md",
+    "canonical_schema": "schemas/canonical/casebrain-object.schema.json",
+    "supabase_migration": "supabase/migrations/0001_casebrain_core.sql",
+    "connector_registry": "config/casebrain-connectors.json",
+    "powerup_registry": "manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json",
+    "akos_federation_contract": "contracts/AKOS-FEDERATION-CONTRACT-001.md"
+  },
+  "connectors": {
+    "github": {
+      "role": "engineering_canon",
+      "state": "connected",
+      "write_policy": "branch_or_reviewed_direct_commit",
+      "required_receipts": ["commit_sha", "path", "timestamp"]
+    },
+    "notion": {
+      "role": "reviewed_projection",
+      "state": "connected",
+      "canonical_page_id": "39eb1e4f-3223-8155-97c2-d0ec6963ce10",
+      "write_policy": "projection_only",
+      "required_fields": ["cbr_id", "github_ref", "verification_state", "last_sync_at"]
+    },
+    "clickup": {
+      "role": "execution_control",
+      "state": "connected_with_action_inconsistency",
+      "anchor_task_id": "86ajhtzgc",
+      "write_policy": "task_status_and_receipts_only",
+      "blocker": "comment action advertised but previously failed at runtime"
+    },
+    "supabase": {
+      "role": "operational_truth_spine",
+      "state": "blocked_no_visible_project",
+      "write_policy": "migration_only_after_explicit_project_selection_and_cost_gate",
+      "required_controls": ["case_scoped_rls", "service_role_isolation", "security_advisors", "append_only_receipts"]
+    },
+    "google_drive": {
+      "role": "evidence_surface",
+      "state": "connected_not_yet_rooted",
+      "write_policy": "read_only_until_root_allowlist_and_preview_receipt"
+    },
+    "dropbox": {
+      "role": "evidence_surface",
+      "state": "connected_not_yet_rooted",
+      "write_policy": "read_only_until_root_allowlist_and_preview_receipt"
+    }
+  },
+  "workflow": [
+    "discover",
+    "fingerprint",
+    "register_crosswalk",
+    "extract_without_mutation",
+    "validate_schema",
+    "link_relationships",
+    "emit_preview",
+    "human_approve",
+    "apply_idempotently",
+    "emit_append_only_receipt",
+    "reconcile_projection"
+  ],
+  "identity": {
+    "format": "CBR-<TYPE>-<ULID>",
+    "crosswalk_required": true,
+    "filename_as_identity_forbidden": true
+  },
+  "safety_gates": {
+    "evidence_mutation": false,
+    "automatic_filing": false,
+    "external_communication": false,
+    "fact_promotion_without_source": false,
+    "destructive_action_without_confirmation": false,
+    "conflict_flattening": false
+  },
+  "next_actions": [
+    {
+      "id": "AKOS-NEXT-001",
+      "action": "select_or_create_supabase_project",
+      "state": "blocked_user_org_and_cost_confirmation"
+    },
+    {
+      "id": "AKOS-NEXT-002",
+      "action": "approve_google_drive_and_dropbox_intake_roots",
+      "state": "blocked_exact_paths_required"
+    },
+    {
+      "id": "AKOS-NEXT-003",
+      "action": "run_first_read_only_case_slice",
+      "state": "ready_after_intake_root_approval"
+    }
+  ]
+}
