@@ -1,0 +1,34 @@
+{
+  "manifest_id": "AKOS-ROOT-MANIFEST-2026-07-15-001",
+  "case_id": "1FDV-23-0001009",
+  "mode": "read_only",
+  "generated_at": "2026-07-15T16:50:00Z",
+  "hash_scope": "canonical root metadata; file-content hashes deferred to file-level scan",
+  "manifest_sha256": "f8797d3f41aeb764700b4bc11f8443506cfce7668a3f083ef728a84f8a4d84ca",
+  "validation": {
+    "schema": "PASS",
+    "allowlist": "PASS",
+    "mutation": "NONE",
+    "pagination_complete": true
+  },
+  "google_drive": {
+    "case_root_id": "1UBkpPVSp9U9bTSSrepMK-1kz_0CeRUeH",
+    "active_root_id": "1EojiiwzI5kkpm6A4BmlM6iUjpTNk8kcl",
+    "selected_case_folder_id": "1YHfISceV92HapCJ5q2Gj41RI6a197rPk",
+    "selected_case_folder_child": {"name":"00_FILING","id":"1tL93iEYilbE8EQ69YUIDfjwhGPW219TH"},
+    "active_children_count": 6,
+    "identity_conflicts": ["CASE_1FDV-23-0001009", "1FDV-23-0001009", "OMNI_PROJECT_FORWARD_ZENITH_Kekoa_1FDV-23-0001009"]
+  },
+  "dropbox": {
+    "case_root_file_id": "id:M3qKixNrNsgAAAAAAATRRg",
+    "case_root_path": "ns:14072171347//CASE_1FDV-23-0001009",
+    "children": ["00_FILING","01_MOTIONS","02_EVIDENCE","03_FORENSIC","04_LEGAL","05_DEFENDANTS"],
+    "evidence_folder_file_id": "id:M3qKixNrNsgAAAAAAATRSA",
+    "evidence_folder_children_count": 0
+  },
+  "metadata_hashes": {
+    "drive_selected_case_folder": "dd9104f2e752f8303c0f53d140650e02c3fa97416d20f48882ce43ddf217f9a7",
+    "drive_filing_folder": "d9c7da2335bf63c0c299d01776fbae22cf1c95ed6048dc000dce3d49398324e6",
+    "dropbox_case_evidence_folder": "3b4cb1d29f304420a72cf3a2cc4ec4c0ac7bd1ebd9ceac1842fc44a8238d9e15"
+  }
+}
