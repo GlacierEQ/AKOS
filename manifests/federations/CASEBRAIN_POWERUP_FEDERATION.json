@@ -1,17 +1,17 @@
 {
   "schema_version": "1.0.0",
   "federation_id": "FAM-CASEBRAIN",
-  "generated_at": "2026-07-14T22:30:00-10:00",
+  "generated_at": "2026-07-15T00:34:00-10:00",
   "governance": {
     "repository": "GlacierEQ/AKOS",
-    "ref": "casebrain-powerup-federation-v1",
-    "commit_sha": "cd9581c08952b807383590b8c409473de4bf605e",
+    "ref": "main",
+    "commit_sha": "538942cd196ae1f0fd04b3de09b5eb4f3ced2693",
     "path": "contracts/AKOS-FEDERATION-CONTRACT-001.md"
   },
   "truth_contract": {
     "repository": "GlacierEQ/AEON-777",
-    "ref": "pull/51/head",
-    "commit_sha": "df519315759c077e32de64869998d0d5983af5d4",
+    "ref": "main",
+    "commit_sha": "b176d0b66358f5e59d0bd37f167160828be3dad6",
     "path": "BRAIN/contracts/CASEBRAIN_UNIFIED_CONTRACT.md"
   },
   "repositories": [
@@ -21,28 +21,59 @@
       "role": "federation governance, identity, lifecycle, quality gates and promotion ledger",
       "visibility": "private",
       "observed_ref": "main",
-      "observed_commit": "873cc0baf86f9b72f96ebd996eb9301d05c5ee7a",
-      "activation_status": "repair_proposed",
-      "verification_status": "verified_files",
-      "claim_boundary": "Architecture canon only; it does not establish case facts, evidence authenticity or runtime health.",
-      "allowed_capabilities": ["identity", "contracts", "promotion", "quality_gates", "ledger"],
-      "forbidden_capabilities": ["store_unverified_case_claims_as_fact", "file_or_serve", "self_promote_agent_output"],
-      "gates": ["manifest_validation", "pro_code_review"]
+      "observed_commit": "538942cd196ae1f0fd04b3de09b5eb4f3ced2693",
+      "activation_status": "federation_contract_merged",
+      "verification_status": "schema_and_review_verified",
+      "claim_boundary": "Canonical federation governance is merged; this proves contract state, not live connector or worker health.",
+      "allowed_capabilities": [
+        "identity",
+        "contracts",
+        "promotion",
+        "quality_gates",
+        "ledger"
+      ],
+      "forbidden_capabilities": [
+        "store_unverified_case_claims_as_fact",
+        "file_or_serve",
+        "self_promote_agent_output"
+      ],
+      "gates": [
+        "manifest_validation",
+        "human_runtime_activation"
+      ]
     },
     {
       "canonical_id": "SYS-CASEBRAIN-AEON-001",
       "repository": "GlacierEQ/AEON-777",
       "role": "CASEBRAIN truth, provenance, validation and human-action policy layer",
       "visibility": "private",
-      "observed_ref": "pull/51/head",
-      "observed_commit": "df519315759c077e32de64869998d0d5983af5d4",
-      "activation_status": "review_ready",
-      "verification_status": "verified_files",
-      "claim_boundary": "PR 51 is the reviewed contract candidate; legacy branches and narrative claims are not promoted by this registry.",
-      "allowed_capabilities": ["validate_case_event", "validate_memory_record", "validate_threat_signal", "recall_index", "source_linking"],
-      "forbidden_capabilities": ["production_write_before_secret_rotation", "verify_allegation_without_primary_source", "authorize_external_action", "automatic_deadline_assertion"],
-      "gates": ["credential_rotation", "indexing_reconciliation", "one_audited_end_to_end_probe", "human_review"],
-      "related_prs": ["https://github.com/GlacierEQ/AEON-777/pull/51"]
+      "observed_ref": "main",
+      "observed_commit": "b176d0b66358f5e59d0bd37f167160828be3dad6",
+      "activation_status": "truth_contract_merged_runtime_blocked",
+      "verification_status": "schemas_tests_and_review_verified",
+      "claim_boundary": "Source-linked schemas and human-action gates are merged. Runtime writes remain blocked pending credential rotation, indexing repair and one audited end-to-end probe.",
+      "allowed_capabilities": [
+        "validate_case_event",
+        "validate_memory_record",
+        "validate_threat_signal",
+        "recall_index",
+        "source_linking"
+      ],
+      "forbidden_capabilities": [
+        "production_write_before_secret_rotation",
+        "verify_allegation_without_primary_source",
+        "authorize_external_action",
+        "automatic_deadline_assertion"
+      ],
+      "gates": [
+        "credential_rotation",
+        "indexing_reconciliation",
+        "one_audited_end_to_end_probe",
+        "human_review"
+      ],
+      "related_prs": [
+        "https://github.com/GlacierEQ/AEON-777/pull/51"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-CORE-001",
@@ -54,9 +85,22 @@
       "activation_status": "repair_required",
       "verification_status": "verified_code_inspection",
       "claim_boundary": "Pointer and projection layer only; connector presence and initialization labels are not proof of runtime health.",
-      "allowed_capabilities": ["repository_pointers", "resource_pointers", "connector_health_receipts"],
-      "forbidden_capabilities": ["truth_authority", "machine_local_absolute_paths", "simulated_live_status", "unsupported_savings_claims"],
-      "gates": ["replace_local_paths", "receipt_backed_health", "reconcile_planned_vs_live_labels"]
+      "allowed_capabilities": [
+        "repository_pointers",
+        "resource_pointers",
+        "connector_health_receipts"
+      ],
+      "forbidden_capabilities": [
+        "truth_authority",
+        "machine_local_absolute_paths",
+        "simulated_live_status",
+        "unsupported_savings_claims"
+      ],
+      "gates": [
+        "replace_local_paths",
+        "receipt_backed_health",
+        "reconcile_planned_vs_live_labels"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-MEMORY-001",
@@ -68,9 +112,21 @@
       "activation_status": "contract_pending",
       "verification_status": "verified_repo_metadata",
       "claim_boundary": "Memory outputs remain working views until CASEBRAIN validation and human promotion.",
-      "allowed_capabilities": ["distillation_candidate", "ranking_candidate", "memory_policy"],
-      "forbidden_capabilities": ["silent_deletion", "fact_promotion", "original_evidence_replacement"],
-      "gates": ["adoption_manifest", "deletion_review", "casebrain_envelope"]
+      "allowed_capabilities": [
+        "distillation_candidate",
+        "ranking_candidate",
+        "memory_policy"
+      ],
+      "forbidden_capabilities": [
+        "silent_deletion",
+        "fact_promotion",
+        "original_evidence_replacement"
+      ],
+      "gates": [
+        "adoption_manifest",
+        "deletion_review",
+        "casebrain_envelope"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-EVIDENCE-001",
@@ -82,9 +138,21 @@
       "activation_status": "contract_pending",
       "verification_status": "inferred_role",
       "claim_boundary": "Repository naming and README claims do not prove evidence completeness, hash integrity or chain of custody.",
-      "allowed_capabilities": ["hashing_candidate", "bates_working_view", "exhibit_catalog_candidate"],
-      "forbidden_capabilities": ["mutate_original_evidence", "release_evidence", "certify_chain_of_custody_without_receipts"],
-      "gates": ["source_hash_required", "chain_of_custody_review", "read_only_adapter"]
+      "allowed_capabilities": [
+        "hashing_candidate",
+        "bates_working_view",
+        "exhibit_catalog_candidate"
+      ],
+      "forbidden_capabilities": [
+        "mutate_original_evidence",
+        "release_evidence",
+        "certify_chain_of_custody_without_receipts"
+      ],
+      "gates": [
+        "source_hash_required",
+        "chain_of_custody_review",
+        "read_only_adapter"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-LEGAL-001",
@@ -96,9 +164,21 @@
       "activation_status": "quarantined",
       "verification_status": "inferred_role",
       "claim_boundary": "Legal theories, templates and labels are research material, not court findings or verified applicability.",
-      "allowed_capabilities": ["research_candidate", "template_candidate"],
-      "forbidden_capabilities": ["legal_conclusion_as_fact", "automatic_filing", "automatic_service", "threat_escalation"],
-      "gates": ["citation_check", "jurisdiction_check", "attorney_or_operator_review"]
+      "allowed_capabilities": [
+        "research_candidate",
+        "template_candidate"
+      ],
+      "forbidden_capabilities": [
+        "legal_conclusion_as_fact",
+        "automatic_filing",
+        "automatic_service",
+        "threat_escalation"
+      ],
+      "gates": [
+        "citation_check",
+        "jurisdiction_check",
+        "attorney_or_operator_review"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-SUPABASE-001",
@@ -106,13 +186,26 @@
       "role": "optional query and projection store after security hardening",
       "visibility": "private",
       "observed_ref": "main",
-      "observed_commit": "12b529fd5fe4418ed1ebd83c0e6671a7e1a62890",
-      "activation_status": "blocked",
-      "verification_status": "verified_code_inspection",
-      "claim_boundary": "Current policies do not provide safe case isolation and current memory/evidence functions do not enforce full provenance.",
-      "allowed_capabilities": ["hardened_staging_projection_after_review"],
-      "forbidden_capabilities": ["production_case_data", "service_role_in_ui_or_mcp", "allow_all_rls", "unhashed_evidence_log"],
-      "gates": ["case_scoped_rls", "operator_binding", "full_sha256", "append_only_audit", "staging_probe"]
+      "observed_commit": "f3a10759a4f754335bc600934b7204233c1afe97",
+      "activation_status": "security_repair_merged_staging_required",
+      "verification_status": "11_security_tests_and_review_verified",
+      "claim_boundary": "Main now contains case-scoped RLS, provenance, append-only audit and secured functions; no production database or Edge Function deployment is proven.",
+      "allowed_capabilities": [
+        "staging_projection_after_secret_rotation_and_migration_rehearsal"
+      ],
+      "forbidden_capabilities": [
+        "production_case_data_before_staging_probe",
+        "service_role_in_ui_or_mcp",
+        "allow_all_rls",
+        "unhashed_evidence_log"
+      ],
+      "gates": [
+        "provider_credential_rotation",
+        "staging_migration",
+        "first_owner_provisioning",
+        "legacy_provenance_remediation",
+        "live_catalog_probe"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-SWARM-001",
@@ -124,9 +217,19 @@
       "activation_status": "contract_pending",
       "verification_status": "inferred_role",
       "claim_boundary": "Swarm labels do not prove deployed workers, persistent state or safe tool bindings.",
-      "allowed_capabilities": ["parallel_read_only_analysis_candidate"],
-      "forbidden_capabilities": ["unbounded_tools", "persistent_live_claim_without_receipt", "external_action"],
-      "gates": ["worker_dispatch_contract", "run_receipt", "kill_switch"]
+      "allowed_capabilities": [
+        "parallel_read_only_analysis_candidate"
+      ],
+      "forbidden_capabilities": [
+        "unbounded_tools",
+        "persistent_live_claim_without_receipt",
+        "external_action"
+      ],
+      "gates": [
+        "worker_dispatch_contract",
+        "run_receipt",
+        "kill_switch"
+      ]
     },
     {
       "canonical_id": "SYS-ASPEN-CONNECTORS-001",
@@ -138,9 +241,20 @@
       "activation_status": "contract_pending",
       "verification_status": "inferred_role",
       "claim_boundary": "A configured connector is not active until a dated, receipt-backed least-privilege probe passes.",
-      "allowed_capabilities": ["connector_catalog", "read_only_health_probe"],
-      "forbidden_capabilities": ["token_disclosure", "presence_equals_health", "implicit_write_activation"],
-      "gates": ["least_privilege", "dated_probe_receipt", "human_activation"]
+      "allowed_capabilities": [
+        "connector_catalog",
+        "read_only_health_probe"
+      ],
+      "forbidden_capabilities": [
+        "token_disclosure",
+        "presence_equals_health",
+        "implicit_write_activation"
+      ],
+      "gates": [
+        "least_privilege",
+        "dated_probe_receipt",
+        "human_activation"
+      ]
     },
     {
       "canonical_id": "SYS-CASEBUILDER-4000-001",
@@ -152,9 +266,23 @@
       "activation_status": "quarantined",
       "verification_status": "verified_code_inspection",
       "claim_boundary": "Narratives, relationship matrices, confidence scores and legal conclusions are unverified projections unless independently sourced.",
-      "allowed_capabilities": ["read_only_source_adapter_candidate", "pdf_processing_candidate", "transcription_candidate", "timeline_candidate"],
-      "forbidden_capabilities": ["narrative_to_verified_fact", "unsupported_actor_link", "automatic_legal_action", "original_evidence_mutation"],
-      "gates": ["one_hashed_source_record", "casebrain_validation", "pending_review_output"]
+      "allowed_capabilities": [
+        "read_only_source_adapter_candidate",
+        "pdf_processing_candidate",
+        "transcription_candidate",
+        "timeline_candidate"
+      ],
+      "forbidden_capabilities": [
+        "narrative_to_verified_fact",
+        "unsupported_actor_link",
+        "automatic_legal_action",
+        "original_evidence_mutation"
+      ],
+      "gates": [
+        "one_hashed_source_record",
+        "casebrain_validation",
+        "pending_review_output"
+      ]
     },
     {
       "canonical_id": "SYS-SUPERLUMINAL-CASE-MATRIX-001",
@@ -166,10 +294,28 @@
       "activation_status": "review_ready",
       "verification_status": "verified_files",
       "claim_boundary": "PR 51 and draft PR 52 are review candidates; repo claims of live automation are not runtime proof.",
-      "allowed_capabilities": ["memory_policy_candidate", "dependency_state", "risk_state", "run_receipts", "daily_lane"],
-      "forbidden_capabilities": ["auto_filing", "auto_service", "runtime_claim_without_receipt", "overwrite_github_canon"],
-      "gates": ["reconcile_pr_51_and_52", "tests", "human_approval"],
-      "related_prs": ["https://github.com/GlacierEQ/SUPERLUMINAL_CASE_MATRIX/pull/51", "https://github.com/GlacierEQ/SUPERLUMINAL_CASE_MATRIX/pull/52"]
+      "allowed_capabilities": [
+        "memory_policy_candidate",
+        "dependency_state",
+        "risk_state",
+        "run_receipts",
+        "daily_lane"
+      ],
+      "forbidden_capabilities": [
+        "auto_filing",
+        "auto_service",
+        "runtime_claim_without_receipt",
+        "overwrite_github_canon"
+      ],
+      "gates": [
+        "reconcile_pr_51_and_52",
+        "tests",
+        "human_approval"
+      ],
+      "related_prs": [
+        "https://github.com/GlacierEQ/SUPERLUMINAL_CASE_MATRIX/pull/51",
+        "https://github.com/GlacierEQ/SUPERLUMINAL_CASE_MATRIX/pull/52"
+      ]
     },
     {
       "canonical_id": "SYS-MAKE-IT-HEAVY-001",
@@ -177,13 +323,28 @@
       "role": "stateless parallel research and synthesis worker runtime",
       "visibility": "public",
       "observed_ref": "main",
-      "observed_commit": "5515645694d01b40f40050f79419ea60cde2e105",
-      "activation_status": "sandbox_candidate",
-      "verification_status": "verified_code_inspection",
-      "claim_boundary": "All model outputs are model_inference and pending_review; declared agent rosters and performance claims require runtime proof.",
-      "allowed_capabilities": ["parallel_read_only_research", "bounded_synthesis"],
-      "forbidden_capabilities": ["write_file_tool", "external_action", "verified_fact_output", "unbounded_cost"],
-      "gates": ["per_role_prompt", "read_only_allowlist", "budget", "timeout", "citations", "human_review"]
+      "observed_commit": "49c7868f323155012a13194fa305260308a05b7e",
+      "activation_status": "sandbox_ready_live_smoke_required",
+      "verification_status": "11_offline_tests_review_and_byte_verification",
+      "claim_boundary": "Role-bound read-only orchestration is merged; outputs remain model_inference and pending_review, and no live API smoke test has been claimed.",
+      "allowed_capabilities": [
+        "parallel_read_only_research",
+        "bounded_synthesis"
+      ],
+      "forbidden_capabilities": [
+        "write_file_tool",
+        "external_action",
+        "verified_fact_output",
+        "unbounded_cost"
+      ],
+      "gates": [
+        "operator_api_key",
+        "live_read_only_smoke",
+        "budget",
+        "timeout",
+        "citations",
+        "human_review"
+      ]
     },
     {
       "canonical_id": "SYS-TOKEN-SAVER-001",
@@ -191,13 +352,27 @@
       "role": "content-addressed context pointer and payload-offload candidate",
       "visibility": "private",
       "observed_ref": "main",
-      "observed_commit": "f47e3659fd729ad54d01e07a4922704a15bade39",
-      "activation_status": "sandbox_candidate",
-      "verification_status": "verified_code_inspection",
-      "claim_boundary": "Only measured workload results may be reported; estimated token savings and MD5-based cache identity are not accepted as proof.",
-      "allowed_capabilities": ["sha256_content_pointer", "canonical_uri", "bounded_context_offload"],
-      "forbidden_capabilities": ["md5_identity", "fixed_savings_claim", "local_only_canonical_path", "silent_payload_loss"],
-      "gates": ["full_sha256", "round_trip_test", "measured_benchmark", "canonical_resource_mesh"]
+      "observed_commit": "9700e8205455ca912edc6e7333eabd48c19fb0a0",
+      "activation_status": "sandbox_ready",
+      "verification_status": "10_tests_review_and_byte_verification",
+      "claim_boundary": "Full SHA-256 canonical pointers, verified resolution and measured accounting are merged; savings must still be measured per workload.",
+      "allowed_capabilities": [
+        "sha256_content_pointer",
+        "canonical_uri",
+        "bounded_context_offload"
+      ],
+      "forbidden_capabilities": [
+        "md5_identity",
+        "fixed_savings_claim",
+        "local_only_canonical_path",
+        "silent_payload_loss"
+      ],
+      "gates": [
+        "full_sha256",
+        "round_trip_test",
+        "measured_benchmark",
+        "allowed_root_configuration"
+      ]
     },
     {
       "canonical_id": "SYS-APEX-BOOTUP-001",
@@ -205,13 +380,27 @@
       "role": "development-machine bootstrap candidate only",
       "visibility": "private",
       "observed_ref": "main",
-      "observed_commit": "1c828c3ca97983c7cd3e526d7f64be7f97cf385e",
-      "activation_status": "blocked",
-      "verification_status": "verified_code_inspection",
-      "claim_boundary": "Bootstrap output is not CASEBRAIN truth, connector health or deployment proof.",
-      "allowed_capabilities": ["explicit_dry_run_after_repair"],
-      "forbidden_capabilities": ["implicit_git_pull", "implicit_package_install", "dynamic_function_execution", "daemon_start", "crontab_edit", "success_lock_before_success"],
-      "gates": ["dry_run", "step_allowlist", "exit_checks", "rollback", "no_case_data_write"]
+      "observed_commit": "139380144087f8df79c53a92e109d60dd0a2527f",
+      "activation_status": "safe_opt_in_bootstrap_merged",
+      "verification_status": "28_regressions_and_static_safety_verified",
+      "claim_boundary": "Bootup is dry-run by default and requires explicit execute plus step allowlist; host-specific selected scripts still require operator audit.",
+      "allowed_capabilities": [
+        "explicit_dry_run",
+        "explicit_allowlisted_execute"
+      ],
+      "forbidden_capabilities": [
+        "implicit_git_pull",
+        "implicit_package_install",
+        "dynamic_function_execution",
+        "daemon_start",
+        "crontab_edit",
+        "success_lock_before_success"
+      ],
+      "gates": [
+        "host_script_audit",
+        "operator_step_selection",
+        "no_case_data_write"
+      ]
     },
     {
       "canonical_id": "SYS-APEX-BOOT-001",
@@ -223,9 +412,17 @@
       "activation_status": "hold_distinct",
       "verification_status": "verified_repo_metadata",
       "claim_boundary": "This repository is not apex-bootup-core and is not activated by this federation.",
-      "allowed_capabilities": ["read_only_audit"],
-      "forbidden_capabilities": ["alias_to_apex_bootup_core", "runtime_activation"],
-      "gates": ["naming_reconciliation", "scope_decision"]
+      "allowed_capabilities": [
+        "read_only_audit"
+      ],
+      "forbidden_capabilities": [
+        "alias_to_apex_bootup_core",
+        "runtime_activation"
+      ],
+      "gates": [
+        "naming_reconciliation",
+        "scope_decision"
+      ]
     },
     {
       "canonical_id": "SYS-PROCODE-BRAIN-001",
@@ -237,9 +434,19 @@
       "activation_status": "contract_pending",
       "verification_status": "verified_files",
       "claim_boundary": "AKOS-PROCODE-001 is the canonical methodology; this repository may mirror but not fork it.",
-      "allowed_capabilities": ["standards_mirror", "review_checklists", "ci_templates"],
-      "forbidden_capabilities": ["parallel_methodology_canon", "self_approval"],
-      "gates": ["adoption_manifest", "mirror_pointer"]
+      "allowed_capabilities": [
+        "standards_mirror",
+        "review_checklists",
+        "ci_templates"
+      ],
+      "forbidden_capabilities": [
+        "parallel_methodology_canon",
+        "self_approval"
+      ],
+      "gates": [
+        "adoption_manifest",
+        "mirror_pointer"
+      ]
     },
     {
       "canonical_id": "SYS-PROCODE-UI-001",
@@ -247,13 +454,28 @@
       "role": "human operator control plane and worker monitoring UI",
       "visibility": "private",
       "observed_ref": "main",
-      "observed_commit": "66fcce3e4cd1ad7cce2a3f62c401c96283415255",
-      "activation_status": "repair_required",
-      "verification_status": "verified_code_inspection",
-      "claim_boundary": "Documented authentication, tracing and worker counts are not accepted until the implementation and a receipt-backed probe match.",
-      "allowed_capabilities": ["review_queue_ui", "worker_status_ui", "human_approval_ui"],
-      "forbidden_capabilities": ["unauthenticated_dispatch", "hardcoded_runtime_endpoint", "fallback_string_as_success", "direct_external_action"],
-      "gates": ["signed_dispatch_envelope", "case_id", "trace_id", "deployment_receipt", "worker_count_reconciliation"]
+      "observed_commit": "0379564b33f6b5ec8f32cdad23fb599216e6cbbc",
+      "activation_status": "dispatch_contract_merged_runtime_gate_required",
+      "verification_status": "10_tests_typecheck_review_and_byte_verification",
+      "claim_boundary": "Fail-closed typed dispatch is merged; the Nexus runtime must still validate signatures, case isolation, idempotency and approval receipts.",
+      "allowed_capabilities": [
+        "review_queue_ui",
+        "worker_status_ui",
+        "typed_fail_closed_dispatch",
+        "human_approval_ui"
+      ],
+      "forbidden_capabilities": [
+        "unsigned_runtime_acceptance",
+        "hardcoded_runtime_endpoint",
+        "fallback_string_as_success",
+        "direct_external_action"
+      ],
+      "gates": [
+        "trusted_signer",
+        "runtime_envelope_validation",
+        "deployment_receipt",
+        "authenticated_operator"
+      ]
     }
   ],
   "workers": [
@@ -265,11 +487,18 @@
       "status": "design",
       "risk_class": "moderate",
       "run_mode": "human_only",
-      "implementation": {"repository": "GlacierEQ/AKOS", "ref": "casebrain-powerup-federation-v1", "commit_sha": "cd9581c08952b807383590b8c409473de4bf605e", "path": "contracts/AKOS-FEDERATION-CONTRACT-001.md"},
+      "implementation": {
+        "repository": "GlacierEQ/AKOS",
+        "ref": "main",
+        "commit_sha": "538942cd196ae1f0fd04b3de09b5eb4f3ced2693",
+        "path": "contracts/AKOS-FEDERATION-CONTRACT-001.md"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:worker-dispatch:1.0.0"],
+      "input_contracts": [
+        "urn:akos:worker-dispatch:1.0.0"
+      ],
       "output_contract": "urn:akos:worker-result:1.0.0",
       "human_gate": "operator dispatch approval",
       "kill_switch": "pause federation lane in Worker Registry"
@@ -282,11 +511,18 @@
       "status": "design",
       "risk_class": "low",
       "run_mode": "zero_llm",
-      "implementation": {"repository": "GlacierEQ/Casebuilder4000", "ref": "main", "commit_sha": "159715f41fca5418902a546cb50a7178d648e534", "path": "adapter-to-be-created"},
+      "implementation": {
+        "repository": "GlacierEQ/Casebuilder4000",
+        "ref": "main",
+        "commit_sha": "159715f41fca5418902a546cb50a7178d648e534",
+        "path": "adapter-to-be-created"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:canonical-resource:1.0.0"],
+      "input_contracts": [
+        "urn:akos:canonical-resource:1.0.0"
+      ],
       "output_contract": "urn:akos:canonical-resource:1.0.0",
       "human_gate": "source identity and sensitivity confirmation",
       "kill_switch": "disable source adapter"
@@ -299,11 +535,19 @@
       "status": "design",
       "risk_class": "high",
       "run_mode": "single_model",
-      "implementation": {"repository": "GlacierEQ/AEON-777", "ref": "pull/51/head", "commit_sha": "df519315759c077e32de64869998d0d5983af5d4", "path": "BRAIN/schemas/CASE_EVENT_SCHEMA.json"},
+      "implementation": {
+        "repository": "GlacierEQ/AEON-777",
+        "ref": "main",
+        "commit_sha": "b176d0b66358f5e59d0bd37f167160828be3dad6",
+        "path": "BRAIN/schemas/CASE_EVENT_SCHEMA.json"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:canonical-resource:1.0.0", "urn:akos:worker-dispatch:1.0.0"],
+      "input_contracts": [
+        "urn:akos:canonical-resource:1.0.0",
+        "urn:akos:worker-dispatch:1.0.0"
+      ],
       "output_contract": "urn:casebrain:schema:case-event:1.0.0",
       "human_gate": "source citation and event-field review",
       "kill_switch": "pause timeline lane"
@@ -316,11 +560,18 @@
       "status": "design",
       "risk_class": "high",
       "run_mode": "parallel_inference",
-      "implementation": {"repository": "GlacierEQ/make-it-heavy", "ref": "main", "commit_sha": "5515645694d01b40f40050f79419ea60cde2e105", "path": "read-only adapter to be created"},
+      "implementation": {
+        "repository": "GlacierEQ/make-it-heavy",
+        "ref": "main",
+        "commit_sha": "49c7868f323155012a13194fa305260308a05b7e",
+        "path": "orchestrator.py"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:worker-dispatch:1.0.0"],
+      "input_contracts": [
+        "urn:akos:worker-dispatch:1.0.0"
+      ],
       "output_contract": "urn:akos:worker-result:1.0.0",
       "human_gate": "contradiction disposition review",
       "kill_switch": "disable parallel inference lane"
@@ -333,11 +584,19 @@
       "status": "design",
       "risk_class": "high",
       "run_mode": "single_model",
-      "implementation": {"repository": "GlacierEQ/AEON-777", "ref": "pull/51/head", "commit_sha": "df519315759c077e32de64869998d0d5983af5d4", "path": "BRAIN/schemas/MEMORY_RECORD_SCHEMA.json"},
+      "implementation": {
+        "repository": "GlacierEQ/AEON-777",
+        "ref": "main",
+        "commit_sha": "b176d0b66358f5e59d0bd37f167160828be3dad6",
+        "path": "BRAIN/schemas/MEMORY_RECORD_SCHEMA.json"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:worker-dispatch:1.0.0", "urn:akos:canonical-resource:1.0.0"],
+      "input_contracts": [
+        "urn:akos:worker-dispatch:1.0.0",
+        "urn:akos:canonical-resource:1.0.0"
+      ],
       "output_contract": "urn:casebrain:schema:memory-record:1.0.0",
       "human_gate": "fact promotion and sensitivity review",
       "kill_switch": "pause CASEBRAIN write lane"
@@ -350,11 +609,18 @@
       "status": "design",
       "risk_class": "moderate",
       "run_mode": "zero_llm",
-      "implementation": {"repository": "GlacierEQ/AKOS", "ref": "casebrain-powerup-federation-v1", "commit_sha": "27c1087b13d6491c00435f2593be8765f155d268", "path": "docs/federation/CASEBRAIN_POWERUP_FEDERATION.md"},
+      "implementation": {
+        "repository": "GlacierEQ/AKOS",
+        "ref": "main",
+        "commit_sha": "538942cd196ae1f0fd04b3de09b5eb4f3ced2693",
+        "path": "docs/federation/CASEBRAIN_POWERUP_FEDERATION.md"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:worker-result:1.0.0"],
+      "input_contracts": [
+        "urn:akos:worker-result:1.0.0"
+      ],
       "output_contract": "notion:pointer-and-review-projection:1.0.0",
       "human_gate": "no evidence bodies or secrets in Notion",
       "kill_switch": "pause Notion projection lane"
@@ -367,11 +633,18 @@
       "status": "design",
       "risk_class": "critical",
       "run_mode": "human_only",
-      "implementation": {"repository": "GlacierEQ/pro-code", "ref": "main", "commit_sha": "66fcce3e4cd1ad7cce2a3f62c401c96283415255", "path": "src/workers.ts"},
+      "implementation": {
+        "repository": "GlacierEQ/pro-code",
+        "ref": "main",
+        "commit_sha": "0379564b33f6b5ec8f32cdad23fb599216e6cbbc",
+        "path": "src/workers.ts"
+      },
       "read_only": true,
       "external_actions": false,
       "evidence_mutation_allowed": false,
-      "input_contracts": ["urn:akos:worker-result:1.0.0"],
+      "input_contracts": [
+        "urn:akos:worker-result:1.0.0"
+      ],
       "output_contract": "urn:akos:approval-record:1.0.0",
       "human_gate": "authenticated named operator",
       "kill_switch": "disable dispatch API and pause all lanes"
