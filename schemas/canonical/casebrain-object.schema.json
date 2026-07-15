@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://casebrain.local/schemas/casebrain-object.schema.json",
+  "title": "CASEBRAIN Canonical Object",
+  "type": "object",
+  "required": [
+    "casebrain_id",
+    "object_type",
+    "case_id",
+    "title",
+    "verification_status",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "casebrain_id": {
+      "type": "string",
+      "pattern": "^CBR-[A-Z_]+-[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "object_type": {
+      "enum": [
+        "case",
+        "actor",
+        "event",
+        "evidence",
+        "claim",
+        "contradiction",
+        "authority",
+        "filing",
+        "task",
+        "relationship",
+        "connector_object",
+        "sync_run",
+        "sync_receipt",
+        "verification_event"
+      ]
+    },
+    "case_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "summary": {"type": ["string", "null"]},
+    "verification_status": {
+      "enum": ["unverified", "machine_extracted", "human_reviewed", "verified", "disputed", "superseded"]
+    },
+    "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "source": {
+      "type": ["object", "null"],
+      "properties": {
+        "system": {"type": "string"},
+        "uri": {"type": "string"},
+        "object_id": {"type": ["string", "null"]},
+        "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "page_start": {"type": ["integer", "null"], "minimum": 1},
+        "page_end": {"type": ["integer", "null"], "minimum": 1},
+        "line_start": {"type": ["integer", "null"], "minimum": 1},
+        "line_end": {"type": ["integer", "null"], "minimum": 1},
+        "time_start_ms": {"type": ["integer", "null"], "minimum": 0},
+        "time_end_ms": {"type": ["integer", "null"], "minimum": 0},
+        "extraction_method": {"type": ["string", "null"]}
+      },
+      "required": ["system", "uri"],
+      "additionalProperties": false
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["predicate", "target_id"],
+        "properties": {
+          "predicate": {"type": "string", "minLength": 1},
+          "target_id": {"type": "string", "minLength": 1},
+          "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "metadata": {"type": "object"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
