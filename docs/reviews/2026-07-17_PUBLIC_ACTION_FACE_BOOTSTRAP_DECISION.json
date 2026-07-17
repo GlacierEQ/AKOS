@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-07-17",
+  "system": "APEX Public Action Face",
+  "decision": "Pass Connector-Mediated Bootstrap; Block Autonomous Activation",
+  "canonical_roles": {
+    "intended_action_face": "GlacierEQ/public-actions-runner-host",
+    "temporary_public_bootstrap_edge": "GlacierEQ/clonezone",
+    "private_control_plane": "GlacierEQ/llm-runner-teams",
+    "architecture": "GlacierEQ/AKOS"
+  },
+  "runtime_evidence": {
+    "public_canary_run_id": 29621916801,
+    "public_canary_job_id": 88018499728,
+    "public_canary_conclusion": "success",
+    "resolved_source_sha": "ddb06c24816897f3dce7fe9dd842b5cbd23c0bad",
+    "workflow_blob_sha": "c41bfd82973113642e51d403496076a6864308f7",
+    "workflow_sha256": "a9a3fa53a2ebd2220143ef0d9e7abe6d5bdb469d9b4fdf3d8e8a985c2509f138",
+    "claim_path": "GlacierEQ/llm-runner-teams/claims/bootstrap-canary-20260717-001.json",
+    "claim_commit_sha": "fc909038e778324096ed571ec2ca6a66a9c2825a",
+    "receipt_path": "GlacierEQ/llm-runner-teams/results/bootstrap-canary-20260717-001.json",
+    "receipt_commit_sha": "d6246c6c7ed3f52571fab66f14032c317d04cf24"
+  },
+  "verified": [
+    "public GitHub-hosted ubuntu runner executes successfully",
+    "public repository owner identity and visibility are verified",
+    "exact public source commit is checked out and bound",
+    "tracked public source remains clean",
+    "workflow integrity is hashed",
+    "private claim exists before the successful canary run",
+    "private immutable result receipt records the actual run and source SHA",
+    "no private GitHub Actions were used",
+    "no secret values or private file contents were exposed"
+  ],
+  "credential_probe": {
+    "bootstrap_edge_APEX_PRIVATE_READ_TOKEN": "absent",
+    "bootstrap_edge_APEX_CONTROL_TOKEN": "absent",
+    "bootstrap_edge_GH_PAT": "absent",
+    "secret_values_exposed": false
+  },
+  "blocking_conditions": [
+    {
+      "id": "CANONICAL-VISIBILITY-001",
+      "severity": "critical",
+      "condition": "GlacierEQ/public-actions-runner-host remains private",
+      "release_effect": "Block canonical autonomous action-face activation"
+    },
+    {
+      "id": "AUTONOMOUS-BRIDGE-001",
+      "severity": "critical",
+      "condition": "Dedicated private-read and control-plane credentials are not installed on the active public execution repository",
+      "release_effect": "Block autonomous private workload checkout, claim, and receipt publication"
+    },
+    {
+      "id": "APEX-VERIFY-RUNTIME-001",
+      "severity": "high",
+      "condition": "No end-to-end APEX verification run against GlacierEQ/mastermind has completed through the public execution plane",
+      "release_effect": "Block deployment reliance"
+    }
+  ],
+  "release_state": {
+    "public_execution_plane": "Pass",
+    "connector_mediated_claim_receipt": "Pass",
+    "autonomous_private_bridge": "Block",
+    "target_apex_verification": "Pending",
+    "deployment_reliance": "Block"
+  },
+  "next_gate": "Install dedicated minimum-scope bridge credentials on the chosen public action face or expose the connector repository-settings and secret-management mutations, then execute apex-verification against GlacierEQ/mastermind"
+}
