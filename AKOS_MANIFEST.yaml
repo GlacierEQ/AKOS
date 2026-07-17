@@ -10,6 +10,21 @@ owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
 
+# Governance identity (required by src/verify_manifest.py)
+operator: GlacierEQ
+governance:
+  model: progressive_os_L0_L5
+  standards:
+    - IDENTITY
+    - GOVERNANCE
+    - EASTER_EGGS
+    - REPOS
+    - pro-code
+  truth_protocol: measure_or_unknown
+  hire_surface_excludes:
+    - AEON-777
+    - legal_case_packs
+
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
   owns identities, repository roles, lifecycle state, review gates, promotion
