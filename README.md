@@ -1,7 +1,7 @@
 # AKOS — Apex Knowledge Operating System
 
 Status: Foundational Build
-Version: 0.1.0
+Version: 0.2.0
 Canonical Repo: `GlacierEQ/AKOS`
 Created: 2026-07-04
 
@@ -45,6 +45,14 @@ No artifact becomes canonical because it sounds powerful.
 
 It becomes canonical when it has identity, provenance, structure, relationships, metadata, review status, and Pro-Code gate alignment.
 
+## Finish-First Rule
+
+No new architecture outranks finishable work.
+
+The executable `finisher/` module scans an allowlisted queue of near-complete pull requests, distinguishes concrete blockers from inertia, blocks expansion when closure is available, and records provider-backed completion receipts. It may execute only bounded, explicitly enabled actions.
+
+See `finisher/README.md`.
+
 ## Repository Purpose
 
 This repository is the canonical architecture home for:
@@ -59,6 +67,7 @@ This repository is the canonical architecture home for:
 - Templates
 - Build records
 - Architecture decision records
+- Finish-first closure operations
 
 ## Directory Map
 
@@ -72,6 +81,7 @@ This repository is the canonical architecture home for:
 /methodologies/    Operating methods such as Pro-Code
 /adr/              Architecture decision records
 /ledger/           Append-only build and sync records
+/finisher/         Deterministic closure engine and receipt queue
 ```
 
 ## Active Specs
@@ -89,9 +99,11 @@ At the start of any AKOS-aware session:
 1. Read this README.
 2. Read `AKOS_MANIFEST.yaml`.
 3. Read `BUILD_INDEX.md`.
-4. Read the active spec relevant to the task.
-5. Preserve history and append deltas.
+4. Read `finisher/out/FINISH_QUEUE.md` when present.
+5. Close finishable work before proposing expansion.
+6. Read the active spec relevant to the task.
+7. Preserve history and append deltas.
 
 ## Operating Principle
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth.
+Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Finish before expansion. Never report closure without a receipt.

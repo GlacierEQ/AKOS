@@ -1,0 +1,48 @@
+{
+  "policy": {
+    "allow_apply": false,
+    "max_actions_per_run": 1,
+    "allow_no_checks": true,
+    "freeze_new_work_when_ready": true,
+    "stale_days": 7,
+    "output_dir": "finisher/out"
+  },
+  "targets": [
+    {
+      "repo": "GlacierEQ/CHERRY_CHAN_RECOVERY_MATRIX",
+      "pr": 3,
+      "desired_action": "merge",
+      "merge_method": "squash",
+      "allow_mark_ready": true,
+      "required_approvals": 0,
+      "notes": "Queen's evidence package: finish first; no new expansion before closure."
+    },
+    {
+      "repo": "GlacierEQ/AEON-777",
+      "pr": 52,
+      "desired_action": "merge",
+      "merge_method": "squash",
+      "allow_mark_ready": true,
+      "required_approvals": 0,
+      "notes": "Source-linked actor registry and quality gates."
+    },
+    {
+      "repo": "GlacierEQ/SUPERLUMINAL_CASE_MATRIX",
+      "pr": 62,
+      "desired_action": "merge",
+      "merge_method": "squash",
+      "allow_mark_ready": true,
+      "required_approvals": 0,
+      "notes": "Canonical CaseBrain V3 bounded core; stop adding scope."
+    },
+    {
+      "repo": "GlacierEQ/AKOS",
+      "pr": 4,
+      "desired_action": "merge",
+      "merge_method": "squash",
+      "allow_mark_ready": true,
+      "required_approvals": 0,
+      "notes": "Connector blocker reconciliation."
+    }
+  ]
+}
