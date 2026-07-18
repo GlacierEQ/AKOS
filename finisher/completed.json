@@ -1,0 +1,15 @@
+{
+  "schema": "akos.finisher.completed.v1",
+  "completed": [
+    {
+      "repo": "GlacierEQ/CHERRY_CHAN_RECOVERY_MATRIX",
+      "pr": 3,
+      "action": "MARK_READY_AND_SQUASH_MERGE",
+      "expected_head_sha": "e0379c793e3d94c2dfcc1e429a8bb8d3a078216e",
+      "merge_commit_sha": "d9a32f93017d6c8451feefa329eb99f2e6c5bef7",
+      "completed_at": "2026-07-18T01:45:19Z",
+      "result": "Pull Request successfully merged",
+      "notes": "Queen's dispute package and isolated casino/hotel lane landed on main."
+    }
+  ]
+}
