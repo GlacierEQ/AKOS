@@ -9,15 +9,6 @@
   },
   "targets": [
     {
-      "repo": "GlacierEQ/CHERRY_CHAN_RECOVERY_MATRIX",
-      "pr": 3,
-      "desired_action": "merge",
-      "merge_method": "squash",
-      "allow_mark_ready": true,
-      "required_approvals": 0,
-      "notes": "Queen's evidence package: finish first; no new expansion before closure."
-    },
-    {
       "repo": "GlacierEQ/AEON-777",
       "pr": 52,
       "desired_action": "merge",
