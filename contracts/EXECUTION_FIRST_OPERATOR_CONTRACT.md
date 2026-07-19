@@ -1,8 +1,8 @@
 # Execution-First Operator Contract
 
 **Canonical ID:** AKOS-OPS-EXEC-001  
-**Version:** 1.0.0  
-**Status:** active_draft  
+**Version:** 1.1.0  
+**Status:** active  
 **Owner:** AKOS runtime  
 **Purpose:** Prevent read-only loops, planning theater, and substitute artifacts when an operator requests real work.
 
@@ -46,6 +46,19 @@ A read, inspection, plan, draft, or proposed design is not completion unless the
 - Do not expose credentials in logs, commits, memory, or chat.
 - Irreversible external actions, legal filings, service, publication, court contact, or law-enforcement contact remain explicit human-approval gates.
 - Do not silently substitute documentation for implementation.
+
+## Capability-twin handoff
+
+The computer-user repository is the operational home for connector declarations and execution methodology. AKOS supplies the governing contract; computer-user supplies the capability twin that maps each declared connector to allowed operations, approval gates, verification, and provenance recording.
+
+The twin must:
+
+- keep credentials and connection IDs outside source control;
+- default to read-first operation;
+- require explicit approval for writes, sends, creates, updates, and uploads;
+- disable delete, move, rename, overwrite, and reset by default;
+- distinguish a proposed plan from an executed and verified result;
+- preserve originals and never promote unverified observations into findings.
 
 ## Response format
 
