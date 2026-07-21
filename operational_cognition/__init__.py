@@ -18,8 +18,19 @@ from .engine import (
     completion_summary,
     route_source,
 )
+from .topology import (
+    ArchitectureSnapshot,
+    ExecutionRoute,
+    InfrastructureDecision,
+    ProposalKind,
+    RouteState,
+    SystemFirstOrchestrator,
+    SystemNode,
+    SystemRole,
+)
 
 __all__ = [
+    "ArchitectureSnapshot",
     "ArtifactReceipt",
     "ArtifactStage",
     "Capability",
@@ -28,11 +39,18 @@ __all__ = [
     "Decision",
     "DecisionState",
     "EvidenceClass",
+    "ExecutionRoute",
+    "InfrastructureDecision",
     "OperationClass",
     "OperationalCognitionEngine",
     "PhaseReceipt",
     "PipelinePhase",
+    "ProposalKind",
+    "RouteState",
     "SourceKind",
+    "SystemFirstOrchestrator",
+    "SystemNode",
+    "SystemRole",
     "WorkItem",
     "completion_summary",
     "route_source",
