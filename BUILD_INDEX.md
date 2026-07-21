@@ -1,14 +1,12 @@
 # AKOS Build Index
 
 Status: Active Draft  
-Version: 0.3.0  
+Version: 0.3.1  
 Updated: 2026-07-21
 
 ## Purpose
 
-This file is the navigation index for the AKOS architecture repository. It
-records what exists, what is canonical, what is historical and what still needs
-construction.
+This file is the navigation index for the AKOS architecture repository. It records what exists, what is canonical, what is historical, and what still needs construction.
 
 ## Canonical Root Files
 
@@ -60,20 +58,22 @@ construction.
 
 ## Operational Cognition Pack
 
-| Artifact | Path | Status |
+| Artifact | Path / Owner | Status |
 |---|---|---|
 | Formal specification | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft |
 | Python runtime | `operational_cognition/engine.py` | implemented |
 | Unit tests | `operational_cognition/test_engine.py` | implemented |
+| Architecture tests | `operational_cognition/test_contracts.py` | implemented |
+| Test discovery | `pytest.ini` | implemented |
 | Record schema | `schemas/operational_cognition.schema.json` | validated JSON draft |
 | Runtime manifest | `manifests/runtime/AKOS_OPERATIONAL_COGNITION.json` | active draft |
-| CI workflow | `.github/workflows/operational-cognition.yml` | implemented |
+| Public CI action | `GlacierEQ/public-actions-runner-host` / `akos-operational-cognition-ci` | runner registration proposed |
+| Private execution receipts | `GlacierEQ/llm-runner-teams/results/<job_id>.json` | required |
 | Build receipt | `ledger/2026-07-21_OPERATIONAL_COGNITION.md` | branch receipt |
 
-The runtime enforces authoritative capability selection, explicit source routing,
-operator-authority and approval gates, provider receipts for writes, validation,
-ledger persistence, monotonic pipeline stages, and the rule that planning does
-not substitute for execution.
+AKOS owns no executable private-repository Actions workflows. Private CI and validation route through the public action face, which performs an allowlisted short-lived checkout and publishes immutable detailed receipts to the private control plane.
+
+The runtime enforces authoritative capability selection, explicit source routing, operator-authority and approval gates, provider receipts for writes, validation, ledger persistence, monotonic pipeline stages, and the rule that planning does not substitute for execution.
 
 ## CASEBRAIN Federation Pack
 
@@ -93,41 +93,30 @@ not substitute for execution.
 | Repository Steward | `manifests/agents/AGENT-REPOSITORY-STEWARD.yaml` | active seed |
 | Pro-Code Reviewer | `manifests/agents/AGENT-PROCODE-REVIEWER.yaml` | active seed |
 
-The federation registry adds design-stage Source Intake/Hasher, Timeline
-Normalizer, Contradiction Candidate, Memory Distiller, Notion Review Mirror and
-Operator Control workers. No worker is marked `verified_live`.
+The federation registry adds design-stage Source Intake/Hasher, Timeline Normalizer, Contradiction Candidate, Memory Distiller, Notion Review Mirror and Operator Control workers. No worker is marked `verified_live`.
 
 ## Construction Order
 
 1. Governance and valid manifest
 2. Foundational laws and truth contracts
 3. Operational Cognition execution and receipt contract
-4. Canonical Object Model and metadata
-5. Repository and federation contracts
-6. Pro-Code review
-7. Commit-pinned manifests and schemas
-8. Credential rotation and storage hardening
-9. One audited read-only integration slice through AKOS-OC-001
-10. One receipt-backed reversible write probe
-11. Worker dry run with immutable receipt
-12. Human-reviewed promotion
+4. Public action-face registration and private-receipt validation
+5. Canonical Object Model and metadata
+6. Repository and federation contracts
+7. Pro-Code review
+8. Commit-pinned manifests and schemas
+9. Credential rotation and storage hardening
+10. One audited read-only integration slice through AKOS-OC-001
+11. One receipt-backed reversible write probe
+12. Worker dry run with immutable receipt
+13. Human-reviewed promotion
 
 ## Canonical Promotion Rule
 
-No file, repository, connector or worker becomes canonical/live until it has:
+No file, repository, connector or worker becomes canonical/live until it has identity, purpose, version and source revision; explicit claim and authority boundaries; Pro-Code review and passing schema validation; a deployment/run receipt where runtime behavior is claimed; and human approval for promotion.
 
-- identity, purpose, version and source revision;
-- explicit claim and authority boundaries;
-- Pro-Code review and passing schema validation;
-- a deployment/run receipt where runtime behavior is claimed;
-- human approval for promotion.
-
-No runtime task becomes complete merely because a plan, draft, or status report
-exists. Completion requires execution, authoritative validation, persistence,
-and handoff under `AKOS-OC-001`.
+No runtime task becomes complete merely because a plan, draft, or status report exists. Completion requires execution, authoritative validation, persistence, and handoff under `AKOS-OC-001`.
 
 ## Current Priority
 
-Review the CASEBRAIN federation pack, rotate exposed credentials and validate
-one source-to-recall path through the Operational Cognition runtime. Do not
-promote production writes before a receipt-backed reversible write probe.
+Register and execute `akos-operational-cognition-ci` through the public action face, preserve the private receipt, then run one source-to-recall path through Operational Cognition. Do not promote production writes before a receipt-backed reversible write probe.
