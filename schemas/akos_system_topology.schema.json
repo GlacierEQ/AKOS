@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/GlacierEQ/AKOS/main/schemas/akos_system_topology.schema.json",
+  "title": "AKOS System Topology",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "status",
+    "verified",
+    "source_refs",
+    "nodes",
+    "locked_routes",
+    "anti_rebuild_rules"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "1.0"},
+    "snapshot_id": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["active_draft", "working_canonical", "historical"]},
+    "verified": {"type": "boolean"},
+    "source_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "roles",
+          "systems",
+          "operations",
+          "active",
+          "private",
+          "authoritative_for",
+          "source_ref"
+        ],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "roles": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["source", "canonical", "control_plane", "execution_plane", "receipt_plane", "mirror"]
+            }
+          },
+          "systems": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "operations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["read", "analyze", "mutate_reversible", "mutate_irreversible", "external_send", "legal_file"]
+            }
+          },
+          "active": {"type": "boolean"},
+          "private": {"type": "boolean"},
+          "authoritative_for": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "source_ref": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "locked_routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["route_id", "source", "control", "execution", "receipt", "system", "rule"],
+        "properties": {
+          "route_id": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "minLength": 1},
+          "control": {"type": "string", "minLength": 1},
+          "execution": {"type": "string", "minLength": 1},
+          "receipt": {"type": "string", "minLength": 1},
+          "system": {"type": "string", "minLength": 1},
+          "rule": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "anti_rebuild_rules": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false
+}
