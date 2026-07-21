@@ -1,15 +1,16 @@
 {
   "canonical_id": "AKOS-OC-001",
   "name": "AKOS Operational Cognition",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "status": "active_draft",
   "owner": "AKOS Cognitive Kernel and Colossal Orchestrator",
   "effective_date": "2026-07-21",
-  "purpose": "Convert model capability, tool power, tool literacy, orchestration, verification, and persistence into receipt-backed completed work.",
+  "purpose": "Convert model capability, tool power, tool literacy, architecture literacy, orchestration, verification, and persistence into receipt-backed completed work.",
   "dimensions": [
     "model_capability",
     "tool_power",
     "tool_literacy",
+    "architecture_literacy",
     "orchestration",
     "verification",
     "persistence"
@@ -17,6 +18,8 @@
   "pipeline": [
     "intake",
     "bind",
+    "discover",
+    "map",
     "route",
     "execute",
     "validate",
@@ -68,8 +71,17 @@
     "pillar": "C",
     "adapter": "test"
   },
+  "system_first_policy": {
+    "sequence": ["discover", "map", "reuse", "extend", "execute", "verify", "persist"],
+    "topology_manifest": "manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json",
+    "topology_schema": "schemas/akos_system_topology.schema.json",
+    "wrong_plane_failure_is_absence_proof": false,
+    "existing_execution_plane_precedes_new_runner": true,
+    "catalog_or_adapter_extension_precedes_new_infrastructure": true
+  },
   "completion_requirements": [
-    "requested_action_executed",
+    "verified_architecture_discovered_or_absence_established",
+    "requested_action_executed_in_correct_plane",
     "provider_receipt_recorded",
     "authoritative_validation_completed",
     "result_and_provenance_persisted",
@@ -85,28 +97,38 @@
   },
   "anti_loop_rules": [
     "no_plan_substitution_for_execution",
+    "no_completion_without_architecture_discovery",
     "no_completion_without_verification",
     "no_completion_without_persistence",
     "no_retry_without_changed_condition",
     "no_memory_substitution_for_available_authoritative_source",
     "no_institutional_title_as_automatic_truth",
     "no_operator_assertion_discarded_for_externally_controlled_missing_record",
-    "no_private_repository_actions_execution"
+    "no_private_repository_actions_execution",
+    "no_wrong_plane_failure_as_absence_proof",
+    "no_new_runner_when_existing_execution_plane_can_be_extended",
+    "no_verbal_correction_without_guard_test_and_receipt"
   ],
   "implementation": {
     "runtime": "operational_cognition/engine.py",
+    "topology_runtime": "operational_cognition/topology.py",
     "tests": [
       "operational_cognition/test_engine.py",
+      "operational_cognition/test_topology.py",
       "operational_cognition/test_contracts.py"
     ],
     "test_discovery": "pytest.ini",
     "schema": "schemas/operational_cognition.schema.json",
+    "topology_schema": "schemas/akos_system_topology.schema.json",
+    "topology_manifest": "manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json",
     "spec": "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md",
+    "mentality": "docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md",
     "public_runner_repo": "GlacierEQ/public-actions-runner-host",
     "public_runner_action": "akos-operational-cognition-ci",
     "private_receipt_repo": "GlacierEQ/llm-runner-teams"
   },
   "promotion_gate": {
+    "topology_tests": "required",
     "public_runner_test_receipt": "required",
     "unit_tests": "required",
     "read_only_connector_probe": "required",
