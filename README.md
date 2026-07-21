@@ -1,7 +1,7 @@
 # AKOS — Apex Knowledge Operating System
 
 Status: Foundational Build
-Version: 0.2.0
+Version: 0.3.0
 Canonical Repo: `GlacierEQ/AKOS`
 Created: 2026-07-04
 
@@ -21,6 +21,8 @@ Prime Purpose
 Foundational Laws
 ↓
 Cognitive Kernel
+↓
+Operational Cognition
 ↓
 Canonical Object Model
 ↓
@@ -53,12 +55,21 @@ The executable `finisher/` module scans an allowlisted queue of near-complete pu
 
 See `finisher/README.md`.
 
+## Operational Cognition Rule
+
+Model capability and tool access are potential. AKOS operational power requires tool literacy, orchestration, verification, and persistence.
+
+A plan, inspection, draft, or proposed design is not completion when the requested outcome requires a target-system action. Completion requires execution, authoritative validation, a provider receipt when applicable, a durable ledger receipt, and a final handoff.
+
+See `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` and `operational_cognition/README.md`.
+
 ## Repository Purpose
 
 This repository is the canonical architecture home for:
 
 - AKOS doctrine
 - Cognitive Kernel methodology
+- Operational Cognition runtime
 - Canonical Object Model
 - Metadata standards
 - Repository contracts
@@ -72,21 +83,23 @@ This repository is the canonical architecture home for:
 ## Directory Map
 
 ```text
-/docs/             Human-readable architecture doctrine
-/specs/            Formal AKOS specifications
-/contracts/        Required compatibility contracts
-/schemas/          Machine-readable validation schemas
-/manifests/        Family and system manifests
-/templates/        Reusable file templates
-/methodologies/    Operating methods such as Pro-Code
-/adr/              Architecture decision records
-/ledger/           Append-only build and sync records
-/finisher/         Deterministic closure engine and receipt queue
+/docs/                     Human-readable architecture doctrine
+/specs/                    Formal AKOS specifications
+/contracts/                Required compatibility contracts
+/schemas/                  Machine-readable validation schemas
+/manifests/                Family and system manifests
+/templates/                Reusable file templates
+/methodologies/            Operating methods such as Pro-Code
+/adr/                      Architecture decision records
+/ledger/                   Append-only build and sync records
+/finisher/                 Deterministic closure engine and receipt queue
+/operational_cognition/    Receipt-driven cognition and orchestration runtime
 ```
 
 ## Active Specs
 
 - `AKOS-CK-001` — Cognitive Kernel
+- `AKOS-OC-001` — Operational Cognition
 - `AKOS-COM-001` — Canonical Object Model
 - `AKOS-META-001` — Metadata Standard
 - `AKOS-REPO-CONTRACT-001` — Repository Contract
@@ -102,7 +115,8 @@ At the start of any AKOS-aware session:
 4. Read `finisher/out/FINISH_QUEUE.md` when present.
 5. Close finishable work before proposing expansion.
 6. Read the active spec relevant to the task.
-7. Preserve history and append deltas.
+7. Apply `AKOS-OC-001` whenever tools, target-system actions, verification, or persistence are involved.
+8. Preserve history and append deltas.
 
 ## Operating Principle
 
