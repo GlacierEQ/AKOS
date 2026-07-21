@@ -1,7 +1,7 @@
 # AKOS — Apex Knowledge Operating System
 
 Status: Foundational Build
-Version: 0.3.0
+Version: 0.4.0
 Canonical Repo: `GlacierEQ/AKOS`
 Created: 2026-07-04
 
@@ -23,6 +23,8 @@ Foundational Laws
 Cognitive Kernel
 ↓
 Operational Cognition
+↓
+Architecture Literacy
 ↓
 Canonical Object Model
 ↓
@@ -57,11 +59,36 @@ See `finisher/README.md`.
 
 ## Operational Cognition Rule
 
-Model capability and tool access are potential. AKOS operational power requires tool literacy, orchestration, verification, and persistence.
+Model capability and tool access are potential. AKOS operational power requires tool literacy, architecture literacy, orchestration, verification, and persistence.
 
-A plan, inspection, draft, or proposed design is not completion when the requested outcome requires a target-system action. Completion requires execution, authoritative validation, a provider receipt when applicable, a durable ledger receipt, and a final handoff.
+A plan, inspection, draft, or proposed design is not completion when the requested outcome requires a target-system action. Completion requires architecture discovery, correct-plane execution, authoritative validation, a provider receipt when applicable, a durable ledger receipt, and a final handoff.
 
 See `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` and `operational_cognition/README.md`.
+
+## System-First Rule
+
+AKOS must understand the existing system before declaring a blocker or proposing infrastructure.
+
+```text
+DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
+```
+
+A failed attempt in the wrong plane is not proof that the correct plane is missing. A memory failure is not proof that the architecture is absent. When an execution plane already exists, AKOS reuses it or adds one bounded catalog action, adapter, or route binding before considering new infrastructure.
+
+For private GitHub workloads:
+
+```text
+GlacierEQ/AKOS
+  -> exact source ref + metadata-only job
+GlacierEQ/public-actions-runner-host
+  -> public execution face
+GlacierEQ/llm-runner-teams
+  -> private control and immutable receipts
+```
+
+Private AKOS owns no executable GitHub Actions workflows.
+
+See `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` and `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`.
 
 ## Repository Purpose
 
@@ -70,6 +97,7 @@ This repository is the canonical architecture home for:
 - AKOS doctrine
 - Cognitive Kernel methodology
 - Operational Cognition runtime
+- System topology and architecture literacy
 - Canonical Object Model
 - Metadata standards
 - Repository contracts
@@ -93,7 +121,7 @@ This repository is the canonical architecture home for:
 /adr/                      Architecture decision records
 /ledger/                   Append-only build and sync records
 /finisher/                 Deterministic closure engine and receipt queue
-/operational_cognition/    Receipt-driven cognition and orchestration runtime
+/operational_cognition/    Execution-first and system-first cognition runtime
 ```
 
 ## Active Specs
@@ -112,12 +140,15 @@ At the start of any AKOS-aware session:
 1. Read this README.
 2. Read `AKOS_MANIFEST.yaml`.
 3. Read `BUILD_INDEX.md`.
-4. Read `finisher/out/FINISH_QUEUE.md` when present.
-5. Close finishable work before proposing expansion.
-6. Read the active spec relevant to the task.
-7. Apply `AKOS-OC-001` whenever tools, target-system actions, verification, or persistence are involved.
-8. Preserve history and append deltas.
+4. Read `CURRENT_STATE.md`.
+5. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
+6. Read `finisher/out/FINISH_QUEUE.md` when present.
+7. Close finishable work before proposing expansion.
+8. Discover the existing route before declaring a capability missing.
+9. Read the active spec relevant to the task.
+10. Apply `AKOS-OC-001` whenever tools, target-system actions, verification, or persistence are involved.
+11. Preserve history and append deltas.
 
 ## Operating Principle
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Finish before expansion. Never report closure without a receipt.
+Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
