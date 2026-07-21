@@ -1,7 +1,7 @@
 # AKOS Build Index
 
 Status: Active Draft  
-Version: 0.3.1  
+Version: 0.4.0  
 Updated: 2026-07-21
 
 ## Purpose
@@ -40,7 +40,7 @@ This file is the navigation index for the AKOS architecture repository. It recor
 | `adr/` | Architecture decision records |
 | `ledger/` | Append-only build and sync records |
 | `audits/` | Review and quality-gate records |
-| `operational_cognition/` | Receipt-driven capability selection, execution, validation and persistence runtime |
+| `operational_cognition/` | Receipt-driven execution and system-first topology cognition |
 
 ## Active Specification Series
 
@@ -60,20 +60,31 @@ This file is the navigation index for the AKOS architecture repository. It recor
 
 | Artifact | Path / Owner | Status |
 |---|---|---|
-| Formal specification | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft |
-| Python runtime | `operational_cognition/engine.py` | implemented |
+| Formal specification | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft v0.3.0 |
+| Core runtime | `operational_cognition/engine.py` | implemented |
+| System-first topology runtime | `operational_cognition/topology.py` | implemented |
 | Unit tests | `operational_cognition/test_engine.py` | implemented |
+| Topology regression tests | `operational_cognition/test_topology.py` | implemented |
 | Architecture tests | `operational_cognition/test_contracts.py` | implemented |
 | Test discovery | `pytest.ini` | implemented |
-| Record schema | `schemas/operational_cognition.schema.json` | validated JSON draft |
-| Runtime manifest | `manifests/runtime/AKOS_OPERATIONAL_COGNITION.json` | active draft |
+| Operational record schema | `schemas/operational_cognition.schema.json` | validated JSON draft |
+| System topology schema | `schemas/akos_system_topology.schema.json` | implemented |
+| Runtime manifest | `manifests/runtime/AKOS_OPERATIONAL_COGNITION.json` | active draft v0.3.0 |
+| Canonical topology manifest | `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` | active draft |
+| System-first mentality | `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` | active draft |
 | Public CI action | `GlacierEQ/public-actions-runner-host` / `akos-operational-cognition-ci` | runner registration proposed |
 | Private execution receipts | `GlacierEQ/llm-runner-teams/results/<job_id>.json` | required |
 | Build receipt | `ledger/2026-07-21_OPERATIONAL_COGNITION.md` | branch receipt |
 
 AKOS owns no executable private-repository Actions workflows. Private CI and validation route through the public action face, which performs an allowlisted short-lived checkout and publishes immutable detailed receipts to the private control plane.
 
-The runtime enforces authoritative capability selection, explicit source routing, operator-authority and approval gates, provider receipts for writes, validation, ledger persistence, monotonic pipeline stages, and the rule that planning does not substitute for execution.
+The runtime now enforces both execution-first and system-first cognition:
+
+```text
+DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
+```
+
+A wrong-plane failure is not evidence that the correct execution plane is missing. When an execution plane exists but the exact route is absent, AKOS extends the existing catalog, adapter, or route binding instead of creating parallel infrastructure.
 
 ## CASEBRAIN Federation Pack
 
@@ -100,23 +111,24 @@ The federation registry adds design-stage Source Intake/Hasher, Timeline Normali
 1. Governance and valid manifest
 2. Foundational laws and truth contracts
 3. Operational Cognition execution and receipt contract
-4. Public action-face registration and private-receipt validation
-5. Canonical Object Model and metadata
-6. Repository and federation contracts
-7. Pro-Code review
-8. Commit-pinned manifests and schemas
-9. Credential rotation and storage hardening
-10. One audited read-only integration slice through AKOS-OC-001
-11. One receipt-backed reversible write probe
-12. Worker dry run with immutable receipt
-13. Human-reviewed promotion
+4. System-first topology and anti-rebuild cognition
+5. Public action-face registration and private-receipt validation
+6. Canonical Object Model and metadata
+7. Repository and federation contracts
+8. Pro-Code review
+9. Commit-pinned manifests and schemas
+10. Credential rotation and storage hardening
+11. One audited read-only integration slice through AKOS-OC-001
+12. One receipt-backed reversible write probe
+13. Worker dry run with immutable receipt
+14. Human-reviewed promotion
 
 ## Canonical Promotion Rule
 
-No file, repository, connector or worker becomes canonical/live until it has identity, purpose, version and source revision; explicit claim and authority boundaries; Pro-Code review and passing schema validation; a deployment/run receipt where runtime behavior is claimed; and human approval for promotion.
+No file, repository, connector or worker becomes canonical/live until it has identity, purpose, version and source revision; explicit claim and authority boundaries; topology alignment; Pro-Code review and passing schema validation; a deployment/run receipt where runtime behavior is claimed; and human approval for promotion.
 
-No runtime task becomes complete merely because a plan, draft, or status report exists. Completion requires execution, authoritative validation, persistence, and handoff under `AKOS-OC-001`.
+No runtime task becomes complete merely because a plan, draft, or status report exists. Completion requires architecture discovery, correct-plane execution, authoritative validation, persistence, and handoff under `AKOS-OC-001`.
 
 ## Current Priority
 
-Register and execute `akos-operational-cognition-ci` through the public action face, preserve the private receipt, then run one source-to-recall path through Operational Cognition. Do not promote production writes before a receipt-backed reversible write probe.
+Merge the public action registration, dispatch `akos-operational-cognition-ci` against the exact AKOS branch SHA, preserve the private receipt, and then run one source-to-recall path through Operational Cognition. Do not create parallel runners or private workflows for work already owned by the public execution face.
