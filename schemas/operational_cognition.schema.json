@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/GlacierEQ/AKOS/main/schemas/operational_cognition.schema.json",
+  "title": "AKOS-OC-001 Operational Cognition Record",
+  "description": "Machine-readable contract for AKOS operational cognition work, claims, capability selection, receipts, and completion status.",
+  "type": "object",
+  "required": [
+    "work",
+    "decision",
+    "claims",
+    "phase_receipts",
+    "artifact_receipts"
+  ],
+  "properties": {
+    "work": {
+      "type": "object",
+      "required": [
+        "work_id",
+        "goal",
+        "target_system",
+        "operation",
+        "source_kind",
+        "expected_outcome",
+        "operator_authorized",
+        "explicit_approval"
+      ],
+      "properties": {
+        "work_id": {"type": "string", "minLength": 1, "maxLength": 128},
+        "goal": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "target_system": {"type": "string", "minLength": 1, "maxLength": 128},
+        "operation": {
+          "type": "string",
+          "enum": [
+            "read",
+            "analyze",
+            "mutate_reversible",
+            "mutate_irreversible",
+            "external_send",
+            "legal_file"
+          ]
+        },
+        "source_kind": {
+          "type": "string",
+          "enum": [
+            "private_connected",
+            "conversation_file",
+            "public_fresh",
+            "static_general",
+            "local_runtime"
+          ]
+        },
+        "expected_outcome": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "operator_authorized": {"type": "boolean"},
+        "explicit_approval": {"type": "boolean"},
+        "requires_verification": {"type": "boolean", "default": true},
+        "requires_persistence": {"type": "boolean", "default": true}
+      },
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "required": ["state", "reason"],
+      "properties": {
+        "state": {"type": "string", "enum": ["execute", "blocked", "complete"]},
+        "reason": {"type": "string", "minLength": 1},
+        "capability": {"type": ["string", "null"]},
+        "next_action": {"type": ["string", "null"]},
+        "exact_blocker": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "evidence_class"],
+        "properties": {
+          "text": {"type": "string", "minLength": 1},
+          "evidence_class": {
+            "type": "string",
+            "enum": [
+              "verified_fact",
+              "architect_assertion",
+              "corroborated_assertion",
+              "record_controlled_allegation",
+              "adverse_documentary_contradiction",
+              "missing_required_record",
+              "inference",
+              "disputed_actor_narrative"
+            ]
+          },
+          "source_ref": {"type": ["string", "null"]},
+          "actor": {"type": ["string", "null"]},
+          "recorded_at": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "phase_receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase", "actor", "target", "result", "timestamp"],
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "intake",
+              "bind",
+              "route",
+              "execute",
+              "validate",
+              "review",
+              "release",
+              "ledger",
+              "handoff"
+            ]
+          },
+          "actor": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "result": {"type": "string", "minLength": 1},
+          "source": {"type": ["string", "null"]},
+          "artifact": {"type": ["string", "null"]},
+          "provider_receipt": {"type": ["string", "null"]},
+          "content_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+          "verified": {"type": "boolean", "default": false},
+          "persisted": {"type": "boolean", "default": false},
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "artifact_receipts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage", "artifact_id", "result", "timestamp"],
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "located",
+              "acquired",
+              "hashed",
+              "preserved",
+              "parsed",
+              "classified",
+              "correlated",
+              "drafted",
+              "verified",
+              "packaged",
+              "stored",
+              "logged",
+              "ready_for_use"
+            ]
+          },
+          "artifact_id": {"type": "string", "minLength": 1},
+          "result": {"type": "string", "minLength": 1},
+          "content_hash": {"type": ["string", "null"], "pattern": "^[A-Fa-f0-9]{64}$"},
+          "location": {"type": ["string", "null"]},
+          "timestamp": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
