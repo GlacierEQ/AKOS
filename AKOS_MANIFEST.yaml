@@ -2,7 +2,7 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.3.0
+version: 0.4.0
 status: active_draft
 created_at: "2026-07-04"
 updated_at: "2026-07-21"
@@ -10,7 +10,6 @@ owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
 
-# Governance identity (required by src/verify_manifest.py)
 operator: GlacierEQ
 governance:
   model: progressive_os_L0_L5
@@ -28,13 +27,14 @@ governance:
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
   owns identities, repository roles, lifecycle state, review gates, promotion
-  records, operational cognition contracts, and adapter contracts; it does not
-  own case facts or evidence originals.
+  records, operational cognition contracts, system topology, and adapter
+  contracts; it does not own case facts or evidence originals.
 
 primary_layer: Genome
 secondary_layers:
   - Cognitive Kernel
   - Operational Cognition
+  - Architecture Literacy
   - Orchestration
   - Canonical Object Model
   - Metadata Standard
@@ -60,6 +60,11 @@ required_principles:
   - pro_code_before_canonical
   - one_truth_many_views
   - spiral_engine_evolution
+  - architecture_discovery_before_blocker
+  - reuse_before_rebuild
+  - extend_existing_plane_before_new_infrastructure
+  - correct_plane_before_execution
+  - correction_becomes_guard_test_and_receipt
 
 canonical_locations:
   docs: docs/
@@ -72,6 +77,14 @@ canonical_locations:
   adr: adr/
   ledger: ledger/
 
+system_topology:
+  manifest: manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json
+  schema: schemas/akos_system_topology.schema.json
+  execution_face: GlacierEQ/public-actions-runner-host
+  control_plane: GlacierEQ/llm-runner-teams
+  receipt_plane: GlacierEQ/llm-runner-teams/results
+  private_actions: forbidden
+
 relationships:
   supersedes: []
   mirrors:
@@ -82,6 +95,7 @@ relationships:
 quality_gates:
   - naming
   - architecture
+  - topology_alignment
   - failure_handling
   - maintainability
   - authenticity
@@ -95,6 +109,9 @@ metadata:
   last_reviewed: "2026-07-21"
 
 next_actions:
+  - merge the public runner registration for akos-operational-cognition-ci
+  - dispatch the exact AKOS branch ref through the public action face
+  - preserve the immutable private execution receipt
   - review and merge the CASEBRAIN federation contract
   - rotate the exposed AEON memory credential before production writes
   - repair Aspen projection and Supabase access controls before connection
