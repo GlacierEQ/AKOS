@@ -1,7 +1,7 @@
 # AKOS Current State
 
 Status: Active Draft  
-Version: 0.3.1  
+Version: 0.4.0  
 Updated: 2026-07-21
 
 ## Purpose
@@ -18,14 +18,14 @@ GlacierEQ/AKOS
 
 AKOS is the proposed governance root for the CASEBRAIN federation and the canonical home for Operational Cognition contracts.
 
-It owns identities, contracts, lifecycle, quality gates, promotion, capability selection, execution gates, and receipt requirements—not case facts, evidence originals, or unverified runtime truth.
+It owns identities, contracts, lifecycle, quality gates, promotion, capability selection, verified system topology, execution gates, and receipt requirements—not case facts, evidence originals, or unverified runtime truth.
 
-Operational Cognition is implemented on branch with executable tests and machine contracts. Private workflow execution has been removed. Validation is now routed through the APEX public action face.
+Operational Cognition is implemented on branch with executable tests and machine contracts. Private workflow execution has been removed. Validation is routed through the APEX public action face. System-first topology cognition now prevents AKOS from mistaking wrong-plane failures or memory gaps for missing infrastructure.
 
 ## Current Build Layer
 
 ```text
-Receipt-driven operational cognition over truth-safe repository federation
+System-first, receipt-driven operational cognition over truth-safe repository federation
 ```
 
 ## Locked System Roles
@@ -36,7 +36,7 @@ Receipt-driven operational cognition over truth-safe repository federation
 4. ClickUp: manual execution visibility.
 5. Drive/source systems: source and preparation pointers, not automatic truth canon.
 6. Supabase: optional staging/query projection after hardening.
-7. AKOS Operational Cognition: capability selection, authority gates, orchestration, verification, persistence, and handoff policy.
+7. AKOS Operational Cognition: capability selection, topology discovery, authority gates, orchestration, verification, persistence, and handoff policy.
 8. `GlacierEQ/public-actions-runner-host`: sole GitHub Actions execution face for private workloads.
 9. `GlacierEQ/llm-runner-teams`: private policy, approval, claim, and immutable-result plane; no executable Actions workflows.
 
@@ -47,16 +47,16 @@ Receipt-driven operational cognition over truth-safe repository federation
 3. `BUILD_INDEX.md`
 4. `CURRENT_STATE.md`
 5. `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md`
-6. `operational_cognition/README.md`
-7. `contracts/AKOS-FEDERATION-CONTRACT-001.md`
-8. `manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json`
-9. `docs/federation/CASEBRAIN_POWERUP_FEDERATION.md`
+6. `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md`
+7. `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`
+8. `operational_cognition/README.md`
+9. `contracts/AKOS-FEDERATION-CONTRACT-001.md`
 10. Relevant integration spec
 
 ## Operational Cognition Status
 
 ```text
-Implemented on Branch — Private Actions Removed — Public Runner Registration Pending Merge and Receipt
+Implemented on Branch — System-First Guards Added — Public Runner Registration Pending Merge and Receipt
 ```
 
 Implemented:
@@ -68,26 +68,42 @@ Implemented:
 - validation and persistence requirements before completion;
 - monotonic runtime pipeline and artifact lifecycle;
 - Architect Assertion preservation as an active allegation without false promotion to independently verified fact;
-- machine schema, runtime manifest, unit tests, architecture tests, and `pytest.ini` discovery;
+- machine schemas, runtime manifests, unit tests, architecture tests, topology tests, and `pytest.ini` discovery;
 - enforcement that private AKOS owns no executable GitHub Actions workflows;
-- public runner action registration proposed as `akos-operational-cognition-ci` under Pillar C.
+- public runner action registration proposed as `akos-operational-cognition-ci` under Pillar C;
+- system-first topology runtime that resolves source, canonical, control, execution, and receipt planes;
+- rejection of private workflows, replacement runners, and duplicate control planes when an existing route or extensible plane exists;
+- bounded-extension rule: add one catalog action, adapter, or route binding before creating infrastructure;
+- correction-to-cognition rule: every material correction becomes policy, executable guard, regression test, repaired route, and append-only receipt.
 
-Promotion still requires a public-runner test receipt, one audited read-only connector probe, and one receipt-backed reversible write probe.
+## System-First Sequence
+
+```text
+DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
+```
+
+AKOS must inspect canonical manifests, catalogs, adapters, open pull requests, connected capabilities, and receipt stores before declaring a blocker.
+
+A failed attempt in the wrong plane is not proof that the correct plane is absent. A conversation-memory failure is not proof that the architecture is absent. When the execution plane exists but the exact lane is missing, AKOS extends the existing public face rather than building a parallel runner.
 
 ## Public Runner Architecture
 
 ```text
-AKOS private source ref
-  -> metadata-only job request
+GlacierEQ/AKOS
+  private source ref + canonical policy
+        |
+        | metadata-only job request
+        v
 GlacierEQ/public-actions-runner-host
-  -> allowlisted ephemeral checkout
-  -> test adapter on GitHub-hosted runner
+  allowlisted ephemeral checkout + execution
+        |
+        | governed result
+        v
 GlacierEQ/llm-runner-teams
-  -> immutable detailed result receipt
-  -> sanitized public status and operator handoff
+  private control + immutable detailed receipt
 ```
 
-A private workflow, reusable-workflow call, or direct private runner is not an approved execution path.
+The public face executes. The private control plane governs and stores receipts. A private workflow, reusable-workflow call, or direct private runner is not an approved execution path.
 
 ## CASEBRAIN Federation Status
 
@@ -104,14 +120,6 @@ Completed in the proposed pack:
 - repository quarantine and activation boundaries;
 - Notion worker-control-plane mapping;
 - append-only build ledger entry.
-
-## ClickUp Integration Status
-
-```text
-Manual Stage Complete — Automation Candidate Blocked
-```
-
-ClickUp may reflect execution state. It may not overwrite GitHub canon, bulk-generate tasks, or automatically mutate connected systems.
 
 ## Critical Blockers
 
@@ -135,10 +143,11 @@ Merge the public runner registration, dispatch `akos-operational-cognition-ci` a
 ```json
 {
   "document": "CURRENT_STATE",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "status": "active_draft",
-  "current_layer": "receipt_driven_operational_cognition_over_truth_safe_federation",
-  "operational_cognition": "implemented_private_actions_removed_public_runner_receipt_pending",
+  "current_layer": "system_first_receipt_driven_operational_cognition",
+  "operational_cognition": "implemented_system_first_guards_added_public_runner_receipt_pending",
+  "system_first_sequence": ["discover", "map", "reuse", "extend", "execute", "verify", "persist"],
   "public_action": "akos-operational-cognition-ci",
   "execution_face": "GlacierEQ/public-actions-runner-host",
   "receipt_plane": "GlacierEQ/llm-runner-teams",
