@@ -1,8 +1,8 @@
 # AKOS Current State
 
 Status: Active Draft  
-Version: 0.2.0  
-Updated: 2026-07-14
+Version: 0.3.0  
+Updated: 2026-07-21
 
 ## Purpose
 
@@ -19,16 +19,21 @@ GlacierEQ/AKOS
 
 ## Current Position
 
-AKOS is the proposed governance root for the CASEBRAIN powerup federation.
-It owns identities, contracts, lifecycle, quality gates and promotion—not case
-facts, evidence originals or runtime truth.
+AKOS is the proposed governance root for the CASEBRAIN powerup federation and
+the canonical home for Operational Cognition contracts.
+
+It owns identities, contracts, lifecycle, quality gates, promotion, capability
+selection, execution gates and receipt requirements—not case facts, evidence
+originals or unverified runtime truth.
 
 The federation is review ready on a branch. It is not production live.
+Operational Cognition is implemented on branch with tests and machine contracts;
+it is not connector-wired or promoted to working canon yet.
 
 ## Current Build Layer
 
 ```text
-Truth-safe repository federation and read-only integration planning
+Receipt-driven operational cognition over truth-safe repository federation
 ```
 
 ## Locked System Roles
@@ -40,6 +45,8 @@ Truth-safe repository federation and read-only integration planning
 5. Drive/source systems: source and preparation pointers, not automatic truth
    canon.
 6. Supabase: optional staging/query projection after hardening.
+7. AKOS Operational Cognition: capability selection, authority gates,
+   orchestration, verification, persistence and handoff policy.
 
 ## Active Read Path
 
@@ -47,10 +54,35 @@ Truth-safe repository federation and read-only integration planning
 2. `AKOS_MANIFEST.yaml`
 3. `BUILD_INDEX.md`
 4. `CURRENT_STATE.md`
-5. `contracts/AKOS-FEDERATION-CONTRACT-001.md`
-6. `manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json`
-7. `docs/federation/CASEBRAIN_POWERUP_FEDERATION.md`
-8. Relevant integration spec
+5. `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md`
+6. `operational_cognition/README.md`
+7. `contracts/AKOS-FEDERATION-CONTRACT-001.md`
+8. `manifests/federations/CASEBRAIN_POWERUP_FEDERATION.json`
+9. `docs/federation/CASEBRAIN_POWERUP_FEDERATION.md`
+10. Relevant integration spec
+
+## Operational Cognition Status
+
+```text
+Implemented on Branch — Unit-Tested Locally — CI and Connector Receipts Pending
+```
+
+Implemented:
+
+- deterministic capability selection favoring authoritative, verifiable and
+  persistent tools;
+- explicit source routing for connected private sources, Files, current public
+  sources and local runtimes;
+- operator authorization and explicit approval gates by operation class;
+- provider-receipt requirement for claimed writes;
+- validation and persistence requirements before completion;
+- monotonic runtime pipeline and artifact lifecycle;
+- Architect Assertion preservation as an active allegation without false
+  promotion to independently verified fact;
+- machine schema, runtime manifest, tests and CI workflow.
+
+Promotion still requires one audited read-only connector probe and one
+receipt-backed reversible write probe.
 
 ## CASEBRAIN Federation Status
 
@@ -88,23 +120,27 @@ generate tasks or automatically mutate connected systems.
 - Bring lowercase `pro-code` dispatch/auth/tracing implementation up to its
   documented contract.
 - Rotate plaintext credentials exposed in Notion pages.
+- Validate AKOS-OC-001 through one read-only and one reversible-write provider
+  receipt path before promotion.
 
 ## Highest-Leverage Next Action
 
-Review and merge the federation contract, rotate the exposed credentials, then
-run one hashed court record through a read-only Casebuilder adapter into a
-hardened staging projection and verify the recalled hash.
+Review and merge the federation contract and Operational Cognition change, rotate
+the exposed credentials, then run one hashed court record through a read-only
+Casebuilder adapter under AKOS-OC-001 and verify the recalled hash and ledger
+receipt.
 
 ## Machine Summary
 
 ```json
 {
   "document": "CURRENT_STATE",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "status": "active_draft",
-  "current_layer": "truth-safe repository federation",
+  "current_layer": "receipt_driven_operational_cognition_over_truth_safe_federation",
+  "operational_cognition": "implemented_branch_ci_and_connector_receipts_pending",
   "casebrain_federation": "review_ready_production_writes_blocked",
   "clickup_status": "manual_stage_complete_automation_candidate_blocked",
-  "highest_leverage_next_action": "review contract, rotate credentials, run one audited read-only source-to-recall probe"
+  "highest_leverage_next_action": "merge governed changes, rotate credentials, run one audited read-only source-to-recall probe through AKOS-OC-001"
 }
 ```
