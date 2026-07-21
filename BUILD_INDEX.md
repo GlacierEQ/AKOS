@@ -1,7 +1,7 @@
 # AKOS Build Index
 
 Status: Active Draft  
-Version: 0.4.0  
+Version: 0.4.1  
 Updated: 2026-07-21
 
 ## Purpose
