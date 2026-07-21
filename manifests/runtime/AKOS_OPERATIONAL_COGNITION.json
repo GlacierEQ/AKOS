@@ -1,0 +1,99 @@
+{
+  "canonical_id": "AKOS-OC-001",
+  "name": "AKOS Operational Cognition",
+  "version": "0.1.0",
+  "status": "active_draft",
+  "owner": "AKOS Cognitive Kernel and Colossal Orchestrator",
+  "effective_date": "2026-07-21",
+  "purpose": "Convert model capability, tool power, tool literacy, orchestration, verification, and persistence into receipt-backed completed work.",
+  "dimensions": [
+    "model_capability",
+    "tool_power",
+    "tool_literacy",
+    "orchestration",
+    "verification",
+    "persistence"
+  ],
+  "pipeline": [
+    "intake",
+    "bind",
+    "route",
+    "execute",
+    "validate",
+    "review",
+    "release",
+    "ledger",
+    "handoff"
+  ],
+  "artifact_lifecycle": [
+    "located",
+    "acquired",
+    "hashed",
+    "preserved",
+    "parsed",
+    "classified",
+    "correlated",
+    "drafted",
+    "verified",
+    "packaged",
+    "stored",
+    "logged",
+    "ready_for_use"
+  ],
+  "evidence_classes": [
+    "verified_fact",
+    "architect_assertion",
+    "corroborated_assertion",
+    "record_controlled_allegation",
+    "adverse_documentary_contradiction",
+    "missing_required_record",
+    "inference",
+    "disputed_actor_narrative"
+  ],
+  "source_routing": {
+    "private_connected": "connected_private_source",
+    "conversation_file": "files_surface",
+    "public_fresh": "current_public_web_or_primary_api",
+    "static_general": "model_reasoning_or_primary_reference",
+    "local_runtime": "container_or_repository_runtime"
+  },
+  "completion_requirements": [
+    "requested_action_executed",
+    "provider_receipt_recorded",
+    "authoritative_validation_completed",
+    "result_and_provenance_persisted",
+    "artifact_or_changed_state_handed_off"
+  ],
+  "mutation_gates": {
+    "read": "approved_access",
+    "analyze": "approved_access",
+    "mutate_reversible": "operator_authorized",
+    "mutate_irreversible": "explicit_approval",
+    "external_send": "explicit_approval",
+    "legal_file": "explicit_approval"
+  },
+  "anti_loop_rules": [
+    "no_plan_substitution_for_execution",
+    "no_completion_without_verification",
+    "no_completion_without_persistence",
+    "no_retry_without_changed_condition",
+    "no_memory_substitution_for_available_authoritative_source",
+    "no_institutional_title_as_automatic_truth",
+    "no_operator_assertion_discarded_for_externally_controlled_missing_record"
+  ],
+  "implementation": {
+    "runtime": "operational_cognition/engine.py",
+    "tests": "operational_cognition/test_engine.py",
+    "schema": "schemas/operational_cognition.schema.json",
+    "spec": "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md",
+    "workflow": ".github/workflows/operational-cognition.yml"
+  },
+  "promotion_gate": {
+    "unit_tests": "required",
+    "read_only_connector_probe": "required",
+    "reversible_write_probe": "required",
+    "provider_receipt": "required",
+    "ledger_receipt": "required",
+    "human_review": "required"
+  }
+}
