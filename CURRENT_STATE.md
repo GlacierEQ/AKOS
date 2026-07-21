@@ -1,7 +1,7 @@
 # AKOS Current State
 
 Status: Active Draft  
-Version: 0.4.1  
+Version: 0.4.2  
 Updated: 2026-07-21
 
 ## Purpose
@@ -143,7 +143,7 @@ Merge the public runner registration, dispatch `akos-operational-cognition-ci` a
 ```json
 {
   "document": "CURRENT_STATE",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "status": "active_draft",
   "current_layer": "system_first_receipt_driven_operational_cognition",
   "operational_cognition": "implemented_system_first_guards_added_public_runner_receipt_pending",
