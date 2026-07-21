@@ -1,0 +1,49 @@
+name: AKOS Operational Cognition
+
+on:
+  pull_request:
+    paths:
+      - "operational_cognition/**"
+      - "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md"
+      - "schemas/operational_cognition.schema.json"
+      - "manifests/runtime/AKOS_OPERATIONAL_COGNITION.json"
+      - ".github/workflows/operational-cognition.yml"
+  push:
+    branches: [main]
+    paths:
+      - "operational_cognition/**"
+      - "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md"
+      - "schemas/operational_cognition.schema.json"
+      - "manifests/runtime/AKOS_OPERATIONAL_COGNITION.json"
+      - ".github/workflows/operational-cognition.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile runtime
+        run: python -m compileall -q operational_cognition
+      - name: Unit tests
+        run: python -m unittest -v operational_cognition.test_engine
+      - name: Parse machine contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for path in (
+              Path("schemas/operational_cognition.schema.json"),
+              Path("manifests/runtime/AKOS_OPERATIONAL_COGNITION.json"),
+          ):
+              with path.open("r", encoding="utf-8") as handle:
+                  json.load(handle)
+              print(f"validated JSON: {path}")
+          PY
