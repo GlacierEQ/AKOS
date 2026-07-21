@@ -2,10 +2,10 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.2.0
+version: 0.3.0
 status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-14"
+updated_at: "2026-07-21"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
@@ -28,11 +28,14 @@ governance:
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
   owns identities, repository roles, lifecycle state, review gates, promotion
-  records, and adapter contracts; it does not own case facts or evidence.
+  records, operational cognition contracts, and adapter contracts; it does not
+  own case facts or evidence originals.
 
 primary_layer: Genome
 secondary_layers:
   - Cognitive Kernel
+  - Operational Cognition
+  - Orchestration
   - Canonical Object Model
   - Metadata Standard
   - Contracts
@@ -42,6 +45,7 @@ secondary_layers:
 
 active_specs:
   - AKOS-CK-001
+  - AKOS-OC-001
   - AKOS-COM-001
   - AKOS-META-001
   - AKOS-REPO-CONTRACT-001
@@ -88,10 +92,11 @@ metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-14"
+  last_reviewed: "2026-07-21"
 
 next_actions:
   - review and merge the CASEBRAIN federation contract
   - rotate the exposed AEON memory credential before production writes
   - repair Aspen projection and Supabase access controls before connection
-  - run one audited read-only source-to-recall integration slice
+  - run one audited read-only source-to-recall integration slice through AKOS-OC-001
+  - run one receipt-backed reversible write probe before promoting operational cognition
