@@ -3,7 +3,8 @@
 **Date:** 2026-07-21  
 **Canonical ID:** AKOS-OC-001  
 **Branch:** `akos-operational-cognition-2026-07-21`  
-**Status:** implemented on branch; promotion pending CI and connector receipts
+**Pull Request:** `GlacierEQ/AKOS#7`  
+**Status:** implemented on branch; promotion pending executable CI and connector receipts
 
 ## Objective
 
@@ -65,17 +66,25 @@ Covered gates:
 - pipeline and artifact regression are rejected;
 - source routing is explicit.
 
-GitHub Actions verification remains pending until the branch pull request runs.
+GitHub Actions was invoked on PR #7. Both the new Operational Cognition workflow
+(run `29872241024`) and the repository CI workflow (run `29872241113`) failed
+before any executable step was exposed. The Operational Cognition job
+`88774806640` returned no step records, and its downloadable job log returned a
+provider `BlobNotFound` response. This is recorded as an external CI execution
+blocker rather than a passing or code-level failing result.
+
 Connector promotion remains blocked until one read-only and one reversible-write
 provider receipt path complete under the new runtime.
 
 ## Truth Boundary
 
 This receipt proves repository mutation and isolated unit-test execution. It does
-not claim that external connectors are wired, that production writes are active,
-or that `AKOS-OC-001` is working canonical.
+not claim that GitHub-hosted CI executed successfully, that external connectors
+are wired, that production writes are active, or that `AKOS-OC-001` is working
+canonical.
 
 ## Next Governed Action
 
-Open the pull request, run CI, review the diff, and then use `AKOS-OC-001` to
+Restore an executable GitHub Actions runner or equivalent CI path, rerun the
+Operational Cognition checks, review the PR diff, and then use `AKOS-OC-001` to
 control the next audited CASEBRAIN source-to-recall probe.
