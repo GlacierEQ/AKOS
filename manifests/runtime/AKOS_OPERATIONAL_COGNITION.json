@@ -1,7 +1,7 @@
 {
   "canonical_id": "AKOS-OC-001",
   "name": "AKOS Operational Cognition",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "active_draft",
   "owner": "AKOS Cognitive Kernel and Colossal Orchestrator",
   "effective_date": "2026-07-21",
@@ -55,7 +55,18 @@
     "conversation_file": "files_surface",
     "public_fresh": "current_public_web_or_primary_api",
     "static_general": "model_reasoning_or_primary_reference",
-    "local_runtime": "container_or_repository_runtime"
+    "local_runtime": "container_or_repository_runtime",
+    "private_repository_ci": "GlacierEQ/public-actions-runner-host",
+    "private_execution_receipts": "GlacierEQ/llm-runner-teams"
+  },
+  "private_actions_policy": {
+    "private_workload_workflows": "forbidden",
+    "private_workflow_call_chain": "forbidden",
+    "sole_execution_face": "GlacierEQ/public-actions-runner-host",
+    "control_plane": "GlacierEQ/llm-runner-teams",
+    "registered_action": "akos-operational-cognition-ci",
+    "pillar": "C",
+    "adapter": "test"
   },
   "completion_requirements": [
     "requested_action_executed",
@@ -79,16 +90,24 @@
     "no_retry_without_changed_condition",
     "no_memory_substitution_for_available_authoritative_source",
     "no_institutional_title_as_automatic_truth",
-    "no_operator_assertion_discarded_for_externally_controlled_missing_record"
+    "no_operator_assertion_discarded_for_externally_controlled_missing_record",
+    "no_private_repository_actions_execution"
   ],
   "implementation": {
     "runtime": "operational_cognition/engine.py",
-    "tests": "operational_cognition/test_engine.py",
+    "tests": [
+      "operational_cognition/test_engine.py",
+      "operational_cognition/test_contracts.py"
+    ],
+    "test_discovery": "pytest.ini",
     "schema": "schemas/operational_cognition.schema.json",
     "spec": "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md",
-    "workflow": ".github/workflows/operational-cognition.yml"
+    "public_runner_repo": "GlacierEQ/public-actions-runner-host",
+    "public_runner_action": "akos-operational-cognition-ci",
+    "private_receipt_repo": "GlacierEQ/llm-runner-teams"
   },
   "promotion_gate": {
+    "public_runner_test_receipt": "required",
     "unit_tests": "required",
     "read_only_connector_probe": "required",
     "reversible_write_probe": "required",
