@@ -1,14 +1,25 @@
 # AKOS Operational Cognition Runtime
 
-Canonical ID: `AKOS-OC-001`
+Canonical IDs: `AKOS-OC-001`, `AKOS-OC-002`
 
-This package converts model capability, tool power, tool literacy, architecture literacy, orchestration, verification, and persistence into deterministic runtime decisions.
+This package converts model capability, tool power, tool literacy, architecture literacy, orchestration, verification, persistence, and artifact closure into deterministic runtime decisions.
 
-## Core rule
+## Core rules
 
 A model response, plan, inspection, or draft is not completion when the requested outcome requires a real target-system action.
 
 A failed attempt in the wrong plane is not proof that the correct plane is missing.
+
+An available tool is not a verified capability. A high-confidence assessment is not a measured score. A good draft is not a completed artifact.
+
+## Capability truth ladder
+
+```text
+DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
+INVOKED -> RETURNED -> VERIFIED -> PERSISTED
+```
+
+`RETURNED`, `VERIFIED`, and `PERSISTED` require provider receipts. `PERSISTED` also requires a durable artifact reference.
 
 ## System-first sequence
 
@@ -31,6 +42,23 @@ VALIDATE -> REVIEW -> RELEASE -> LEDGER -> HANDOFF
 LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
 CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
 ```
+
+The closure gate reports exact missing stages. Stages `VERIFIED` through `LOGGED` are mandatory release controls, but completion still requires `READY_FOR_USE`.
+
+## Receipt-grounded maturity
+
+`operational_cognition/maturity.py` replaces subjective `1–10` ratings with:
+
+- weighted controls;
+- sourced availability;
+- evidence levels;
+- provider receipts;
+- persisted artifact references;
+- available ceiling;
+- demonstrated reliability;
+- exact missing controls.
+
+Unmeasured dimensions remain `UNASSESSED`.
 
 ## Existing private-workload execution route
 
@@ -73,6 +101,7 @@ An Architect Assertion is preserved as an active allegation and investigative in
 python -m compileall -q operational_cognition
 python -m unittest -v operational_cognition.test_engine
 python -m unittest -v operational_cognition.test_topology
+python -m unittest -v operational_cognition.test_maturity
 pytest
 ```
 
