@@ -107,6 +107,8 @@
             "enum": [
               "intake",
               "bind",
+              "discover",
+              "map",
               "route",
               "execute",
               "validate",
