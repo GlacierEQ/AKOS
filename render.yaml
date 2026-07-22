@@ -1,20 +1,14 @@
-previews:
-  generation: automatic
-  expireAfterDays: 3
-
 services:
   - type: web
     runtime: ruby
     name: sinatra-app
     repo: https://github.com/render-examples/sinatra
     plan: free
-    branch: prod
+    branch: main
     buildCommand: bundle install
     startCommand: bundle exec ruby main.rb
     autoDeployTrigger: checksPass
     healthCheckPath: /health
-    previews:
-      generation: automatic
     envVars:
       - key: DATABASE_URL
         fromDatabase:
