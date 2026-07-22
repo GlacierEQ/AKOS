@@ -4,7 +4,6 @@ services:
     name: sinatra-app
     repo: https://github.com/render-examples/sinatra
     plan: free
-    branch: main
     buildCommand: bundle install
     startCommand: bundle exec ruby main.rb
     autoDeployTrigger: checksPass
