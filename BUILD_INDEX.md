@@ -1,8 +1,8 @@
 # AKOS Build Index
 
 Status: Active Draft  
-Version: 0.4.1  
-Updated: 2026-07-21
+Version: 0.5.0  
+Updated: 2026-07-22
 
 ## Purpose
 
@@ -40,7 +40,7 @@ This file is the navigation index for the AKOS architecture repository. It recor
 | `adr/` | Architecture decision records |
 | `ledger/` | Append-only build and sync records |
 | `audits/` | Review and quality-gate records |
-| `operational_cognition/` | Receipt-driven execution and system-first topology cognition |
+| `operational_cognition/` | Execution, topology, maturity, and artifact-closure runtime |
 
 ## Active Specification Series
 
@@ -49,6 +49,7 @@ This file is the navigation index for the AKOS architecture repository. It recor
 | AKOS-LAW-001 | Foundational Laws | `specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md` | planned |
 | AKOS-CK-001 | Cognitive Kernel | `specs/AKOS-CK-001_COGNITIVE_KERNEL.md` | active seed |
 | AKOS-OC-001 | Operational Cognition | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft; executable runtime included |
+| AKOS-OC-002 | Operational Maturity and Closure | `specs/AKOS-OC-002_OPERATIONAL_MATURITY.md` | active draft; executable runtime included |
 | AKOS-COM-001 | Canonical Object Model | `specs/AKOS-COM-001_CANONICAL_OBJECT_MODEL.md` | active seed |
 | AKOS-META-001 | Metadata Standard | `specs/AKOS-META-001_METADATA_STANDARD.md` | active seed |
 | AKOS-REPO-CONTRACT-001 | Repository Contract | `contracts/AKOS-REPO-CONTRACT-001.md` | active seed |
@@ -60,31 +61,46 @@ This file is the navigation index for the AKOS architecture repository. It recor
 
 | Artifact | Path / Owner | Status |
 |---|---|---|
-| Formal specification | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft v0.3.0 |
+| Operational Cognition spec | `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` | active draft v0.3.0 |
+| Operational Maturity spec | `specs/AKOS-OC-002_OPERATIONAL_MATURITY.md` | active draft v0.1.0 |
 | Core runtime | `operational_cognition/engine.py` | implemented |
 | System-first topology runtime | `operational_cognition/topology.py` | implemented |
-| Unit tests | `operational_cognition/test_engine.py` | implemented |
-| Topology regression tests | `operational_cognition/test_topology.py` | implemented |
-| Architecture tests | `operational_cognition/test_contracts.py` | implemented |
+| Maturity and closure runtime | `operational_cognition/maturity.py` | implemented |
+| Core tests | `operational_cognition/test_engine.py` | implemented |
+| Topology tests | `operational_cognition/test_topology.py` | implemented |
+| Maturity tests | `operational_cognition/test_maturity.py` | implemented |
+| Contract tests | `operational_cognition/test_contracts.py` | implemented |
 | Test discovery | `pytest.ini` | implemented |
-| Operational record schema | `schemas/operational_cognition.schema.json` | validated JSON draft |
-| System topology schema | `schemas/akos_system_topology.schema.json` | implemented |
-| Runtime manifest | `manifests/runtime/AKOS_OPERATIONAL_COGNITION.json` | active draft v0.3.0 |
-| Canonical topology manifest | `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` | active draft |
+| Operational record schema | `schemas/operational_cognition.schema.json` | active draft |
+| System topology schema | `schemas/akos_system_topology.schema.json` | active draft |
+| Maturity scorecard schema | `schemas/operational_maturity.schema.json` | active draft |
+| Operational manifest | `manifests/runtime/AKOS_OPERATIONAL_COGNITION.json` | active draft v0.3.0 |
+| Topology manifest | `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` | active draft |
+| Maturity manifest | `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` | active draft v0.1.0 |
 | System-first mentality | `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` | active draft |
 | Public CI action | `GlacierEQ/public-actions-runner-host` / `akos-operational-cognition-ci` | runner registration proposed |
 | Private execution receipts | `GlacierEQ/llm-runner-teams/results/<job_id>.json` | required |
-| Build receipt | `ledger/2026-07-21_OPERATIONAL_COGNITION.md` | branch receipt |
+| Cognition receipt | `ledger/2026-07-21_OPERATIONAL_COGNITION.md` | branch receipt |
+| Maturity receipt | `ledger/2026-07-22_OPERATIONAL_MATURITY.md` | branch receipt |
+
+## Operational Truth Rules
+
+```text
+Capability:
+DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
+INVOKED -> RETURNED -> VERIFIED -> PERSISTED
+
+Architecture:
+DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
+
+Artifact:
+LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
+CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
+```
 
 AKOS owns no executable private-repository Actions workflows. Private CI and validation route through the public action face, which performs an allowlisted short-lived checkout and publishes immutable detailed receipts to the private control plane.
 
-The runtime now enforces both execution-first and system-first cognition:
-
-```text
-DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
-```
-
-A wrong-plane failure is not evidence that the correct execution plane is missing. When an execution plane exists but the exact route is absent, AKOS extends the existing catalog, adapter, or route binding instead of creating parallel infrastructure.
+A wrong-plane failure is not evidence that the correct execution plane is missing. An available tool is not a verified capability. A good draft is not a completed artifact. Unmeasured maturity remains `UNASSESSED` rather than receiving an invented numeric score.
 
 ## CASEBRAIN Federation Pack
 
@@ -104,31 +120,33 @@ A wrong-plane failure is not evidence that the correct execution plane is missin
 | Repository Steward | `manifests/agents/AGENT-REPOSITORY-STEWARD.yaml` | active seed |
 | Pro-Code Reviewer | `manifests/agents/AGENT-PROCODE-REVIEWER.yaml` | active seed |
 
-The federation registry adds design-stage Source Intake/Hasher, Timeline Normalizer, Contradiction Candidate, Memory Distiller, Notion Review Mirror and Operator Control workers. No worker is marked `verified_live`.
-
 ## Construction Order
 
 1. Governance and valid manifest
 2. Foundational laws and truth contracts
 3. Operational Cognition execution and receipt contract
 4. System-first topology and anti-rebuild cognition
-5. Public action-face registration and private-receipt validation
-6. Canonical Object Model and metadata
-7. Repository and federation contracts
-8. Pro-Code review
-9. Commit-pinned manifests and schemas
-10. Credential rotation and storage hardening
-11. One audited read-only integration slice through AKOS-OC-001
-12. One receipt-backed reversible write probe
-13. Worker dry run with immutable receipt
-14. Human-reviewed promotion
+5. Operational maturity controls and artifact closure
+6. Public action-face registration and private-receipt validation
+7. First receipt-grounded AKOS scorecard
+8. One capability traversing through `PERSISTED`
+9. One artifact traversing through `READY_FOR_USE`
+10. Canonical Object Model and metadata
+11. Repository and federation contracts
+12. Pro-Code review
+13. Commit-pinned manifests and schemas
+14. Credential rotation and storage hardening
+15. One audited read-only integration slice through AKOS-OC-001
+16. One receipt-backed reversible write probe
+17. Worker dry run with immutable receipt
+18. Human-reviewed promotion
 
 ## Canonical Promotion Rule
 
-No file, repository, connector or worker becomes canonical/live until it has identity, purpose, version and source revision; explicit claim and authority boundaries; topology alignment; Pro-Code review and passing schema validation; a deployment/run receipt where runtime behavior is claimed; and human approval for promotion.
+No file, repository, connector, worker, scorecard, or artifact becomes canonical/live until it has identity, purpose, version and source revision; explicit claim and authority boundaries; topology alignment; control-level evidence; Pro-Code review and passing schema validation; a deployment or execution receipt where runtime behavior is claimed; complete artifact closure where applicable; and human approval for promotion.
 
-No runtime task becomes complete merely because a plan, draft, or status report exists. Completion requires architecture discovery, correct-plane execution, authoritative validation, persistence, and handoff under `AKOS-OC-001`.
+No runtime task becomes complete merely because a plan, draft, status report, or high-confidence assessment exists. Completion requires architecture discovery, correct-plane execution, authoritative validation, persistence, artifact closure, and handoff under `AKOS-OC-001` and `AKOS-OC-002`.
 
 ## Current Priority
 
-Merge the public action registration, dispatch `akos-operational-cognition-ci` against the exact AKOS branch SHA, preserve the private receipt, and then run one source-to-recall path through Operational Cognition. Do not create parallel runners or private workflows for work already owned by the public execution face.
+Merge the public action registration, dispatch `akos-operational-cognition-ci` against the exact AKOS branch SHA, preserve the private receipt, generate the first receipt-grounded maturity scorecard, and complete one real artifact through `READY_FOR_USE`.
