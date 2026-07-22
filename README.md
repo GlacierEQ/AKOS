@@ -1,7 +1,7 @@
 # AKOS — Apex Knowledge Operating System
 
 Status: Foundational Build
-Version: 0.4.0
+Version: 0.5.0
 Canonical Repo: `GlacierEQ/AKOS`
 Created: 2026-07-04
 
@@ -24,7 +24,11 @@ Cognitive Kernel
 ↓
 Operational Cognition
 ↓
+Operational Maturity
+↓
 Architecture Literacy
+↓
+Artifact Closure
 ↓
 Canonical Object Model
 ↓
@@ -65,6 +69,28 @@ A plan, inspection, draft, or proposed design is not completion when the request
 
 See `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` and `operational_cognition/README.md`.
 
+## Operational Maturity Rule
+
+AKOS does not convert confidence, ambition, or architectural complexity into an unsupported `1–10` score.
+
+Every capability moves through distinct truth states:
+
+```text
+DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
+INVOKED -> RETURNED -> VERIFIED -> PERSISTED
+```
+
+Every scorecard separates:
+
+- **available ceiling** — sourced capability that is actually available;
+- **demonstrated reliability** — capability exercised to the required evidence level;
+- **operational gap** — the difference between them;
+- **missing controls** — exact work required next.
+
+Unmeasured means `UNASSESSED`, not an invented number.
+
+See `specs/AKOS-OC-002_OPERATIONAL_MATURITY.md` and `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`.
+
 ## System-First Rule
 
 AKOS must understand the existing system before declaring a blocker or proposing infrastructure.
@@ -90,6 +116,17 @@ Private AKOS owns no executable GitHub Actions workflows.
 
 See `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` and `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`.
 
+## Artifact Closure Rule
+
+```text
+LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
+CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
+```
+
+A good draft is not complete. Stages `VERIFIED` through `LOGGED` are mandatory release controls, but closure still requires `READY_FOR_USE`.
+
+The system returns exact missing stages rather than a vague completion percentage.
+
 ## Repository Purpose
 
 This repository is the canonical architecture home for:
@@ -97,7 +134,9 @@ This repository is the canonical architecture home for:
 - AKOS doctrine
 - Cognitive Kernel methodology
 - Operational Cognition runtime
+- Operational maturity controls and scorecards
 - System topology and architecture literacy
+- Artifact closure gates
 - Canonical Object Model
 - Metadata standards
 - Repository contracts
@@ -121,13 +160,14 @@ This repository is the canonical architecture home for:
 /adr/                      Architecture decision records
 /ledger/                   Append-only build and sync records
 /finisher/                 Deterministic closure engine and receipt queue
-/operational_cognition/    Execution-first and system-first cognition runtime
+/operational_cognition/    Execution, topology, maturity, and closure runtime
 ```
 
 ## Active Specs
 
 - `AKOS-CK-001` — Cognitive Kernel
 - `AKOS-OC-001` — Operational Cognition
+- `AKOS-OC-002` — Operational Maturity and Closure
 - `AKOS-COM-001` — Canonical Object Model
 - `AKOS-META-001` — Metadata Standard
 - `AKOS-REPO-CONTRACT-001` — Repository Contract
@@ -142,13 +182,14 @@ At the start of any AKOS-aware session:
 3. Read `BUILD_INDEX.md`.
 4. Read `CURRENT_STATE.md`.
 5. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
-6. Read `finisher/out/FINISH_QUEUE.md` when present.
-7. Close finishable work before proposing expansion.
-8. Discover the existing route before declaring a capability missing.
-9. Read the active spec relevant to the task.
-10. Apply `AKOS-OC-001` whenever tools, target-system actions, verification, or persistence are involved.
-11. Preserve history and append deltas.
+6. Read `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` when capability, score, reliability, closure, or comparative claims are involved.
+7. Read `finisher/out/FINISH_QUEUE.md` when present.
+8. Close finishable work before proposing expansion.
+9. Discover the existing route before declaring a capability missing.
+10. Read the active spec relevant to the task.
+11. Apply `AKOS-OC-001` to tool actions and `AKOS-OC-002` to capability or closure assessments.
+12. Preserve history and append deltas.
 
 ## Operating Principle
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
+Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
