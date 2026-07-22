@@ -2,10 +2,10 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.4.0
+version: 0.5.0
 status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-21"
+updated_at: "2026-07-22"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
@@ -27,15 +27,18 @@ governance:
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
   owns identities, repository roles, lifecycle state, review gates, promotion
-  records, operational cognition contracts, system topology, and adapter
-  contracts; it does not own case facts or evidence originals.
+  records, operational cognition contracts, operational maturity controls,
+  system topology, and adapter contracts; it does not own case facts or
+  evidence originals.
 
 primary_layer: Genome
 secondary_layers:
   - Cognitive Kernel
   - Operational Cognition
+  - Operational Maturity
   - Architecture Literacy
   - Orchestration
+  - Artifact Closure
   - Canonical Object Model
   - Metadata Standard
   - Contracts
@@ -46,6 +49,7 @@ secondary_layers:
 active_specs:
   - AKOS-CK-001
   - AKOS-OC-001
+  - AKOS-OC-002
   - AKOS-COM-001
   - AKOS-META-001
   - AKOS-REPO-CONTRACT-001
@@ -65,6 +69,12 @@ required_principles:
   - extend_existing_plane_before_new_infrastructure
   - correct_plane_before_execution
   - correction_becomes_guard_test_and_receipt
+  - capability_states_must_not_be_collapsed
+  - score_only_from_control_evidence
+  - unmeasured_means_unassessed
+  - good_draft_is_not_complete
+  - ready_for_use_requires_full_lifecycle
+  - persistent_state_before_completion
 
 canonical_locations:
   docs: docs/
@@ -85,6 +95,14 @@ system_topology:
   receipt_plane: GlacierEQ/llm-runner-teams/results
   private_actions: forbidden
 
+operational_maturity:
+  spec: specs/AKOS-OC-002_OPERATIONAL_MATURITY.md
+  manifest: manifests/runtime/AKOS_OPERATIONAL_MATURITY.json
+  schema: schemas/operational_maturity.schema.json
+  runtime: operational_cognition/maturity.py
+  unsupported_numeric_self_rating: forbidden
+  unmeasured_state: unassessed
+
 relationships:
   supersedes: []
   mirrors:
@@ -96,6 +114,10 @@ quality_gates:
   - naming
   - architecture
   - topology_alignment
+  - capability_truth_state
+  - scorecard_evidence
+  - artifact_closure
+  - persistence
   - failure_handling
   - maintainability
   - authenticity
@@ -106,12 +128,15 @@ metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-21"
+  last_reviewed: "2026-07-22"
 
 next_actions:
   - merge the public runner registration for akos-operational-cognition-ci
   - dispatch the exact AKOS branch ref through the public action face
   - preserve the immutable private execution receipt
+  - generate the first receipt-grounded AKOS maturity scorecard
+  - drive one capability from discovered through persisted
+  - drive one artifact through all thirteen stages to ready_for_use
   - review and merge the CASEBRAIN federation contract
   - rotate the exposed AEON memory credential before production writes
   - repair Aspen projection and Supabase access controls before connection
