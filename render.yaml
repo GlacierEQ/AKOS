@@ -1,0 +1,57 @@
+previews:
+  generation: automatic
+  expireAfterDays: 3
+
+services:
+  - type: web
+    runtime: ruby
+    name: sinatra-app
+    repo: https://github.com/render-examples/sinatra
+    plan: free
+    branch: prod
+    buildCommand: bundle install
+    startCommand: bundle exec ruby main.rb
+    autoDeployTrigger: checksPass
+    healthCheckPath: /health
+    previews:
+      generation: automatic
+      plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: elephant
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: lightning
+          property: connectionString
+      - key: APP_SECRET
+        generateValue: true
+
+  - type: web
+    name: my-blog
+    runtime: static
+    buildCommand: yarn build
+    staticPublishPath: ./build
+    autoDeployTrigger: checksPass
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /static/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+  - type: keyvalue
+    name: lightning
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+
+databases:
+  - name: elephant
+    databaseName: mydb
+    user: adrian
+    plan: free
+    postgresMajorVersion: '18'
+
