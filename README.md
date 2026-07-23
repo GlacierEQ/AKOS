@@ -1,7 +1,7 @@
 # AKOS — Apex Knowledge Operating System
 
 Status: Foundational Build
-Version: 0.5.0
+Version: 0.5.1
 Canonical Repo: `GlacierEQ/AKOS`
 Created: 2026-07-04
 
@@ -12,6 +12,16 @@ AKOS is the Apex Knowledge Operating System: a recursive architecture for transf
 AKOS is not one model, one prompt, one database, one repository, or one automation.
 
 AKOS is the governing architecture that binds them.
+
+## Direct-to-Main Rule
+
+`GlacierEQ/AKOS` is a single-operator private canonical repository.
+
+Changes commit directly to `main`. Branches and pull requests are not the default workflow and may be created only when the operator explicitly requests them.
+
+Verification happens after the direct commit through provider readback, the public execution face, immutable receipts, and additive correction or `git revert` when rollback is required.
+
+A generic team-development convention does not outrank the operator's repository model.
 
 ## Core Stack
 
@@ -57,7 +67,7 @@ It becomes canonical when it has identity, provenance, structure, relationships,
 
 No new architecture outranks finishable work.
 
-The executable `finisher/` module scans an allowlisted queue of near-complete pull requests, distinguishes concrete blockers from inertia, blocks expansion when closure is available, and records provider-backed completion receipts. It may execute only bounded, explicitly enabled actions.
+The executable `finisher/` module scans an allowlisted queue of near-complete pull requests when a repository actually uses pull requests, distinguishes concrete blockers from inertia, blocks expansion when closure is available, and records provider-backed completion receipts. It may execute only bounded, explicitly enabled actions.
 
 See `finisher/README.md`.
 
@@ -105,7 +115,7 @@ For private GitHub workloads:
 
 ```text
 GlacierEQ/AKOS
-  -> exact source ref + metadata-only job
+  -> exact main commit + metadata-only job
 GlacierEQ/public-actions-runner-host
   -> public execution face
 GlacierEQ/llm-runner-teams
@@ -181,15 +191,16 @@ At the start of any AKOS-aware session:
 2. Read `AKOS_MANIFEST.yaml`.
 3. Read `BUILD_INDEX.md`.
 4. Read `CURRENT_STATE.md`.
-5. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
-6. Read `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` when capability, score, reliability, closure, or comparative claims are involved.
-7. Read `finisher/out/FINISH_QUEUE.md` when present.
-8. Close finishable work before proposing expansion.
-9. Discover the existing route before declaring a capability missing.
-10. Read the active spec relevant to the task.
-11. Apply `AKOS-OC-001` to tool actions and `AKOS-OC-002` to capability or closure assessments.
-12. Preserve history and append deltas.
+5. Commit AKOS changes directly to `main` unless the operator explicitly requests a branch or pull request.
+6. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
+7. Read `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` when capability, score, reliability, closure, or comparative claims are involved.
+8. Read `finisher/out/FINISH_QUEUE.md` when present.
+9. Close finishable work before proposing expansion.
+10. Discover the existing route before declaring a capability missing.
+11. Read the active spec relevant to the task.
+12. Apply `AKOS-OC-001` to tool actions and `AKOS-OC-002` to capability or closure assessments.
+13. Preserve history and append deltas.
 
 ## Operating Principle
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
+Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Commit directly to the canonical private mainline. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
