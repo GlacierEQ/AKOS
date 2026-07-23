@@ -2,15 +2,14 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.2.0
+version: 0.5.0
 status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-14"
+updated_at: "2026-07-22"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
 
-# Governance identity (required by src/verify_manifest.py)
 operator: GlacierEQ
 governance:
   model: progressive_os_L0_L5
@@ -28,11 +27,18 @@ governance:
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
   owns identities, repository roles, lifecycle state, review gates, promotion
-  records, and adapter contracts; it does not own case facts or evidence.
+  records, operational cognition contracts, operational maturity controls,
+  system topology, and adapter contracts; it does not own case facts or
+  evidence originals.
 
 primary_layer: Genome
 secondary_layers:
   - Cognitive Kernel
+  - Operational Cognition
+  - Operational Maturity
+  - Architecture Literacy
+  - Orchestration
+  - Artifact Closure
   - Canonical Object Model
   - Metadata Standard
   - Contracts
@@ -42,6 +48,8 @@ secondary_layers:
 
 active_specs:
   - AKOS-CK-001
+  - AKOS-OC-001
+  - AKOS-OC-002
   - AKOS-COM-001
   - AKOS-META-001
   - AKOS-REPO-CONTRACT-001
@@ -56,6 +64,17 @@ required_principles:
   - pro_code_before_canonical
   - one_truth_many_views
   - spiral_engine_evolution
+  - architecture_discovery_before_blocker
+  - reuse_before_rebuild
+  - extend_existing_plane_before_new_infrastructure
+  - correct_plane_before_execution
+  - correction_becomes_guard_test_and_receipt
+  - capability_states_must_not_be_collapsed
+  - score_only_from_control_evidence
+  - unmeasured_means_unassessed
+  - good_draft_is_not_complete
+  - ready_for_use_requires_full_lifecycle
+  - persistent_state_before_completion
 
 canonical_locations:
   docs: docs/
@@ -68,6 +87,22 @@ canonical_locations:
   adr: adr/
   ledger: ledger/
 
+system_topology:
+  manifest: manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json
+  schema: schemas/akos_system_topology.schema.json
+  execution_face: GlacierEQ/public-actions-runner-host
+  control_plane: GlacierEQ/llm-runner-teams
+  receipt_plane: GlacierEQ/llm-runner-teams/results
+  private_actions: forbidden
+
+operational_maturity:
+  spec: specs/AKOS-OC-002_OPERATIONAL_MATURITY.md
+  manifest: manifests/runtime/AKOS_OPERATIONAL_MATURITY.json
+  schema: schemas/operational_maturity.schema.json
+  runtime: operational_cognition/maturity.py
+  unsupported_numeric_self_rating: forbidden
+  unmeasured_state: unassessed
+
 relationships:
   supersedes: []
   mirrors:
@@ -78,6 +113,11 @@ relationships:
 quality_gates:
   - naming
   - architecture
+  - topology_alignment
+  - capability_truth_state
+  - scorecard_evidence
+  - artifact_closure
+  - persistence
   - failure_handling
   - maintainability
   - authenticity
@@ -88,10 +128,17 @@ metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-14"
+  last_reviewed: "2026-07-22"
 
 next_actions:
+  - merge the public runner registration for akos-operational-cognition-ci
+  - dispatch the exact AKOS branch ref through the public action face
+  - preserve the immutable private execution receipt
+  - generate the first receipt-grounded AKOS maturity scorecard
+  - drive one capability from discovered through persisted
+  - drive one artifact through all thirteen stages to ready_for_use
   - review and merge the CASEBRAIN federation contract
   - rotate the exposed AEON memory credential before production writes
   - repair Aspen projection and Supabase access controls before connection
-  - run one audited read-only source-to-recall integration slice
+  - run one audited read-only source-to-recall integration slice through AKOS-OC-001
+  - run one receipt-backed reversible write probe before promoting operational cognition

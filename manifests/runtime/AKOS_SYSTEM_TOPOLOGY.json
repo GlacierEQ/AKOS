@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "snapshot_id": "AKOS-TOPOLOGY-2026-07-21",
+  "status": "active_draft",
+  "verified": true,
+  "source_refs": [
+    "GlacierEQ/AKOS:AKOS_MANIFEST.yaml",
+    "GlacierEQ/public-actions-runner-host:README.md",
+    "GlacierEQ/public-actions-runner-host:config/action-face-actions.json",
+    "GlacierEQ/llm-runner-teams:README.md",
+    "GlacierEQ/llm-runner-teams:policy/no-private-actions.json"
+  ],
+  "nodes": [
+    {
+      "name": "GlacierEQ/AKOS",
+      "roles": ["source", "canonical"],
+      "systems": ["akos_policy", "github_actions.private_workload_ci"],
+      "operations": ["read", "analyze", "mutate_reversible"],
+      "active": true,
+      "private": true,
+      "authoritative_for": ["akos_policy"],
+      "source_ref": "AKOS_MANIFEST.yaml"
+    },
+    {
+      "name": "GlacierEQ/public-actions-runner-host",
+      "roles": ["execution_plane"],
+      "systems": ["github_actions.private_workload_ci", "apex_public_execution"],
+      "operations": ["read", "analyze", "mutate_reversible"],
+      "active": true,
+      "private": false,
+      "authoritative_for": ["github_actions.private_workload_ci", "apex_public_execution"],
+      "source_ref": "config/action-face-actions.json"
+    },
+    {
+      "name": "GlacierEQ/llm-runner-teams",
+      "roles": ["control_plane"],
+      "systems": ["apex_policy", "github_actions.private_workload_ci"],
+      "operations": ["read", "analyze", "mutate_reversible"],
+      "active": true,
+      "private": true,
+      "authoritative_for": ["apex_policy"],
+      "source_ref": "README.md"
+    },
+    {
+      "name": "GlacierEQ/llm-runner-teams/results",
+      "roles": ["receipt_plane"],
+      "systems": ["*"],
+      "operations": ["read", "analyze", "mutate_reversible"],
+      "active": true,
+      "private": true,
+      "authoritative_for": ["execution_receipts"],
+      "source_ref": "results/<job_id>.json"
+    }
+  ],
+  "locked_routes": [
+    {
+      "route_id": "AKOS-PRIVATE-CI-001",
+      "source": "GlacierEQ/AKOS",
+      "control": "GlacierEQ/llm-runner-teams",
+      "execution": "GlacierEQ/public-actions-runner-host",
+      "receipt": "GlacierEQ/llm-runner-teams/results",
+      "system": "github_actions.private_workload_ci",
+      "rule": "private AKOS supplies metadata and an exact source ref; the public face executes; the private control plane governs and stores the immutable receipt"
+    }
+  ],
+  "anti_rebuild_rules": [
+    "discover_existing_architecture_before_declaring_absence",
+    "reuse_existing_execution_plane_before_creating_infrastructure",
+    "extend_catalog_or_adapter_before_minting_runner",
+    "never_add_executable_github_actions_to_private_akos",
+    "never_treat_a_failed_wrong_plane_attempt_as_proof_the_correct_plane_is_missing"
+  ]
+}

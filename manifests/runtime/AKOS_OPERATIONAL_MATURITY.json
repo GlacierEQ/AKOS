@@ -1,0 +1,108 @@
+{
+  "canonical_id": "AKOS-OC-002",
+  "name": "AKOS Operational Maturity and Closure",
+  "version": "0.1.0",
+  "status": "active_draft",
+  "effective_date": "2026-07-22",
+  "purpose": "Replace impressionistic capability ratings with receipt-grounded maturity controls, capability truth states, and artifact closure gates.",
+  "governing_dimensions": [
+    "model_capability",
+    "tool_power",
+    "tool_literacy",
+    "architecture_literacy",
+    "orchestration",
+    "verification",
+    "persistence"
+  ],
+  "capability_truth_ladder": [
+    "declared",
+    "discovered",
+    "connected",
+    "authenticated",
+    "authorized",
+    "invoked",
+    "returned",
+    "verified",
+    "persisted"
+  ],
+  "evidence_levels": [
+    "none",
+    "asserted",
+    "observed",
+    "provider_receipt",
+    "verified",
+    "persisted"
+  ],
+  "assessment_dimensions": [
+    "model_capability",
+    "tool_power",
+    "source_selection_literacy",
+    "legal_document_literacy",
+    "evidence_forensic_document_literacy",
+    "developer_tool_literacy",
+    "architecture_literacy",
+    "multi_tool_orchestration",
+    "end_to_end_execution",
+    "artifact_closure",
+    "persistent_system_state",
+    "physical_science_forensics"
+  ],
+  "score_contract": {
+    "available_ceiling": "weighted percentage of controls with sourced available capability",
+    "demonstrated_reliability": "weighted percentage earned through evidence at the required level",
+    "gap": "available_ceiling minus demonstrated_reliability",
+    "unsupported_numeric_self_rating": "forbidden",
+    "unmeasured_state": "unassessed"
+  },
+  "maturity_bands": [
+    "unassessed",
+    "declared",
+    "observed",
+    "receipt_backed",
+    "verified",
+    "persisted"
+  ],
+  "artifact_lifecycle": [
+    "located",
+    "acquired",
+    "hashed",
+    "preserved",
+    "parsed",
+    "classified",
+    "correlated",
+    "drafted",
+    "verified",
+    "packaged",
+    "stored",
+    "logged",
+    "ready_for_use"
+  ],
+  "closure_rules": [
+    "good_draft_is_not_complete",
+    "stages_9_through_12_are_mandatory_release_controls",
+    "ready_for_use_requires_stage_13_receipt",
+    "missing_stages_return_exact_blocker",
+    "artifact_state_must_survive_conversation_boundaries"
+  ],
+  "comparison_rules": [
+    "user_class_comparisons_are_descriptive_archetypes_without_benchmark_data",
+    "no_world_ranking_without_dataset",
+    "no_percentile_claim_without_dataset",
+    "compare_structural_capabilities_not_professional_titles_alone"
+  ],
+  "implementation": {
+    "runtime": "operational_cognition/maturity.py",
+    "tests": "operational_cognition/test_maturity.py",
+    "spec": "specs/AKOS-OC-002_OPERATIONAL_MATURITY.md",
+    "schema": "schemas/operational_maturity.schema.json",
+    "manifest": "manifests/runtime/AKOS_OPERATIONAL_MATURITY.json"
+  },
+  "promotion_gate": {
+    "runtime_tests": "required",
+    "public_runner_receipt": "required",
+    "one_capability_persisted": "required",
+    "one_artifact_ready_for_use": "required",
+    "scorecard_evidence_citations": "required",
+    "human_review": "required"
+  }
+}
