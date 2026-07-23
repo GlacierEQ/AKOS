@@ -1,0 +1,70 @@
+{
+  "run_id": "AKOS-CASE-SLICE-2026-07-15-001",
+  "case_id": "1FDV-23-0001009",
+  "mode": "read_only",
+  "started_at": "2026-07-15T16:52:00Z",
+  "completed_at": "2026-07-15T16:56:00Z",
+  "input_manifest": "manifests/read_only/2026-07-15_CASEBRAIN_ROOT_METADATA_MANIFEST.json",
+  "input_manifest_sha256": "f8797d3f41aeb764700b4bc11f8443506cfce7668a3f083ef728a84f8a4d84ca",
+  "validation": {
+    "root_manifest": "PASS",
+    "source_allowlist": "PASS",
+    "read_only_contract": "PASS",
+    "evidence_mutation": "NONE",
+    "fact_promotion": "NONE"
+  },
+  "observations": [
+    {
+      "classification": "established_metadata_fact",
+      "source": "google_drive",
+      "finding": "The selected Drive case folder currently exposes only one direct child, 00_FILING.",
+      "source_pointer": "drive:1YHfISceV92HapCJ5q2Gj41RI6a197rPk/1tL93iEYilbE8EQ69YUIDfjwhGPW219TH"
+    },
+    {
+      "classification": "established_metadata_fact",
+      "source": "google_drive",
+      "finding": "The Active root contains at least three separate folder identities referring to case 1FDV-23-0001009.",
+      "source_pointer": "drive:1EojiiwzI5kkpm6A4BmlM6iUjpTNk8kcl"
+    },
+    {
+      "classification": "established_metadata_fact",
+      "source": "dropbox",
+      "finding": "The Dropbox case root contains six organized top-level case lanes.",
+      "source_pointer": "dropbox:id:M3qKixNrNsgAAAAAAATRRg"
+    },
+    {
+      "classification": "established_metadata_fact",
+      "source": "dropbox",
+      "finding": "The Dropbox 02_EVIDENCE folder returned zero direct children at inspection time.",
+      "source_pointer": "dropbox:id:M3qKixNrNsgAAAAAAATRSA"
+    }
+  ],
+  "identity_conflicts": [
+    {
+      "status": "OPEN",
+      "type": "duplicate_case_root_candidates",
+      "candidates": [
+        "drive:1YHfISceV92HapCJ5q2Gj41RI6a197rPk",
+        "drive:1g6yZFk20KPzTAgXw2yXhPy0qIj3RPyRm",
+        "drive:1AsqmSwmAmevn_40HOSB-byXXNrjnW1tI"
+      ],
+      "rule": "Do not merge, move, rename, or flatten. Inspect contents and lineage first."
+    }
+  ],
+  "gaps": [
+    "No file-level content hashes were produced because the inspected slice contained folders only.",
+    "The selected Drive case folder may be a thin projection rather than the complete case corpus.",
+    "The empty Dropbox evidence lane must not be interpreted as absence of evidence elsewhere."
+  ],
+  "next_safe_slice": {
+    "mode": "read_only",
+    "targets": [
+      "Google Drive 00_FILING direct children",
+      "Dropbox 00_FILING direct children",
+      "Dropbox 01_MOTIONS direct children",
+      "Google Drive Evidence root direct children"
+    ],
+    "required_output": ["file_id", "path", "mime_type", "byte_size", "modified_at", "provider_content_hash_when_available", "metadata_sha256"]
+  },
+  "result": "PASS_WITH_IDENTITY_CONFLICTS_AND_CONTENT_HASH_DEFERRED"
+}
