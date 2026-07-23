@@ -2,10 +2,10 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.5.0
+version: 0.5.1
 status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-22"
+updated_at: "2026-07-23"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
@@ -23,6 +23,16 @@ governance:
   hire_surface_excludes:
     - AEON-777
     - legal_case_packs
+
+repository_workflow:
+  mode: direct_to_main
+  operator_model: single_operator_private_repository
+  branches_by_default: forbidden
+  pull_requests_by_default: forbidden
+  exception: explicit_operator_request_only
+  verification: post_commit_provider_receipt_and_public_execution_face
+  rollback: additive_fix_or_git_revert
+  canonical_ref: main
 
 purpose: >
   Canonical governance repository for AKOS and the CASEBRAIN federation. It
@@ -64,6 +74,8 @@ required_principles:
   - pro_code_before_canonical
   - one_truth_many_views
   - spiral_engine_evolution
+  - direct_to_main_for_single_operator_private_repo
+  - no_branch_or_pull_request_without_explicit_operator_request
   - architecture_discovery_before_blocker
   - reuse_before_rebuild
   - extend_existing_plane_before_new_infrastructure
@@ -128,11 +140,11 @@ metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-22"
+  last_reviewed: "2026-07-23"
 
 next_actions:
   - merge the public runner registration for akos-operational-cognition-ci
-  - dispatch the exact AKOS branch ref through the public action face
+  - dispatch the exact AKOS main commit through the public action face
   - preserve the immutable private execution receipt
   - generate the first receipt-grounded AKOS maturity scorecard
   - drive one capability from discovered through persisted
