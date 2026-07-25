@@ -1,7 +1,7 @@
 # AKOS-GIT-001 — Master Strand Repository Architecture
 
 **Status:** active draft  
-**Version:** 0.1.0  
+**Version:** 0.1.1  
 **Owner:** GlacierEQ / AKOS  
 **Effective:** 2026-07-24
 
@@ -142,9 +142,9 @@ The gate returns an exact blocker when deletion is unsafe.
 
 ## Pull-request rule
 
-Pull requests are not the canonical work surface for a single-operator private repository.
+Pull requests are not the canonical work surface for a single-operator repository.
 
-Existing PRs are treated as branch discovery records. Their functional content is resolved into the Master Strand, then the PR is closed or marked merged. New PRs and branches require explicit operator instruction.
+Existing PRs are treated as branch discovery records. Their functional content is resolved into the Master Strand, then the PR is closed or marked merged. A new PR or temporary branch is permitted only by operator direction or when a bounded verification/review gate is required before canonical integration; it must be resolved promptly after the gate completes.
 
 ## Organization-wide objective
 
