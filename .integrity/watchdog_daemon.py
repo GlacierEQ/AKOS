@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Deterministic repository-integrity watchdog.
 
 Trust modes:
@@ -10,6 +8,8 @@ Trust modes:
 Verification never rewrites its own trust anchor. Baseline creation is a separate,
 explicit command.
 """
+
+from __future__ import annotations
 
 import argparse
 import hashlib
