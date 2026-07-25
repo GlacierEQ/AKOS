@@ -15,11 +15,11 @@ AKOS is the governing architecture that binds them.
 
 ## Direct-to-Main Rule
 
-`GlacierEQ/AKOS` is a single-operator private canonical repository.
+`GlacierEQ/AKOS` is a single-operator public canonical repository.
 
-Changes commit directly to `main`. Branches and pull requests are not the default workflow and may be created only when the operator explicitly requests them.
+Changes commit directly to `main`. Branches and pull requests are not the default workflow and may be created only when the operator explicitly requests them or when a bounded verification/review gate is required before canonical integration.
 
-Verification happens after the direct commit through provider readback, the public execution face, immutable receipts, and additive correction or `git revert` when rollback is required.
+Verification happens through provider readback, the read-only AKOS repository-local integrity gate, the public execution face for governed cross-repository workloads, immutable receipts where required, and additive correction or `git revert` when rollback is required.
 
 A generic team-development convention does not outrank the operator's repository model.
 
@@ -111,7 +111,7 @@ DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
 
 A failed attempt in the wrong plane is not proof that the correct plane is missing. A memory failure is not proof that the architecture is absent. When an execution plane already exists, AKOS reuses it or adds one bounded catalog action, adapter, or route binding before considering new infrastructure.
 
-For private GitHub workloads:
+For governed private GitHub workloads:
 
 ```text
 GlacierEQ/AKOS
@@ -122,7 +122,7 @@ GlacierEQ/llm-runner-teams
   -> private control and immutable receipts
 ```
 
-Private AKOS owns no executable GitHub Actions workflows.
+Public AKOS may own read-only repository-local verification workflows under `docs/architecture/PUBLIC_ACTION_FACE.md`. It may not execute governed cross-repository workloads, receive bridge credentials, deploy, or create action-face claims and receipts.
 
 See `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` and `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`.
 
@@ -191,7 +191,7 @@ At the start of any AKOS-aware session:
 2. Read `AKOS_MANIFEST.yaml`.
 3. Read `BUILD_INDEX.md`.
 4. Read `CURRENT_STATE.md`.
-5. Commit AKOS changes directly to `main` unless the operator explicitly requests a branch or pull request.
+5. Commit AKOS changes directly to `main` unless the operator explicitly requests a branch or pull request, or a bounded verification/review gate is required before canonical integration.
 6. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
 7. Read `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` when capability, score, reliability, closure, or comparative claims are involved.
 8. Read `finisher/out/FINISH_QUEUE.md` when present.
@@ -203,7 +203,7 @@ At the start of any AKOS-aware session:
 
 ## Operating Principle
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Commit directly to the canonical private mainline. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
+Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Commit directly to the canonical mainline. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
 
 ---
 

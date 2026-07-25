@@ -1,0 +1,34 @@
+name: AKOS Integrity Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: akos-integrity-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile every tracked Python file
+        shell: bash
+        run: git ls-files -z '*.py' | xargs -0 -r python -m py_compile
+      - name: Run adversarial integrity tests
+        run: python -m unittest discover -s .integrity -p 'test_*.py' -v
+      - name: Verify checkout against Git anchor
+        run: python .integrity/watchdog_daemon.py verify-git --anchor HEAD --json
