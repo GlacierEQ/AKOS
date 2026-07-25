@@ -1,24 +1,37 @@
 # AKOS Public Action Face Architecture
 
-**Status:** Active governing architecture; runtime activation blocked pending public visibility and canary evidence  
-**Effective:** 2026-07-16
+**Status:** Active governing architecture; public action-face runtime trust still requires reviewed canary evidence  
+**Effective:** 2026-07-16  
+**Amended:** 2026-07-24 — public repository-local verification boundary
 
 ## Canonical roles
 
 | Role | Repository | Required visibility | GitHub Actions posture |
 |---|---|---:|---:|
-| Public action face and execution plane | `GlacierEQ/public-actions-runner-host` | Public | Sole execution owner |
+| Public action face and governed execution plane | `GlacierEQ/public-actions-runner-host` | Public | Sole owner of governed cross-repository workload execution |
 | Private runner-team control plane | `GlacierEQ/llm-runner-teams` | Private | No executable workflows |
-| Private workload repositories | Catalog-approved `GlacierEQ/*` sources | Private or public | No Actions when private |
-| AKOS | `GlacierEQ/AKOS` | Private | Canonical policy and routing truth |
+| Private workload repositories | Catalog-approved `GlacierEQ/*` sources | Private | No Actions |
+| Public workload repositories | Catalog-approved `GlacierEQ/*` sources | Public | Read-only repository-local verification only; no governed cross-repository execution |
+| AKOS | `GlacierEQ/AKOS` | Public | Canonical policy/routing truth plus read-only repository-local verification |
 
 ## Prime law
 
-> All GitHub Actions execution, public run identity, workflow badges, and sanitized status belong to `GlacierEQ/public-actions-runner-host`.
+> All governed cross-repository workload execution, public run identity, workflow badges, and sanitized workload status belong to `GlacierEQ/public-actions-runner-host`.
 
 `GlacierEQ/llm-runner-teams` is the private policy, approval, atomic-claim, and immutable-result brain. It must not become the workflow owner, billed execution owner, or public run face.
 
 No private-repository Actions exception exists.
+
+A public source repository may own a narrowly bounded repository-local verification workflow only when every condition below is true:
+
+1. the workflow validates only the checked-out repository and does not orchestrate another repository;
+2. permissions are read-only and checkout credentials are not persisted;
+3. no bridge token, private-control token, broad PAT, deployment credential, or private workload secret is exposed;
+4. the workflow creates no public action-face claim, governed workload receipt, deployment, release, or external side effect;
+5. detailed private results are not published publicly;
+6. failure blocks promotion of the repository change but does not represent public action-face workload execution.
+
+This exception is a local CI boundary, not a second execution plane.
 
 ## Full pipeline
 
@@ -53,6 +66,8 @@ Handoff
   exact next repair, canary, verification, or deployment stage
 ```
 
+Repository-local verification stops after `Validate`. It does not enter Claim, Approve, Execute-as-workload, Record, Release, or private-control-plane publication.
+
 ## Immutable public identity
 
 The action face is bound to:
@@ -69,7 +84,7 @@ archived: false
 disabled: false
 ```
 
-Any mismatch blocks execution before workload planning.
+Any mismatch blocks governed workload execution before planning.
 
 ## Authorized principal law
 
@@ -112,6 +127,8 @@ No broad PAT fallback is permitted.
 - `APEX_CONTROL_TOKEN`: private control-plane policy/approval/claim/receipt access only.
 
 The public workflow pins checkout to an immutable action revision and uses `persist-credentials: false`. Bridge-token names and `GITHUB_TOKEN` are removed from workload process environments.
+
+Repository-local verification workflows use only the event-scoped read-only `GITHUB_TOKEN`, set `persist-credentials: false`, and do not receive APEX or control-plane credentials.
 
 ## Private control-plane invariants
 
@@ -160,6 +177,8 @@ stage and adapter result
 
 Workload success without private receipt success is a blocked release.
 
+Repository-local verification creates ordinary CI evidence only and must never impersonate this claim/receipt lifecycle.
+
 ## Public events
 
 ```text
@@ -189,17 +208,23 @@ Runtime trust requires two stages:
 
 No deployment reliance is approved before both stages are reviewed.
 
+Repository-local CI success does not satisfy either public action-face canary stage.
+
 ## Public/private truth boundary
 
 Public status is limited to identifiers, lane, state, private-ledger state, and public run URL.
 
 Evidence, source contents, legal narratives, document contents, prompts, messages, credentials, private approvals, claims, and detailed result logs remain private.
 
+A public repository-local verification log may contain only public source/test output and must not receive private evidence or secrets.
+
 ## Release-blocking conditions
 
 - Public action face is private or its immutable identity changes.
 - Private control plane becomes public, forked, archived, disabled, or gains executable workflows.
 - A private repository owns an Actions run.
+- A public workload repository performs governed cross-repository execution, receives bridge credentials, creates action-face claims/receipts, deploys, or publishes private detail.
+- A repository-local workflow persists checkout credentials or has permissions broader than required for read-only verification.
 - Dedicated bridge credentials are missing or over-broad.
 - Unauthorized ingress reaches planning.
 - Invalid, oversized, mixed-path, or conflicting metadata is accepted.
@@ -222,3 +247,5 @@ Evidence, source contents, legal narratives, document contents, prompts, message
 - Private no-Actions policy: `GlacierEQ/llm-runner-teams/policy/no-private-actions.json`
 - Private immutable-result policy: `GlacierEQ/llm-runner-teams/policy/immutable-results.json`
 - Retirement evidence: `GlacierEQ/llm-runner-teams/docs/migrations/2026-07-14-private-actions-retirement.json`
+- AKOS repository-local verification: `.github/workflows/integrity.yml`
+- AKOS integrity implementation: `.integrity/watchdog_daemon.py`
