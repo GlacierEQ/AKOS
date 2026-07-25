@@ -69,6 +69,19 @@ class WatchdogBaselineTests(unittest.TestCase):
         self.assertFalse(status["src/app.py"])
         self.assertFalse(status["new.txt"])
 
+    def test_symlink_hashes_link_text_without_reading_target(self) -> None:
+        outside = self.root.parent / "outside-secret.txt"
+        outside.write_text("secret-v1\n", encoding="utf-8")
+        link = self.root / "external-link"
+        try:
+            link.symlink_to(outside)
+        except (OSError, NotImplementedError):
+            self.skipTest("symlinks unavailable")
+        first = self.watchdog.scan()["external-link"]
+        outside.write_text("secret-v2\n", encoding="utf-8")
+        second = self.watchdog.scan()["external-link"]
+        self.assertEqual(first, second)
+
     def test_snapshot_requires_explicit_confirmation(self) -> None:
         result = main(["snapshot", "--root", str(self.root)])
         self.assertEqual(result, 2)
