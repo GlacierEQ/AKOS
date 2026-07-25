@@ -24,6 +24,7 @@ from typing import Iterable, Sequence
 
 SCHEMA_VERSION = 1
 HASH_ALGORITHM = "sha256"
+GIT_TIMEOUT_SECONDS = 30
 DEFAULT_EXCLUDED_DIRS = frozenset(
     {
         ".git",
@@ -115,6 +116,7 @@ class WatchdogDaemon:
         current: dict[str, str] = {}
         for relative, path in self._iter_files():
             if path.is_symlink():
+                # Hash the link text itself. Never resolve or read the target.
                 target = os.readlink(path).encode("utf-8", errors="surrogateescape")
                 current[relative] = self._sha256_bytes(b"symlink\0" + target)
             else:
@@ -202,7 +204,11 @@ class WatchdogDaemon:
         """Compatibility API: return status for the union of baseline/current paths."""
         current = self.scan()
         all_paths = sorted(set(self.baseline) | set(current))
-        return {path: self.baseline.get(path) == current.get(path) for path in all_paths}
+        missing = object()
+        return {
+            path: self.baseline.get(path, missing) == current.get(path, missing)
+            for path in all_paths
+        }
 
     def verify_git(self, anchor: str = "HEAD") -> IntegrityReport:
         """Verify tracked content against a Git anchor and reject untracked files."""
@@ -213,6 +219,7 @@ class WatchdogDaemon:
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.PIPE,
                 text=True,
+                timeout=GIT_TIMEOUT_SECONDS,
             )
             changed = self._git_paths(
                 ["diff", "--name-only", "--no-renames", "-z", anchor, "--"], nul=True
@@ -223,7 +230,7 @@ class WatchdogDaemon:
             tracked = set(
                 self._git_paths(["ls-tree", "-r", "--name-only", "-z", anchor], nul=True)
             )
-        except (OSError, subprocess.CalledProcessError) as exc:
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
             detail = getattr(exc, "stderr", None) or str(exc)
             return IntegrityReport(anchor=f"git:{anchor}", error=detail.strip())
 
@@ -248,6 +255,7 @@ class WatchdogDaemon:
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            timeout=GIT_TIMEOUT_SECONDS,
         )
         separator = b"\0" if nul else b"\n"
         return {
