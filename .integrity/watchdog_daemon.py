@@ -2,10 +2,10 @@ from __future__ import annotations
 
 """Deterministic repository-integrity watchdog.
 
-The watchdog has two explicit trust modes:
+Trust modes:
 
 * ``baseline`` compares the working tree with a reviewed SHA-256 manifest.
-* ``git`` compares the working tree with a pinned Git commit (``HEAD`` by default).
+* ``git`` compares actual working-tree bytes with a pinned Git tree.
 
 Verification never rewrites its own trust anchor. Baseline creation is a separate,
 explicit command.
@@ -15,6 +15,7 @@ import argparse
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import sys
 import tempfile
@@ -25,6 +26,7 @@ from typing import Iterable, Sequence
 SCHEMA_VERSION = 1
 HASH_ALGORITHM = "sha256"
 GIT_TIMEOUT_SECONDS = 30
+BASELINE_STATUS_KEY = "__akos_baseline__"
 DEFAULT_EXCLUDED_DIRS = frozenset(
     {
         ".git",
@@ -63,6 +65,13 @@ class IntegrityReport:
         return payload
 
 
+@dataclass(frozen=True)
+class GitTreeEntry:
+    mode: str
+    object_type: str
+    object_sha: str
+
+
 class WatchdogDaemon:
     def __init__(
         self,
@@ -81,8 +90,18 @@ class WatchdogDaemon:
             else self.integrity_dir / "file_hashes.json"
         )
         self.excluded_dirs = frozenset(excluded_dirs)
-        self.excluded_files = frozenset(Path(p).as_posix() for p in excluded_files)
-        self.baseline = self._load_baseline()
+        dynamic_exclusions = {Path(path).as_posix() for path in excluded_files}
+        try:
+            dynamic_exclusions.add(self.hash_store.relative_to(self.repo_root).as_posix())
+        except ValueError:
+            pass
+        self.excluded_files = frozenset(dynamic_exclusions)
+        self.baseline: dict[str, str] = {}
+        self.baseline_error: str | None = None
+        try:
+            self.baseline = self._load_baseline()
+        except (OSError, ValueError) as exc:
+            self.baseline_error = str(exc)
 
     @staticmethod
     def _sha256_file(path: Path) -> str:
@@ -105,18 +124,36 @@ class WatchdogDaemon:
     def _iter_files(self) -> Iterable[tuple[str, Path]]:
         if not self.repo_root.is_dir():
             raise FileNotFoundError(f"repository root does not exist: {self.repo_root}")
-        for path in sorted(self.repo_root.rglob("*"), key=lambda p: p.as_posix()):
-            relative = path.relative_to(self.repo_root)
-            if self._is_excluded(relative):
-                continue
-            if path.is_symlink() or path.is_file():
-                yield relative.as_posix(), path
+
+        for current_root, dirnames, filenames in os.walk(
+            self.repo_root, topdown=True, followlinks=False
+        ):
+            root = Path(current_root)
+            kept_dirs: list[str] = []
+            for dirname in sorted(dirnames):
+                path = root / dirname
+                relative = path.relative_to(self.repo_root)
+                if self._is_excluded(relative):
+                    continue
+                if path.is_symlink():
+                    yield relative.as_posix(), path
+                else:
+                    kept_dirs.append(dirname)
+            dirnames[:] = kept_dirs
+
+            for filename in sorted(filenames):
+                path = root / filename
+                relative = path.relative_to(self.repo_root)
+                if self._is_excluded(relative):
+                    continue
+                if path.is_symlink() or path.is_file():
+                    yield relative.as_posix(), path
 
     def scan(self) -> dict[str, str]:
         current: dict[str, str] = {}
         for relative, path in self._iter_files():
             if path.is_symlink():
-                # Hash the link text itself. Never resolve or read the target.
+                # Hash link text only. Never resolve or read the target.
                 target = os.readlink(path).encode("utf-8", errors="surrogateescape")
                 current[relative] = self._sha256_bytes(b"symlink\0" + target)
             else:
@@ -130,9 +167,23 @@ class WatchdogDaemon:
             raw = json.loads(self.hash_store.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             raise ValueError(f"invalid integrity baseline: {self.hash_store}: {exc}") from exc
+        if not isinstance(raw, dict):
+            raise ValueError("integrity baseline must be a JSON object")
 
-        # Backward compatibility with the original flat mapping.
-        files = raw.get("files") if isinstance(raw, dict) and "files" in raw else raw
+        if "files" in raw:
+            if raw.get("schema_version") != SCHEMA_VERSION:
+                raise ValueError(
+                    f"unsupported integrity schema: {raw.get('schema_version')!r}"
+                )
+            if raw.get("algorithm") != HASH_ALGORITHM:
+                raise ValueError(
+                    f"unsupported integrity algorithm: {raw.get('algorithm')!r}"
+                )
+            files = raw["files"]
+        else:
+            # Backward compatibility with the original flat mapping.
+            files = raw
+
         if not isinstance(files, dict):
             raise ValueError("integrity baseline must contain a 'files' object")
 
@@ -171,14 +222,15 @@ class WatchdogDaemon:
                 pass
             raise
         self.baseline = files
+        self.baseline_error = None
         return files
 
     def report(self) -> IntegrityReport:
+        anchor = f"baseline:{self.hash_store}"
+        if self.baseline_error:
+            return IntegrityReport(anchor=anchor, error=self.baseline_error)
         if not self.hash_store.exists() or not self.baseline:
-            return IntegrityReport(
-                anchor=f"baseline:{self.hash_store}",
-                error="missing or empty SHA-256 baseline",
-            )
+            return IntegrityReport(anchor=anchor, error="missing or empty SHA-256 baseline")
         current = self.scan()
         baseline_paths = set(self.baseline)
         current_paths = set(current)
@@ -193,7 +245,7 @@ class WatchdogDaemon:
         )
         unchanged = len((baseline_paths & current_paths) - set(modified))
         return IntegrityReport(
-            anchor=f"baseline:{self.hash_store}",
+            anchor=anchor,
             added=added,
             removed=removed,
             modified=modified,
@@ -201,7 +253,9 @@ class WatchdogDaemon:
         )
 
     def verify(self) -> dict[str, bool]:
-        """Compatibility API: return status for the union of baseline/current paths."""
+        """Compatibility API returning per-path status and a fail-closed anchor flag."""
+        if self.baseline_error or not self.hash_store.exists() or not self.baseline:
+            return {BASELINE_STATUS_KEY: False}
         current = self.scan()
         all_paths = sorted(set(self.baseline) | set(current))
         missing = object()
@@ -211,58 +265,123 @@ class WatchdogDaemon:
         }
 
     def verify_git(self, anchor: str = "HEAD") -> IntegrityReport:
-        """Verify tracked content against a Git anchor and reject untracked files."""
+        """Compare actual tracked bytes with a Git tree and reject non-excluded extras."""
         try:
-            subprocess.run(
-                ["git", "-C", str(self.repo_root), "rev-parse", "--verify", anchor],
-                check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.PIPE,
-                text=True,
-                timeout=GIT_TIMEOUT_SECONDS,
-            )
-            changed = self._git_paths(
-                ["diff", "--name-only", "--no-renames", "-z", anchor, "--"], nul=True
-            )
-            untracked = self._git_paths(
-                ["ls-files", "--others", "--exclude-standard", "-z"], nul=True
-            )
-            tracked = set(
-                self._git_paths(["ls-tree", "-r", "--name-only", "-z", anchor], nul=True)
-            )
+            tree_sha = self._git_text(
+                ["rev-parse", "--verify", f"{anchor}^{{tree}}"]
+            ).strip()
+            entries = self._git_tree(tree_sha)
         except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
-            detail = getattr(exc, "stderr", None) or str(exc)
-            return IntegrityReport(anchor=f"git:{anchor}", error=detail.strip())
+            return IntegrityReport(anchor=f"git:{anchor}", error=self._error_text(exc))
 
-        changed = {path for path in changed if not self._is_excluded(Path(path))}
-        untracked = {path for path in untracked if not self._is_excluded(Path(path))}
-        tracked = {path for path in tracked if not self._is_excluded(Path(path))}
-        removed = tuple(sorted(path for path in changed if not (self.repo_root / path).exists()))
-        modified = tuple(sorted(set(changed) - set(removed)))
-        added = tuple(sorted(untracked))
-        unchanged = max(0, len(tracked - set(changed)))
+        modified: set[str] = set()
+        removed: set[str] = set()
+        submodules: set[str] = set()
+
+        for relative, entry in sorted(entries.items()):
+            path = self.repo_root / relative
+            present = path.exists() or path.is_symlink()
+            if not present:
+                removed.add(relative)
+                continue
+            try:
+                if entry.mode == "120000":
+                    if not path.is_symlink():
+                        modified.add(relative)
+                        continue
+                    actual = os.readlink(path).encode("utf-8", errors="surrogateescape")
+                    expected = self._git_bytes(["cat-file", "blob", entry.object_sha])
+                    if actual != expected:
+                        modified.add(relative)
+                elif entry.object_type == "blob":
+                    if path.is_symlink() or not path.is_file():
+                        modified.add(relative)
+                        continue
+                    actual = path.read_bytes()
+                    expected = self._git_bytes(["cat-file", "blob", entry.object_sha])
+                    expected_executable = entry.mode == "100755"
+                    actual_executable = bool(path.stat().st_mode & stat.S_IXUSR)
+                    if actual != expected or actual_executable != expected_executable:
+                        modified.add(relative)
+                elif entry.object_type == "commit":
+                    submodules.add(relative)
+                    if not path.is_dir():
+                        modified.add(relative)
+                        continue
+                    current_sha = self._git_text(
+                        ["-C", str(path), "rev-parse", "--verify", "HEAD"]
+                    ).strip()
+                    if current_sha != entry.object_sha:
+                        modified.add(relative)
+                else:
+                    modified.add(relative)
+            except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+                modified.add(relative)
+
+        tracked_paths = set(entries)
+        current_paths = set(self.scan())
+        added = {
+            path
+            for path in current_paths - tracked_paths
+            if not any(path == root or path.startswith(f"{root}/") for root in submodules)
+        }
+        unchanged = max(0, len(tracked_paths - modified - removed))
         return IntegrityReport(
             anchor=f"git:{anchor}",
-            added=added,
-            removed=removed,
-            modified=modified,
+            added=tuple(sorted(added)),
+            removed=tuple(sorted(removed)),
+            modified=tuple(sorted(modified)),
             unchanged=unchanged,
         )
 
-    def _git_paths(self, arguments: Sequence[str], *, nul: bool = False) -> set[str]:
-        completed = subprocess.run(
+    def _git_tree(self, tree_sha: str) -> dict[str, GitTreeEntry]:
+        output = self._git_bytes(
+            ["ls-tree", "-r", "-z", "--full-tree", tree_sha]
+        )
+        entries: dict[str, GitTreeEntry] = {}
+        for record in output.split(b"\0"):
+            if not record:
+                continue
+            header, raw_path = record.split(b"\t", 1)
+            mode, object_type, object_sha = header.split(b" ", 2)
+            relative = raw_path.decode("utf-8", errors="surrogateescape")
+            entries[relative] = GitTreeEntry(
+                mode=mode.decode("ascii"),
+                object_type=object_type.decode("ascii"),
+                object_sha=object_sha.decode("ascii"),
+            )
+        return entries
+
+    def _run_git(
+        self, arguments: Sequence[str], *, text: bool = False
+    ) -> subprocess.CompletedProcess:
+        return subprocess.run(
             ["git", "-C", str(self.repo_root), *arguments],
             check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            text=text,
             timeout=GIT_TIMEOUT_SECONDS,
         )
-        separator = b"\0" if nul else b"\n"
-        return {
-            item.decode("utf-8", errors="surrogateescape")
-            for item in completed.stdout.split(separator)
-            if item
-        }
+
+    def _git_bytes(self, arguments: Sequence[str]) -> bytes:
+        output = self._run_git(arguments).stdout
+        assert isinstance(output, bytes)
+        return output
+
+    def _git_text(self, arguments: Sequence[str]) -> str:
+        output = self._run_git(arguments, text=True).stdout
+        assert isinstance(output, str)
+        return output
+
+    @staticmethod
+    def _error_text(exc: BaseException) -> str:
+        detail = getattr(exc, "stderr", None)
+        if isinstance(detail, bytes):
+            return detail.decode("utf-8", errors="replace").strip()
+        if isinstance(detail, str) and detail.strip():
+            return detail.strip()
+        return str(exc)
 
 
 def _print_report(report: IntegrityReport, *, json_output: bool) -> None:
@@ -301,11 +420,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "snapshot" and args.confirm != "YES":
+        print("Refusing to rewrite trust anchor: pass --confirm YES", file=sys.stderr)
+        return 2
+
     watchdog = WatchdogDaemon(repo_root=args.root, hash_store=args.baseline)
     if args.command == "snapshot":
-        if args.confirm != "YES":
-            print("Refusing to rewrite trust anchor: pass --confirm YES", file=sys.stderr)
-            return 2
         files = watchdog.update_baseline()
         print(f"Wrote SHA-256 baseline for {len(files)} files: {watchdog.hash_store}")
         return 0
