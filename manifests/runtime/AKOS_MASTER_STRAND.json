@@ -1,0 +1,78 @@
+{
+  "canonical_id": "AKOS-GIT-001",
+  "name": "Master Strand Repository Architecture",
+  "version": "0.1.0",
+  "status": "active_draft",
+  "effective_date": "2026-07-24",
+  "operator_model": "single_operator_private_repositories",
+  "canonical_working_face": "default_branch",
+  "preferred_default_branch": "main",
+  "branch_default": "forbidden",
+  "pull_request_default": "forbidden",
+  "noncanonical_branch_states": [
+    "absorb",
+    "transplant",
+    "quarantine",
+    "discard"
+  ],
+  "master_strand": {
+    "alpha": [
+      "executable_logic",
+      "schemas_and_interfaces",
+      "tests_and_acceptance_criteria",
+      "operational_configuration",
+      "user_visible_capability"
+    ],
+    "omega": [
+      "source_commit",
+      "origin_repository",
+      "provider_receipt",
+      "verification_result",
+      "hashes_and_artifact_locations",
+      "supersession_and_rollback",
+      "destination_decision"
+    ]
+  },
+  "branch_extinction_sequence": [
+    "inventory",
+    "compare_against_canonical_mainline",
+    "identify_unique_function",
+    "classify_ownership",
+    "resolve_disposition",
+    "verify_destination_mainline",
+    "record_receipt_and_lineage",
+    "close_associated_pr",
+    "align_old_ref_to_canonical_head",
+    "delete_old_ref"
+  ],
+  "dispositions": {
+    "absorb": "integrate valuable function into the current repository canonical mainline",
+    "transplant": "move valuable function to the canonical mainline of the correct repository",
+    "quarantine": "preserve exact lineage outside the active face when unsafe or untrusted",
+    "discard": "remove duplicate, superseded, empty, bot-noise, or rejected work after proof"
+  },
+  "anti_patterns": [
+    "indefinite_branch_storage",
+    "branch_as_alternate_reality",
+    "deletion_before_unique_value_extraction",
+    "blind_conflict_overwrite",
+    "bot_branch_as_canonical_truth",
+    "release_branch_outranking_working_face",
+    "copying_capability_without_lineage",
+    "keeping_function_in_wrong_repository"
+  ],
+  "deletion_gate": [
+    "unique_value_is_verified_on_destination_or_rejected_with_reason",
+    "source_sha_is_preserved",
+    "destination_or_disposition_receipt_exists",
+    "obsolete_ref_is_aligned",
+    "provider_deletion_is_confirmed"
+  ],
+  "implementation": {
+    "spec": "specs/AKOS-GIT-001_MASTER_STRAND.md",
+    "runtime": "operational_cognition/master_strand.py",
+    "tests": "operational_cognition/test_master_strand.py",
+    "ledger": "ledger/2026-07-24_MASTER_STRAND_CONSOLIDATION.md"
+  },
+  "truth_boundary": "the architecture is implemented; organization-wide branch consolidation is in progress and is not complete until every owned repository and non-default ref has a disposition and provider-confirmed final state"
+}
