@@ -18,6 +18,16 @@ from .engine import (
     completion_summary,
     route_source,
 )
+from .master_strand import (
+    BranchAssessment,
+    BranchDisposition,
+    BranchExtinctionGate,
+    ExtinctionGateResult,
+    ExtinctionReceipt,
+    MasterStrandEngine,
+    StrandDecision,
+    summarize_decisions,
+)
 from .maturity import (
     ArtifactClosureGate,
     ArtifactClosureResult,
@@ -51,6 +61,9 @@ __all__ = [
     "ArtifactClosureResult",
     "ArtifactReceipt",
     "ArtifactStage",
+    "BranchAssessment",
+    "BranchDisposition",
+    "BranchExtinctionGate",
     "Capability",
     "CapabilityLedger",
     "CapabilityReceipt",
@@ -64,7 +77,10 @@ __all__ = [
     "EvidenceClass",
     "EvidenceLevel",
     "ExecutionRoute",
+    "ExtinctionGateResult",
+    "ExtinctionReceipt",
     "InfrastructureDecision",
+    "MasterStrandEngine",
     "MaturityBand",
     "MaturityControl",
     "MaturityDimension",
@@ -77,6 +93,7 @@ __all__ = [
     "RouteState",
     "ScorecardResult",
     "SourceKind",
+    "StrandDecision",
     "SystemFirstOrchestrator",
     "SystemNode",
     "SystemRole",
@@ -84,4 +101,5 @@ __all__ = [
     "completion_summary",
     "route_source",
     "standard_maturity_controls",
+    "summarize_decisions",
 ]
