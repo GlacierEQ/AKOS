@@ -1,8 +1,8 @@
 # AKOS Build Index
 
 Status: Active Draft  
-Version: 0.5.0  
-Updated: 2026-07-22
+Version: 0.5.1  
+Updated: 2026-07-26
 
 ## Purpose
 
@@ -40,7 +40,7 @@ This file is the navigation index for the AKOS architecture repository. It recor
 | `adr/` | Architecture decision records |
 | `ledger/` | Append-only build and sync records |
 | `audits/` | Review and quality-gate records |
-| `operational_cognition/` | Execution, topology, maturity, and artifact-closure runtime |
+| `operational_cognition/` | Execution, topology, maturity, artifact-closure, and connector runtime |
 
 ## Active Specification Series
 
@@ -82,6 +82,20 @@ This file is the navigation index for the AKOS architecture repository. It recor
 | Private execution receipts | `GlacierEQ/llm-runner-teams/results/<job_id>.json` | required |
 | Cognition receipt | `ledger/2026-07-21_OPERATIONAL_COGNITION.md` | branch receipt |
 | Maturity receipt | `ledger/2026-07-22_OPERATIONAL_MATURITY.md` | branch receipt |
+
+## Connector Implementation Pack
+
+| Artifact | Path | Status |
+|---|---|---|
+| Connector registry | `docs/connector-registry.md` | active draft v0.2.0 |
+| Connector interface contract | `docs/integrations/CONNECTOR_INTERFACE_CONTRACT.md` | active draft |
+| Connector readiness gates | `docs/integrations/CONNECTOR_READINESS_GATES.md` | active draft |
+| Kimi portable memory runtime | `operational_cognition/connectors/kimi_memory.py` | implemented and locally verified |
+| Kimi adapter tests | `operational_cognition/test_kimi_memory.py` | six tests passed locally |
+| Kimi connector manifest | `manifests/connectors/CONN-KIMI-001.json` | Ready for Manual Test |
+| Kimi record schema | `schemas/connectors/kimi-memory-record.schema.json` | Draft 2020-12 sample validation passed |
+| Kimi operator guide | `docs/integrations/kimi/README.md` | implemented |
+| Kimi build receipt | `ledger/2026-07-26_KIMI_MEMORY_ADAPTER.md` | implementation receipt |
 
 ## Operational Truth Rules
 
