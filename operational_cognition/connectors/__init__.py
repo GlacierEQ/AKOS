@@ -1,21 +1,8 @@
-"""External-system connector adapters governed by AKOS Operational Cognition."""
+"""External-system connector adapters governed by AKOS Operational Cognition.
 
-from .kimi_memory import (
-    ImportDisposition,
-    ImportReceipt,
-    JsonlMemoryStore,
-    KimiMemoryAdapter,
-    MemoryRecord,
-    load_export_records,
-    memoryplugin_line,
-)
+Connector modules are intentionally not imported eagerly so each adapter remains
+independently executable with ``python -m`` and unavailable providers do not
+break package discovery.
+"""
 
-__all__ = [
-    "ImportDisposition",
-    "ImportReceipt",
-    "JsonlMemoryStore",
-    "KimiMemoryAdapter",
-    "MemoryRecord",
-    "load_export_records",
-    "memoryplugin_line",
-]
+__all__: list[str] = []
