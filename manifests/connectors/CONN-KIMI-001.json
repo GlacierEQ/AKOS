@@ -1,0 +1,44 @@
+{
+  "connector_id": "CONN-KIMI-001",
+  "name": "Kimi Portable Memory Adapter",
+  "version": "0.1.0",
+  "status": "implemented_local_projection",
+  "primary_role": "external-agent memory import and portability",
+  "source_system": "Kimi",
+  "target_system": "AKOS",
+  "canonical_authority": false,
+  "source_class": "mirrored_external_export",
+  "object_types": ["connector_object", "sync_receipt", "verification_event"],
+  "supported_operations": [
+    "import_json",
+    "import_jsonl",
+    "normalize",
+    "deduplicate",
+    "detect_drift",
+    "verify_content_hashes",
+    "render_memoryplugin_line"
+  ],
+  "unsupported_claims": [
+    "live_kimi_api_connected",
+    "memoryplugin_api_authenticated",
+    "automatic_canonical_promotion",
+    "silent_overwrite"
+  ],
+  "implementation": {
+    "module": "operational_cognition.connectors.kimi_memory",
+    "schema": "schemas/connectors/kimi-memory-record.schema.json",
+    "tests": "operational_cognition/test_kimi_memory.py",
+    "documentation": "docs/integrations/kimi/README.md"
+  },
+  "readiness": {
+    "role_clarity": "passed",
+    "object_clarity": "passed",
+    "field_clarity": "passed",
+    "source_clarity": "passed",
+    "review_clarity": "passed",
+    "drift_visibility": "passed",
+    "handoff_clarity": "passed",
+    "pro_code_alignment": "implemented_pending_provider_receipt",
+    "result": "Ready for Manual Test"
+  }
+}
