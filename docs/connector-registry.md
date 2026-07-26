@@ -1,8 +1,9 @@
 # AKOS Connector Registry
 
 Status: Active Draft
-Version: 0.1.0
+Version: 0.2.0
 Created: 2026-07-04
+Updated: 2026-07-26
 
 ## Purpose
 
@@ -24,6 +25,7 @@ CONN-SUPABASE-001
 CONN-MAKE-001
 CONN-GITHUB-001
 CONN-NOTION-001
+CONN-KIMI-001
 ```
 
 ## Priority Connectors
@@ -35,6 +37,12 @@ CONN-NOTION-001
 | 3 | Make | Automation layer |
 | 4 | GitHub | Architecture and version source |
 | 5 | Notion | Dashboard and navigation mirror |
+
+## Implemented Edge Connectors
+
+| Connector ID | Connector | Role | Canonical authority | Readiness |
+|---|---|---|---|---|
+| `CONN-KIMI-001` | Kimi Portable Memory Adapter | External-agent memory import and portability | no | Ready for Manual Test |
 
 ## Shared Object Fields
 
@@ -66,7 +74,8 @@ review_status:
 ```json
 {
   "document": "connector-registry",
-  "version": "0.1.0",
-  "priority_connectors": ["ClickUp", "Supabase", "Make", "GitHub", "Notion"]
+  "version": "0.2.0",
+  "priority_connectors": ["ClickUp", "Supabase", "Make", "GitHub", "Notion"],
+  "implemented_edge_connectors": ["CONN-KIMI-001"]
 }
 ```
