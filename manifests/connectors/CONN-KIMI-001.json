@@ -1,14 +1,21 @@
 {
   "connector_id": "CONN-KIMI-001",
-  "name": "Kimi Portable Memory Adapter",
-  "version": "0.1.0",
-  "status": "implemented_local_projection",
-  "primary_role": "external-agent memory import and portability",
-  "source_system": "Kimi",
+  "name": "Kimi + MemoryPlugin Live Bridge",
+  "version": "0.2.0",
+  "status": "implemented_live_path_pending_secret_binding",
+  "primary_role": "external-agent memory recall, write, and Kimi inference",
+  "source_systems": ["Kimi API", "MemoryPlugin API"],
   "target_system": "AKOS",
   "canonical_authority": false,
-  "source_class": "mirrored_external_export",
+  "source_class": "mirrored_external_memory",
   "object_types": ["connector_object", "sync_receipt", "verification_event"],
+  "required_secrets": ["MOONSHOT_API_KEY", "MEMORY_PLUGIN_API_KEY"],
+  "verified_endpoints": {
+    "moonshot_models": "https://api.moonshot.ai/v1/models",
+    "moonshot_chat": "https://api.moonshot.ai/v1/chat/completions",
+    "memoryplugin_search": "https://www.memoryplugin.com/api/v2/memory",
+    "memoryplugin_create": "https://www.memoryplugin.com/api/memory"
+  },
   "supported_operations": [
     "import_json",
     "import_jsonl",
@@ -16,18 +23,27 @@
     "deduplicate",
     "detect_drift",
     "verify_content_hashes",
-    "render_memoryplugin_line"
+    "render_memoryplugin_line",
+    "probe_provider_credentials",
+    "search_memoryplugin",
+    "create_memoryplugin_memory",
+    "call_kimi_chat_completion",
+    "inject_recalled_memory_into_kimi",
+    "persist_secret_free_provider_receipts"
   ],
   "unsupported_claims": [
-    "live_kimi_api_connected",
-    "memoryplugin_api_authenticated",
+    "provider_credentials_authenticated_without_probe_receipt",
     "automatic_canonical_promotion",
-    "silent_overwrite"
+    "silent_overwrite",
+    "secret_persistence_in_repository"
   ],
   "implementation": {
-    "module": "operational_cognition.connectors.kimi_memory",
+    "export_module": "operational_cognition.connectors.kimi_memory",
+    "live_module": "operational_cognition.connectors.live_memory",
     "schema": "schemas/connectors/kimi-memory-record.schema.json",
-    "tests": "operational_cognition/test_kimi_memory.py",
+    "export_tests": "operational_cognition/test_kimi_memory.py",
+    "live_tests": "operational_cognition/test_live_memory.py",
+    "secret_template": "config/kimi-memory.env.example",
     "documentation": "docs/integrations/kimi/README.md"
   },
   "readiness": {
@@ -38,7 +54,9 @@
     "review_clarity": "passed",
     "drift_visibility": "passed",
     "handoff_clarity": "passed",
-    "pro_code_alignment": "implemented_pending_provider_receipt",
-    "result": "Ready for Manual Test"
+    "secret_redaction_tests": "passed_locally",
+    "provider_contract_tests": "passed_locally",
+    "provider_authentication": "pending_secret_binding_and_probe",
+    "result": "Ready for Authenticated Test"
   }
 }
