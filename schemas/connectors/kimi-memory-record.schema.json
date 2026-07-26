@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://akos.local/schemas/connectors/kimi-memory-record.schema.json",
+  "title": "AKOS Kimi Portable Memory Record",
+  "type": "object",
+  "required": [
+    "casebrain_id",
+    "object_type",
+    "case_id",
+    "title",
+    "summary",
+    "verification_status",
+    "source",
+    "relations",
+    "metadata",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "casebrain_id": {
+      "type": "string",
+      "pattern": "^CBR-CONNECTOR_OBJECT-[0-9A-HJKMNP-TV-Z]{26}$"
+    },
+    "object_type": {"const": "connector_object"},
+    "case_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "summary": {"type": "string"},
+    "verification_status": {"const": "unverified"},
+    "confidence": {"type": "null"},
+    "source": {
+      "type": "object",
+      "required": ["system", "uri", "object_id", "sha256", "extraction_method"],
+      "properties": {
+        "system": {"const": "kimi"},
+        "uri": {"type": "string", "minLength": 1},
+        "object_id": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "page_start": {"type": ["integer", "null"]},
+        "page_end": {"type": ["integer", "null"]},
+        "line_start": {"type": ["integer", "null"]},
+        "line_end": {"type": ["integer", "null"]},
+        "time_start_ms": {"type": ["integer", "null"]},
+        "time_end_ms": {"type": ["integer", "null"]},
+        "extraction_method": {"const": "export_normalization"}
+      },
+      "additionalProperties": false
+    },
+    "relations": {"type": "array"},
+    "metadata": {
+      "type": "object",
+      "required": [
+        "connector_id",
+        "content",
+        "content_sha256",
+        "source_object_id",
+        "source_system",
+        "target_system",
+        "target_location",
+        "review_state",
+        "owner",
+        "imported_at",
+        "raw_metadata"
+      ],
+      "properties": {
+        "connector_id": {"const": "CONN-KIMI-001"},
+        "content": {"type": "string", "minLength": 1},
+        "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "source_object_id": {"type": "string", "minLength": 1},
+        "source_system": {"const": "kimi"},
+        "target_system": {"const": "AKOS"},
+        "target_location": {"const": "casebrain/connector_object"},
+        "review_state": {"const": "working"},
+        "owner": {"type": "string", "minLength": 1},
+        "imported_at": {"type": "string", "format": "date-time"},
+        "raw_metadata": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "created_at": {"type": "string"},
+    "updated_at": {"type": "string"}
+  },
+  "additionalProperties": false
+}
