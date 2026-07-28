@@ -157,9 +157,11 @@
   ],
   "implementation": {
     "runtime": "operational_cognition/engine.py",
+    "execution_authority_runtime": "operational_cognition/execution_authority.py",
     "topology_runtime": "operational_cognition/topology.py",
     "tests": [
       "operational_cognition/test_engine.py",
+      "operational_cognition/test_execution_authority.py",
       "operational_cognition/test_topology.py",
       "operational_cognition/test_contracts.py"
     ],
@@ -168,6 +170,7 @@
     "topology_schema": "schemas/akos_system_topology.schema.json",
     "topology_manifest": "manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json",
     "spec": "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md",
+    "execution_authority_spec": "specs/AKOS-OC-001A_EXECUTION_AUTHORITY_ADDENDUM.md",
     "mentality": "docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md",
     "execution_law": "specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md#law-011--execution-without-redundant-permission",
     "execution_contract": "contracts/AKOS-NONDESTRUCTIVE-AUTOAPPLY-001.md",
