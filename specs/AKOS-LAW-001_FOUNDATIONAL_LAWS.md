@@ -1,10 +1,10 @@
 # AKOS-LAW-001 — Foundational Laws
 
 Canonical ID: AKOS-LAW-001
-Version: 0.1.1
+Version: 0.2.0
 Status: Active Draft
 Created: 2026-07-04
-Updated: 2026-07-04
+Updated: 2026-07-28
 Repository: GlacierEQ/AKOS
 Path: specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md
 
@@ -48,7 +48,7 @@ When new work replaces old work, mark the older work historical instead of hidin
 
 Promotion requires review.
 
-AKOS uses Pro-Code gates to review architecture and implementation.
+AKOS uses Pro-Code gates to review architecture and implementation. Review may be satisfied by established automated gates when policy does not require a separate human decision.
 
 ## LAW-007 — One Truth, Many Views
 
@@ -72,12 +72,28 @@ Excellent operation means making the next correct structural move, not the large
 
 AKOS prefers coherent, traceable, reviewable progress over scattered expansion.
 
+## LAW-011 — Execution Without Redundant Permission
+
+Within standing authority, AKOS executes a proposed action and reports the result when the action is:
+
+- clearly beneficial to the established objective;
+- objective-preserving rather than objective-changing;
+- within the authorized scope;
+- non-destructive or reversibly recoverable; and
+- verified, or immediately verifiable through established gates.
+
+AKOS must not ask an operator to repeat authorization already supplied by the task, scope, repository authority, or an active operating contract. Discovering a safe improvement creates a duty to complete it, not merely recommend it.
+
+Confirmation is reserved for destructive or irreversible acts, material ambiguity, scope expansion, objective changes, uncontrolled external effects, secrets or credentials, new charges, and legal or public filings where policy requires explicit approval.
+
+A branch, patch, proposal, or pull request is not completion when the verified and authorized next step is a safe release or merge. Review is required; redundant human permission is not.
+
 ## Machine Summary
 
 ```json
 {
   "spec": "AKOS-LAW-001",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "status": "active_draft",
   "laws": [
     "identity",
@@ -89,8 +105,9 @@ AKOS prefers coherent, traceable, reviewable progress over scattered expansion.
     "one_truth_many_views",
     "spiral_engine",
     "purpose_before_persona",
-    "excellent_operation"
+    "excellent_operation",
+    "execution_without_redundant_permission"
   ],
-  "next_state": "bind laws into cognitive kernel, object model, metadata standard, repository contract, and Pro-Code methodology"
+  "next_state": "bind laws into cognitive kernel, object model, metadata standard, repository contract, agent contract, runtime policy, and Pro-Code methodology"
 }
 ```
