@@ -67,3 +67,31 @@ def test_private_repository_owns_no_actions_workflows() -> None:
         "AKOS is a private workload and policy repository; execution must route "
         f"through GlacierEQ/public-actions-runner-host, found: {forbidden}"
     )
+
+
+def test_verified_reversible_improvements_execute_without_redundant_permission() -> None:
+    path = ROOT / "manifests/runtime/AKOS_OPERATIONAL_COGNITION.json"
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+
+    authority = payload["execution_authority"]
+    assert authority["default_mode"] == "execute_verify_persist_report"
+    assert authority["redundant_confirmation"] == "forbidden"
+    assert authority["pr_is_completion_when_safe_release_remains"] is False
+    assert authority["auto_execute_requires"] == [
+        "clearly_beneficial",
+        "objective_preserving",
+        "within_standing_authority",
+        "non_destructive_or_recoverable",
+        "verified_or_immediately_verifiable",
+    ]
+
+    assert payload["mutation_gates"]["mutate_reversible"].startswith("auto_execute_if_")
+    assert payload["mutation_gates"]["merge_verified_change"] == (
+        "auto_execute_if_authorized_green_and_recoverable"
+    )
+    assert "no_redundant_confirmation_after_green_gates" in payload["anti_loop_rules"]
+    assert "no_pr_as_completion_when_safe_merge_is_authorized" in payload["anti_loop_rules"]
+    assert payload["promotion_gate"]["human_review"] == (
+        "required_only_when_confirmation_triggered"
+    )
