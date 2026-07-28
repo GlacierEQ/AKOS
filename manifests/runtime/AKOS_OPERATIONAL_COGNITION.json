@@ -1,11 +1,11 @@
 {
   "canonical_id": "AKOS-OC-001",
   "name": "AKOS Operational Cognition",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "status": "active_draft",
   "owner": "AKOS Cognitive Kernel and Colossal Orchestrator",
-  "effective_date": "2026-07-21",
-  "purpose": "Convert model capability, tool power, tool literacy, architecture literacy, orchestration, verification, and persistence into receipt-backed completed work.",
+  "effective_date": "2026-07-28",
+  "purpose": "Convert model capability, tool power, tool literacy, architecture literacy, orchestration, verification, persistence, and standing authority into receipt-backed completed work without redundant permission loops.",
   "dimensions": [
     "model_capability",
     "tool_power",
@@ -13,7 +13,8 @@
     "architecture_literacy",
     "orchestration",
     "verification",
-    "persistence"
+    "persistence",
+    "execution_authority"
   ],
   "pipeline": [
     "intake",
@@ -72,16 +73,57 @@
     "adapter": "test"
   },
   "system_first_policy": {
-    "sequence": ["discover", "map", "reuse", "extend", "execute", "verify", "persist"],
+    "sequence": [
+      "discover",
+      "map",
+      "reuse",
+      "extend",
+      "execute",
+      "verify",
+      "persist"
+    ],
     "topology_manifest": "manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json",
     "topology_schema": "schemas/akos_system_topology.schema.json",
     "wrong_plane_failure_is_absence_proof": false,
     "existing_execution_plane_precedes_new_runner": true,
     "catalog_or_adapter_extension_precedes_new_infrastructure": true
   },
+  "execution_authority": {
+    "default_mode": "execute_verify_persist_report",
+    "standing_authority_sources": [
+      "operator_task",
+      "established_objective",
+      "connected_system_permissions",
+      "repository_authority",
+      "active_akos_contract"
+    ],
+    "auto_execute_requires": [
+      "clearly_beneficial",
+      "objective_preserving",
+      "within_standing_authority",
+      "non_destructive_or_recoverable",
+      "verified_or_immediately_verifiable"
+    ],
+    "confirmation_triggers": [
+      "destructive_or_irreversible",
+      "material_ambiguity",
+      "scope_expansion",
+      "objective_change",
+      "uncontrolled_external_effect",
+      "legal_or_public_filing_not_requested",
+      "secrets_credentials_or_privilege_change",
+      "new_cost",
+      "service_interruption_risk",
+      "rollback_unavailable_or_unverified"
+    ],
+    "redundant_confirmation": "forbidden",
+    "safe_release_rule": "merge_or_release_when_authorized_green_and_recoverable",
+    "pr_is_completion_when_safe_release_remains": false
+  },
   "completion_requirements": [
     "verified_architecture_discovered_or_absence_established",
     "requested_action_executed_in_correct_plane",
+    "safe_verified_change_released_not_merely_proposed",
     "provider_receipt_recorded",
     "authoritative_validation_completed",
     "result_and_provenance_persisted",
@@ -90,9 +132,10 @@
   "mutation_gates": {
     "read": "approved_access",
     "analyze": "approved_access",
-    "mutate_reversible": "operator_authorized",
+    "mutate_reversible": "auto_execute_if_beneficial_objective_preserving_in_scope_and_verified",
+    "merge_verified_change": "auto_execute_if_authorized_green_and_recoverable",
     "mutate_irreversible": "explicit_approval",
-    "external_send": "explicit_approval",
+    "external_send": "explicit_approval_unless_already_requested",
     "legal_file": "explicit_approval"
   },
   "anti_loop_rules": [
@@ -107,7 +150,10 @@
     "no_private_repository_actions_execution",
     "no_wrong_plane_failure_as_absence_proof",
     "no_new_runner_when_existing_execution_plane_can_be_extended",
-    "no_verbal_correction_without_guard_test_and_receipt"
+    "no_verbal_correction_without_guard_test_and_receipt",
+    "no_redundant_confirmation_after_green_gates",
+    "no_pr_as_completion_when_safe_merge_is_authorized",
+    "no_permission_request_as_substitute_for_engineering_judgment"
   ],
   "implementation": {
     "runtime": "operational_cognition/engine.py",
@@ -123,6 +169,9 @@
     "topology_manifest": "manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json",
     "spec": "specs/AKOS-OC-001_OPERATIONAL_COGNITION.md",
     "mentality": "docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md",
+    "execution_law": "specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md#law-011--execution-without-redundant-permission",
+    "execution_contract": "contracts/AKOS-NONDESTRUCTIVE-AUTOAPPLY-001.md",
+    "agent_contract": "contracts/AKOS-AGENT-CONTRACT-001.md",
     "public_runner_repo": "GlacierEQ/public-actions-runner-host",
     "public_runner_action": "akos-operational-cognition-ci",
     "private_receipt_repo": "GlacierEQ/llm-runner-teams"
@@ -135,6 +184,6 @@
     "reversible_write_probe": "required",
     "provider_receipt": "required",
     "ledger_receipt": "required",
-    "human_review": "required"
+    "human_review": "required_only_when_confirmation_triggered"
   }
 }
