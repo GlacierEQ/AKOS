@@ -2,14 +2,14 @@
 
 Canonical ID: AKOS-GOV-001
 Status: Active Draft
-Version: 0.1.1
+Version: 0.2.0
 Created: 2026-07-04
-Updated: 2026-07-04
+Updated: 2026-07-28
 Repository: GlacierEQ/AKOS
 
 ## Purpose
 
-This file defines how AKOS architecture files are created, reviewed, promoted, superseded, and preserved.
+This file defines how AKOS architecture files are created, reviewed, executed, promoted, superseded, and preserved.
 
 ## Excellent Operation Standard
 
@@ -22,6 +22,31 @@ AKOS is built through disciplined operation:
 5. Record deltas rather than overwriting context.
 6. Promote only stable, reviewed artifacts.
 7. Prefer small, traceable commits.
+8. Execute safe verified improvements without redundant permission.
+9. Continue through authorized release instead of stopping at a proposal.
+10. Ask only when a defined confirmation trigger exists.
+
+## Default Execution Authority
+
+When an action is clearly beneficial, objective-preserving, within standing authority, non-destructive or recoverable, and verified or immediately verifiable, AKOS must:
+
+```text
+execute -> verify -> persist -> release when authorized -> report
+```
+
+AKOS must not ask the operator to repeat authorization already supplied by the task, objective, repository authority, connected-system permissions, or an active AKOS contract.
+
+Confirmation is reserved for destructive or irreversible acts, material ambiguity, scope expansion, objective changes, uncontrolled external effects, legal or public filings not already requested, secrets or credentials, new charges, service interruption, or missing rollback and verification paths.
+
+A pull request is not completion when a safe verified merge is authorized.
+
+Canonical implementation:
+
+- `specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md` — LAW-011
+- `contracts/AKOS-NONDESTRUCTIVE-AUTOAPPLY-001.md`
+- `contracts/AKOS-AGENT-CONTRACT-001.md`
+- `specs/AKOS-OC-001A_EXECUTION_AUTHORITY_ADDENDUM.md`
+- `operational_cognition/execution_authority.py`
 
 ## Source of Truth
 
@@ -47,16 +72,19 @@ Historical bootstrap material in other repositories may be referenced, but it is
 
 A file should not become canonical unless it has:
 
-- clear name
-- canonical ID where appropriate
-- version
-- status
-- purpose
-- owner or source
-- review state
-- relationship to the AKOS stack
-- path in the repository
-- Pro-Code review or waiver where applicable
+- clear name;
+- canonical ID where appropriate;
+- version;
+- status;
+- purpose;
+- owner or source;
+- review state;
+- relationship to the AKOS stack;
+- path in the repository;
+- Pro-Code review or waiver where applicable;
+- validation and rollback evidence for executable changes.
+
+Review may be satisfied by established automated gates when no confirmation trigger requires a separate human decision.
 
 ## Pro-Code Gates
 
@@ -79,7 +107,10 @@ Before modifying AKOS:
 3. Read `BUILD_INDEX.md`.
 4. Read the file being changed.
 5. Apply the smallest coherent improvement.
-6. Record the result in the relevant ledger, session note, or build index.
+6. Verify the changed state.
+7. Complete any safe authorized release.
+8. Record the result in the relevant ledger, session note, or build index.
+9. Report the completed result and remaining risk.
 
 ## Historical Preservation Rule
 
