@@ -9,10 +9,12 @@ This repository is part of the GlacierEQ APEX portfolio — a live job applicati
 
 | Rule | Source |
 |------|--------|
-| Identity / hireable | `AKOS/IDENTITY.md` |
-| Governance | `AKOS/GOVERNANCE.md` |
-| Easter eggs (silent) | `AKOS/EASTER_EGGS.md` |
-| Portfolio map | `AKOS/REPOS.md` |
+| Identity / hireable | `IDENTITY.md` |
+| Governance | `GOVERNANCE.md` |
+| Execution authority | `contracts/AKOS-NONDESTRUCTIVE-AUTOAPPLY-001.md` |
+| Foundational laws | `specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md` |
+| Easter eggs (silent) | `EASTER_EGGS.md` |
+| Portfolio map | `REPOS.md` |
 | Double Helix | Alpha (what) ↔ Omega (how) |
 
 ## Rules of engagement
@@ -22,6 +24,18 @@ This repository is part of the GlacierEQ APEX portfolio — a live job applicati
 3. Easter eggs never explain themselves.
 4. No teacher voice. No hype metrics.
 5. Point mirrors back to AKOS — do not fork truth.
+6. Execute safe, verified, objective-preserving improvements within standing authority.
+7. Do not ask for redundant permission after the execution gates are green.
+8. Stop only for destructive, ambiguous, scope-changing, objective-changing, or otherwise confirmation-gated actions.
+
+## Execution law
+
+```text
+beneficial + objective-preserving + authorized + recoverable + verified
+= execute -> verify -> persist -> release when authorized -> report
+```
+
+A branch or pull request is not completion when a safe verified merge remains authorized.
 
 ## Link
 
