@@ -1,220 +1,200 @@
 # AKOS — Apex Knowledge Operating System
 
-Status: Foundational Build
-Version: 0.5.1
-Canonical Repo: `GlacierEQ/AKOS`
+Status: Foundational Build  
+Version: 0.6.0  
+Canonical repository: `GlacierEQ/AKOS`  
 Created: 2026-07-04
 
-## Prime Definition
+<!-- README-MESH:BEGIN -->
+## Three-audience project map
 
-AKOS is the Apex Knowledge Operating System: a recursive architecture for transforming knowledge into structured cognition, durable memory, reliable execution, and continuously improving systems.
+### For recruiters and non-specialists
 
-AKOS is not one model, one prompt, one database, one repository, or one automation.
+**What AKOS accomplishes.** AKOS is the operating architecture that helps a large collection of tools, repositories, documents, agents, and decisions behave like one coherent system instead of a pile of disconnected experiments.
 
-AKOS is the governing architecture that binds them.
+- Gives durable work a stable identity and records where it came from.
+- Distinguishes a plan from an action and an action from verified completion.
+- Preserves history while allowing the system to improve recursively.
+- Turns corrections into policy, executable guards, regression tests, and receipts.
+- Governs the README Mesh that explains the engineering portfolio to recruiters, experts, and AI systems.
 
-## Direct-to-Main Rule
+**Openable evidence**
 
-`GlacierEQ/AKOS` is a single-operator public canonical repository.
+- [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) — foundational operating laws.
+- [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) — deterministic execute/confirm/block authority gate.
+- [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json) — machine-readable execution and completion contract.
 
-Changes commit directly to `main`. Branches and pull requests are not the default workflow and may be created only when the operator explicitly requests them or when a bounded verification/review gate is required before canonical integration.
+### For senior engineers and domain experts
 
-Verification happens through provider readback, the read-only AKOS repository-local integrity gate, the public execution face for governed cross-repository workloads, immutable receipts where required, and additive correction or `git revert` when rollback is required.
+**Innovation and evolution.** AKOS treats operational intelligence as a product of model capability, tool power, architecture literacy, orchestration, verification, and persistence. It separates canonical source, execution plane, control plane, receipt plane, and mirrors; models artifact maturity as monotonic evidence-backed states; and makes standing authority executable rather than conversational. The system evolved from architecture doctrine into tested runtime modules for topology discovery, capability selection, execution authority, artifact closure, operational maturity, and finish-first work completion.
 
-A generic team-development convention does not outrank the operator's repository model.
+The core innovations are structural:
 
-## Core Stack
+1. **One truth, many views** — canonical objects may have multiple projections without losing source identity.
+2. **Execution without redundant permission** — safe, beneficial, objective-preserving, recoverable, verified work proceeds automatically.
+3. **Receipt-backed completion** — plans and drafts cannot masquerade as changed state.
+4. **System-first routing** — discover and reuse the existing plane before inventing infrastructure.
+5. **Correction-to-cognition** — operator corrections become durable law, runtime behavior, tests, and ledger receipts.
+6. **Artifact closure** — progress is represented by exact missing stages, not subjective percentages.
+
+### For AI systems and toolchains
+
+- Repository ID: `GlacierEQ/AKOS`
+- Canonical role: governance, operational cognition, authority, provenance, and completion semantics.
+- README Mesh package: `glaciereq.readme.v1`
+- README Mesh node source: [`GlacierEQ/job-app-helix/manifests/readme_mesh.json`](https://github.com/GlacierEQ/job-app-helix/blob/main/manifests/readme_mesh.json)
+- Machine topology: [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json)
+- Operational policy: [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json)
+- Maturity policy: [`manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`](manifests/runtime/AKOS_OPERATIONAL_MATURITY.json)
+
+```protobuf
+repository: "GlacierEQ/AKOS"
+display_name: "AKOS"
+one_line_purpose: "Govern identity, provenance, authority, execution, verification, persistence, and recursive system improvement."
+```
+
+### Portfolio mesh
+
+| Engineering family | AKOS relationship | Combined value |
+|---|---|---|
+| [Job-App Helix](https://github.com/GlacierEQ/job-app-helix) | governs | AKOS defines evidence boundaries and completion; Helix renders and verifies the portfolio graph. |
+| SpaceX subsystem repositories | governs | Independent physics, network, control, and mission pistons share one evidence and authority model. |
+| Colossus Alpha/Omega repositories | governs | Requirement computation and stateful response remain separate, typed responsibilities. |
+| Agent coordinator + safety monitor | governs | Motion and oversight remain independent while sharing completion and review semantics. |
+
+Real README graph schema: [`proto/readme_mesh.proto`](https://github.com/GlacierEQ/job-app-helix/blob/main/proto/readme_mesh.proto).
+<!-- README-MESH:END -->
+
+## Prime definition
+
+AKOS is a recursive architecture for transforming knowledge into structured cognition, durable memory, reliable execution, and continuously improving systems.
+
+AKOS is not one model, prompt, database, repository, or automation. It is the governing architecture that binds them while preserving their boundaries.
+
+## Core stack
 
 ```text
 Prime Purpose
-↓
+  ↓
 Foundational Laws
-↓
+  ↓
 Cognitive Kernel
-↓
+  ↓
 Operational Cognition
-↓
-Operational Maturity
-↓
-Architecture Literacy
-↓
-Artifact Closure
-↓
-Canonical Object Model
-↓
-Metadata Standard
-↓
-Repository Contracts
-↓
+  ↓
+Operational Maturity + Artifact Closure
+  ↓
+Canonical Object Model + Metadata Standard
+  ↓
+Repository and Agent Contracts
+  ↓
 Pro-Code Methodology
-↓
-Family Manifests
-↓
-Runtime Modules
-↓
+  ↓
+Family and Runtime Manifests
+  ↓
 Operational Lanes
-↓
+  ↓
 Spiral Engine Evolution
 ```
 
-## Foundational Rule
+## The operating rules
 
-No artifact becomes canonical because it sounds powerful.
+### Truth before power
 
-It becomes canonical when it has identity, provenance, structure, relationships, metadata, review status, and Pro-Code gate alignment.
+No artifact becomes canonical because it sounds powerful. Canon requires identity, provenance, structure, relationships, metadata, review state, and evidence aligned with the applicable Pro-Code gates.
 
-## Finish-First Rule
+### Finish before expansion
 
-No new architecture outranks finishable work.
+No new architecture outranks finishable work. The [`finisher/`](finisher/) runtime distinguishes concrete blockers from inertia and records provider-backed completion receipts for bounded enabled actions.
 
-The executable `finisher/` module scans an allowlisted queue of near-complete pull requests when a repository actually uses pull requests, distinguishes concrete blockers from inertia, blocks expansion when closure is available, and records provider-backed completion receipts. It may execute only bounded, explicitly enabled actions.
+### Execute, verify, persist, report
 
-See `finisher/README.md`.
+A plan, inspection, branch, draft, or proposed design is not completion when the requested outcome requires changed state. Completion requires correct-plane execution, authoritative validation, persistence, and a usable handoff.
 
-## Operational Cognition Rule
+When a change is beneficial, objective-preserving, inside standing authority, recoverable, and verified or immediately verifiable, AKOS executes it without asking for redundant permission. See [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py).
 
-Model capability and tool access are potential. AKOS operational power requires tool literacy, architecture literacy, orchestration, verification, and persistence.
+### System first
 
-A plan, inspection, draft, or proposed design is not completion when the requested outcome requires a target-system action. Completion requires architecture discovery, correct-plane execution, authoritative validation, a provider receipt when applicable, a durable ledger receipt, and a final handoff.
+```text
+DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
+```
 
-See `specs/AKOS-OC-001_OPERATIONAL_COGNITION.md` and `operational_cognition/README.md`.
+A failed attempt in the wrong plane is not proof that the capability is absent. A memory failure is not proof that architecture is absent. Existing routes and adapters are reused or minimally extended before new infrastructure is considered.
 
-## Operational Maturity Rule
+### Evidence-backed maturity
 
-AKOS does not convert confidence, ambition, or architectural complexity into an unsupported `1–10` score.
-
-Every capability moves through distinct truth states:
+Capabilities move through observable states:
 
 ```text
 DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
 INVOKED -> RETURNED -> VERIFIED -> PERSISTED
 ```
 
-Every scorecard separates:
+Unmeasured means `UNASSESSED`, not an invented score.
 
-- **available ceiling** — sourced capability that is actually available;
-- **demonstrated reliability** — capability exercised to the required evidence level;
-- **operational gap** — the difference between them;
-- **missing controls** — exact work required next.
-
-Unmeasured means `UNASSESSED`, not an invented number.
-
-See `specs/AKOS-OC-002_OPERATIONAL_MATURITY.md` and `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`.
-
-## System-First Rule
-
-AKOS must understand the existing system before declaring a blocker or proposing infrastructure.
-
-```text
-DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
-```
-
-A failed attempt in the wrong plane is not proof that the correct plane is missing. A memory failure is not proof that the architecture is absent. When an execution plane already exists, AKOS reuses it or adds one bounded catalog action, adapter, or route binding before considering new infrastructure.
-
-For governed private GitHub workloads:
-
-```text
-GlacierEQ/AKOS
-  -> exact main commit + metadata-only job
-GlacierEQ/public-actions-runner-host
-  -> public execution face
-GlacierEQ/llm-runner-teams
-  -> private control and immutable receipts
-```
-
-Public AKOS may own read-only repository-local verification workflows under `docs/architecture/PUBLIC_ACTION_FACE.md`. It may not execute governed cross-repository workloads, receive bridge credentials, deploy, or create action-face claims and receipts.
-
-See `docs/operational_cognition/SYSTEM_FIRST_MENTALITY.md` and `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`.
-
-## Artifact Closure Rule
+### Artifact closure
 
 ```text
 LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
 CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
 ```
 
-A good draft is not complete. Stages `VERIFIED` through `LOGGED` are mandatory release controls, but closure still requires `READY_FOR_USE`.
+The runtime returns exact missing stages. A polished draft is not equivalent to a ready-to-use artifact.
 
-The system returns exact missing stages rather than a vague completion percentage.
+## Repository roles
 
-## Repository Purpose
+This repository is the canonical home for:
 
-This repository is the canonical architecture home for:
-
-- AKOS doctrine
-- Cognitive Kernel methodology
-- Operational Cognition runtime
-- Operational maturity controls and scorecards
-- System topology and architecture literacy
-- Artifact closure gates
-- Canonical Object Model
-- Metadata standards
-- Repository contracts
+- AKOS doctrine and foundational laws
+- cognitive-kernel methodology
+- operational-cognition runtime
+- execution-authority policy
+- operational-maturity and closure controls
+- system topology and architecture literacy
+- canonical object and metadata standards
+- repository, agent, runtime, and federation contracts
 - Pro-Code methodology
-- Family manifests
-- Templates
-- Build records
-- Architecture decision records
-- Finish-first closure operations
+- family and runtime manifests
+- architecture decision records
+- append-only build and correction ledgers
+- finish-first closure operations
 
-## Directory Map
+## Directory map
 
 ```text
-/docs/                     Human-readable architecture doctrine
-/specs/                    Formal AKOS specifications
-/contracts/                Required compatibility contracts
-/schemas/                  Machine-readable validation schemas
-/manifests/                Family and system manifests
-/templates/                Reusable file templates
-/methodologies/            Operating methods such as Pro-Code
-/adr/                      Architecture decision records
-/ledger/                   Append-only build and sync records
-/finisher/                 Deterministic closure engine and receipt queue
-/operational_cognition/    Execution, topology, maturity, and closure runtime
+/docs/                     human-readable architecture and integration doctrine
+/specs/                    formal AKOS specifications
+/contracts/                compatibility and authority contracts
+/schemas/                  machine-readable validation schemas
+/manifests/                family, topology, cognition, and maturity manifests
+/templates/                reusable canonical templates
+/methodologies/            Pro-Code and operating methods
+/adr/                      architecture decision records
+/ledger/                   append-only build, correction, and sync receipts
+/finisher/                 deterministic closure engine
+/operational_cognition/    execution, topology, maturity, authority, and closure runtime
 ```
 
-## Active Specs
+## Start here
 
-- `AKOS-CK-001` — Cognitive Kernel
-- `AKOS-OC-001` — Operational Cognition
-- `AKOS-OC-002` — Operational Maturity and Closure
-- `AKOS-COM-001` — Canonical Object Model
-- `AKOS-META-001` — Metadata Standard
-- `AKOS-REPO-CONTRACT-001` — Repository Contract
-- `AKOS-PROCODE-001` — Pro-Code Methodology
+1. Read [`AKOS_MANIFEST.yaml`](AKOS_MANIFEST.yaml).
+2. Read [`BUILD_INDEX.md`](BUILD_INDEX.md) and [`CURRENT_STATE.md`](CURRENT_STATE.md).
+3. Inspect [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json) before diagnosing missing tools or routes.
+4. Apply [`AKOS-OC-001`](specs/AKOS-OC-001_OPERATIONAL_COGNITION.md) to execution and [`AKOS-OC-002`](specs/AKOS-OC-002_OPERATIONAL_MATURITY.md) to maturity or closure claims.
+5. Read [`finisher/out/FINISH_QUEUE.md`](finisher/out/FINISH_QUEUE.md) when present.
+6. Close finishable work before proposing expansion.
+7. Preserve history and append deltas.
 
-## Session Boot Rule
+## Repository workflow
 
-At the start of any AKOS-aware session:
+`GlacierEQ/AKOS` is a single-operator canonical repository. Coherent, reversible, verified improvements commit directly to `main`. A branch or pull request is used only when a bounded verification or review gate materially benefits the change.
 
-1. Read this README.
-2. Read `AKOS_MANIFEST.yaml`.
-3. Read `BUILD_INDEX.md`.
-4. Read `CURRENT_STATE.md`.
-5. Commit AKOS changes directly to `main` unless the operator explicitly requests a branch or pull request, or a bounded verification/review gate is required before canonical integration.
-6. Read `manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json` when tools, repositories, execution, or receipts are involved.
-7. Read `manifests/runtime/AKOS_OPERATIONAL_MATURITY.json` when capability, score, reliability, closure, or comparative claims are involved.
-8. Read `finisher/out/FINISH_QUEUE.md` when present.
-9. Close finishable work before proposing expansion.
-10. Discover the existing route before declaring a capability missing.
-11. Read the active spec relevant to the task.
-12. Apply `AKOS-OC-001` to tool actions and `AKOS-OC-002` to capability or closure assessments.
-13. Preserve history and append deltas.
+Rollback uses additive correction or `git revert`; history is not silently rewritten.
 
-## Operating Principle
+## Evidence boundary
 
-Build in layers. Preserve history. Promote stable objects. Mark superseded objects historical. Never hide drift. Never confuse a mirror with the source of truth. Never confuse a wrong-plane failure with missing infrastructure. Never convert confidence into an unsupported score. Commit directly to the canonical mainline. Reuse before rebuild. Finish before expansion. Never report closure without a receipt.
+AKOS governs systems; it does not convert architecture into fictional capability. Every completion, reliability, deployment, integration, or scale claim must be tied to source, tests, provider receipts, or an explicit `UNASSESSED` state.
 
----
+## Operating principle
 
-## Fleet ops (transparent)
-
-This repo may include **`.integrity/`** (SHA-256 baselines / watchdog) and/or a health sidecar.
-These are **documented multi-repo fleet operations**, not covert implants.
-
-See [SECURITY_AND_FLEET_OPS.md](SECURITY_AND_FLEET_OPS.md) and
-`~/GlacierEQ_Swarm/state/PORTFOLIO_SHADOW_AND_GAUNTLET.md`.
-
-## Helix strand
-
-See [HELIX_STRAND.md](HELIX_STRAND.md) — piston/spiral role in the portfolio double helix.
+Build in layers. Preserve history. Reuse before rebuilding. Finish before expanding. Verify before claiming. Persist before reporting closure. Never confuse a mirror with the source of truth, a wrong-plane failure with missing infrastructure, or a compelling explanation with completed work.
