@@ -35,8 +35,14 @@ class ReceiptPlugin:
         self.collection_errors: list[dict[str, str]] = []
         self.internal_errors: list[str] = []
 
-    def pytest_collection_finish(self, session: pytest.Session) -> None:
-        self.collected = session.testscollected
+    def pytest_collection_modifyitems(
+        self,
+        session: pytest.Session,
+        config: pytest.Config,
+        items: list[pytest.Item],
+    ) -> None:
+        del session, config
+        self.collected = len(items)
 
     def pytest_collectreport(self, report: pytest.CollectReport) -> None:
         if report.failed:
