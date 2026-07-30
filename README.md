@@ -1,127 +1,168 @@
 # AKOS — Apex Knowledge Operating System
 
-Status: Foundational Build  
-Version: 0.6.0  
-Canonical repository: `GlacierEQ/AKOS`  
-Created: 2026-07-04
+[![AKOS Verification](https://github.com/GlacierEQ/AKOS/actions/workflows/ci.yml/badge.svg)](https://github.com/GlacierEQ/AKOS/actions/workflows/ci.yml)
+
+**Version:** `0.6.1`  
+**Canonical repository:** `GlacierEQ/AKOS`  
+**Verification state:** `PARTIALLY_VERIFIED` until this repository-native CI change is merged and revalidated on `main`  
+**Evidence target:** `TEST`
+
+AKOS is the governance and operational-cognition layer for large, interconnected engineering systems. It converts identity, provenance, authority, execution, verification, persistence, and completion from informal expectations into inspectable contracts and executable behavior.
 
 <!-- README-MESH:BEGIN -->
-## Three-audience project map
 
-### For recruiters and non-specialists
+## For recruiters and non-technical reviewers
 
-**What AKOS accomplishes.** AKOS is the operating architecture that helps a large collection of tools, repositories, documents, agents, and decisions behave like one coherent system instead of a pile of disconnected experiments.
+### What AKOS accomplishes
 
-- Gives durable work a stable identity and records where it came from.
-- Distinguishes a plan from an action and an action from verified completion.
-- Preserves history while allowing the system to improve recursively.
-- Turns corrections into policy, executable guards, regression tests, and receipts.
-- Governs the README Mesh that explains the engineering portfolio to recruiters, experts, and AI systems.
+A sophisticated tool collection can still fail as a system: work may be duplicated, actions may happen in the wrong place, drafts may be reported as completion, and corrections may disappear between sessions. AKOS addresses that coordination failure.
 
-**Openable evidence**
+It gives a large portfolio one durable operating model without flattening the projects inside it:
 
-- [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) — foundational operating laws.
-- [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) — deterministic execute/confirm/block authority gate.
-- [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json) — machine-readable execution and completion contract.
+- every important object has a stable identity and provenance;
+- plans, actions, verification, persistence, and completion are different states;
+- safe work can proceed under explicit standing authority;
+- high-risk or irreversible work remains gated;
+- corrections become policy, executable guards, regression tests, and receipts;
+- incomplete work reports its exact missing stage instead of an invented percentage.
 
-### For senior engineers and domain experts
+### Why the design matters
 
-**Innovation and evolution.** AKOS treats operational intelligence as a product of model capability, tool power, architecture literacy, orchestration, verification, and persistence. It separates canonical source, execution plane, control plane, receipt plane, and mirrors; models artifact maturity as monotonic evidence-backed states; and makes standing authority executable rather than conversational. The system evolved from architecture doctrine into tested runtime modules for topology discovery, capability selection, execution authority, artifact closure, operational maturity, and finish-first work completion.
+AKOS demonstrates systems architecture beyond a single application. It shows how governance can become code, how trust can become an evidence property, and how a portfolio can improve recursively without rewriting history or obscuring responsibility.
 
-The core innovations are structural:
+### Proof in 60 seconds
 
-1. **One truth, many views** — canonical objects may have multiple projections without losing source identity.
-2. **Execution without redundant permission** — safe, beneficial, objective-preserving, recoverable, verified work proceeds automatically.
-3. **Receipt-backed completion** — plans and drafts cannot masquerade as changed state.
-4. **System-first routing** — discover and reuse the existing plane before inventing infrastructure.
-5. **Correction-to-cognition** — operator corrections become durable law, runtime behavior, tests, and ledger receipts.
-6. **Artifact closure** — progress is represented by exact missing stages, not subjective percentages.
+| Open or run | What it demonstrates |
+|---|---|
+| [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) | Durable operating laws and non-negotiable system invariants. |
+| [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Deterministic execute, confirm, or block decisions. |
+| [`operational_cognition/engine.py`](operational_cognition/engine.py) | Evidence classes, work routing, phase receipts, and completion logic. |
+| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first analysis and explicit blocker handling. |
+| [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json) | Machine-readable execution and completion policy. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Positive-count test execution and atomic verification receipt. |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Repository-native verification across Python 3.11, 3.12, and 3.13. |
 
-### For AI systems and toolchains
+## For senior engineers and domain experts
 
-- Repository ID: `GlacierEQ/AKOS`
-- Canonical role: governance, operational cognition, authority, provenance, and completion semantics.
-- README Mesh package: `glaciereq.readme.v1`
-- README Mesh node source: [`GlacierEQ/job-app-helix/manifests/readme_mesh.json`](https://github.com/GlacierEQ/job-app-helix/blob/main/manifests/readme_mesh.json)
-- Machine topology: [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json)
-- Operational policy: [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json)
-- Maturity policy: [`manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`](manifests/runtime/AKOS_OPERATIONAL_MATURITY.json)
+### System boundary
 
-```protobuf
-repository: "GlacierEQ/AKOS"
-display_name: "AKOS"
-one_line_purpose: "Govern identity, provenance, authority, execution, verification, persistence, and recursive system improvement."
-```
+AKOS owns:
 
-### Portfolio mesh
+- canonical identity and provenance rules;
+- authority and confirmation policy;
+- source and capability routing;
+- evidence-backed maturity transitions;
+- execution, validation, persistence, and handoff semantics;
+- artifact-closure stages and exact blocker reporting;
+- correction-to-policy persistence;
+- governance contracts for connected repositories and agents.
 
-| Engineering family | AKOS relationship | Combined value |
-|---|---|---|
-| [Job-App Helix](https://github.com/GlacierEQ/job-app-helix) | governs | AKOS defines evidence boundaries and completion; Helix renders and verifies the portfolio graph. |
-| SpaceX subsystem repositories | governs | Independent physics, network, control, and mission pistons share one evidence and authority model. |
-| Colossus Alpha/Omega repositories | governs | Requirement computation and stateful response remain separate, typed responsibilities. |
-| Agent coordinator + safety monitor | governs | Motion and oversight remain independent while sharing completion and review semantics. |
+AKOS does **not** claim that a declared integration is connected, that a connected provider is authorized, or that a designed workflow has executed. Those transitions require their own receipts.
 
-Real README graph schema: [`proto/readme_mesh.proto`](https://github.com/GlacierEQ/job-app-helix/blob/main/proto/readme_mesh.proto).
-<!-- README-MESH:END -->
-
-## Prime definition
-
-AKOS is a recursive architecture for transforming knowledge into structured cognition, durable memory, reliable execution, and continuously improving systems.
-
-AKOS is not one model, prompt, database, repository, or automation. It is the governing architecture that binds them while preserving their boundaries.
-
-## Core stack
+### Architecture
 
 ```text
-Prime Purpose
-  ↓
-Foundational Laws
-  ↓
-Cognitive Kernel
-  ↓
-Operational Cognition
-  ↓
-Operational Maturity + Artifact Closure
-  ↓
-Canonical Object Model + Metadata Standard
-  ↓
-Repository and Agent Contracts
-  ↓
-Pro-Code Methodology
-  ↓
-Family and Runtime Manifests
-  ↓
-Operational Lanes
-  ↓
-Spiral Engine Evolution
+Prime purpose + foundational laws
+                │
+                ▼
+       Canonical object model
+ identity • provenance • relationships
+                │
+        ┌───────┴────────┐
+        ▼                ▼
+Operational cognition   Maturity + closure
+route • decide • act     measure • gate • finish
+        │                │
+        └───────┬────────┘
+                ▼
+Execution authority + provider boundary
+ execute • confirm • block • verify
+                │
+                ▼
+Canonical persistence + append-only receipts
 ```
 
-## The operating rules
+The architecture separates five concerns that are often collapsed:
 
-### Truth before power
+1. **Canonical source** — the authoritative object or record.
+2. **Execution plane** — the system capable of changing the target state.
+3. **Control plane** — policy governing whether and how work proceeds.
+4. **Receipt plane** — evidence that an action occurred and was validated.
+5. **Projection plane** — human and machine views that never replace the source.
 
-No artifact becomes canonical because it sounds powerful. Canon requires identity, provenance, structure, relationships, metadata, review state, and evidence aligned with the applicable Pro-Code gates.
+### Core innovations
 
-### Finish before expansion
+1. **One truth, many views** — canonical objects can have multiple projections without losing identity.
+2. **Execution without redundant permission** — beneficial, objective-preserving, recoverable work can proceed within standing authority.
+3. **Receipt-backed completion** — plans and drafts cannot masquerade as changed state.
+4. **System-first routing** — existing planes are discovered and reused before new infrastructure is invented.
+5. **Correction-to-cognition** — operator corrections become durable law, runtime behavior, tests, and ledger entries.
+6. **Artifact closure** — exact missing stages replace subjective completion percentages.
+7. **Monotonic maturity** — evidence states advance through explicit transitions and cannot silently regress.
 
-No new architecture outranks finishable work. The [`finisher/`](finisher/) runtime distinguishes concrete blockers from inertia and records provider-backed completion receipts for bounded enabled actions.
+### Runtime components
 
-### Execute, verify, persist, report
+| Component | Responsibility |
+|---|---|
+| [`operational_cognition/engine.py`](operational_cognition/engine.py) | Work models, routing, evidence classes, phase receipts, and completion decisions. |
+| [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Standing-authority and confirmation-trigger evaluation. |
+| [`operational_cognition/topology.py`](operational_cognition/topology.py) | Architecture discovery and correct-plane routing. |
+| [`operational_cognition/maturity.py`](operational_cognition/maturity.py) | Evidence-backed capability maturity and artifact closure. |
+| [`operational_cognition/master_strand.py`](operational_cognition/master_strand.py) | Branch assessment, extinction gates, and canonical-strand decisions. |
+| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first work classification and closure planning. |
+| [`src/verify_manifest.py`](src/verify_manifest.py) | Machine-readable manifest validation. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Test discovery, positive-count enforcement, and receipt generation. |
 
-A plan, inspection, branch, draft, or proposed design is not completion when the requested outcome requires changed state. Completion requires correct-plane execution, authoritative validation, persistence, and a usable handoff.
+### Correctness and failure behavior
 
-When a change is beneficial, objective-preserving, inside standing authority, recoverable, and verified or immediately verifiable, AKOS executes it without asking for redundant permission. See [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py).
+- A plan is not execution.
+- Execution without a provider receipt cannot establish a provider-side change.
+- Validation without persistence cannot establish durable completion.
+- Irreversible operations require explicit approval.
+- Unauthorized writes are blocked.
+- Pipeline and artifact stages reject regression.
+- Architect assertions remain active claims but are not auto-promoted to verified facts.
+- Missing test modules fail verification.
+- A runner that executes zero tests returns `UNVERIFIED`, even with exit code zero.
+- Test failures or import errors return `FAILED`.
+- Receipts are written atomically so a stale success cannot survive a failed rerun.
+- Machine-local paths are rejected from the public README contract.
 
-### System first
+### Build and verification
+
+```bash
+# Install the runtime and verification tooling
+python -m pip install -e ".[dev]"
+
+# Static quality
+ruff check operational_cognition finisher src scripts tests
+python -m compileall -q operational_cognition finisher src scripts tests
+
+# Verify the three-audience README contract
+python scripts/verify_readme_contract.py
+
+# Run every AKOS unittest module and emit a positive-count receipt
+python scripts/verify_repository.py --output artifacts/ci/test-receipt.json
+```
+
+The receipt schema is `glaciereq.akos.test-receipt.v1`. It records the commit, Python version, discovered modules, test count, failures, errors, skips, evidence level, and conclusion.
+
+### Language fit
+
+| Language / format | Responsibility | Boundary | Proof |
+|---|---|---|---|
+| Python 3.11+ | Operational cognition, authority, topology, maturity, closure, and verification | Executable runtime and test tooling | Three-version CI plus positive-count unittest receipt |
+| JSON | Runtime manifests, topology, maturity, and receipt interchange | Machine-readable policy and evidence records | Parsing and contract tests |
+| YAML | Canonical AKOS manifest and operator-readable configuration | Human-editable system declaration | Manifest verification tests |
+| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review surface | README contract gate and link-visible evidence |
+
+The repository remains intentionally Python-centered. Additional languages belong only where a workload, safety property, interoperability boundary, or performance requirement creates a measurable advantage.
+
+### Evidence-backed operating rules
 
 ```text
 DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
 ```
-
-A failed attempt in the wrong plane is not proof that the capability is absent. A memory failure is not proof that architecture is absent. Existing routes and adapters are reused or minimally extended before new infrastructure is considered.
-
-### Evidence-backed maturity
 
 Capabilities move through observable states:
 
@@ -130,36 +171,106 @@ DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
 INVOKED -> RETURNED -> VERIFIED -> PERSISTED
 ```
 
-Unmeasured means `UNASSESSED`, not an invented score.
-
-### Artifact closure
+Artifacts move through closure stages:
 
 ```text
 LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
 CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
 ```
 
-The runtime returns exact missing stages. A polished draft is not equivalent to a ready-to-use artifact.
+Unmeasured means `UNASSESSED`, not an invented score.
 
-## Repository roles
+## For AI systems and toolchains
 
-This repository is the canonical home for:
+### Machine contract
 
-- AKOS doctrine and foundational laws
-- cognitive-kernel methodology
-- operational-cognition runtime
-- execution-authority policy
-- operational-maturity and closure controls
-- system topology and architecture literacy
-- canonical object and metadata standards
-- repository, agent, runtime, and federation contracts
-- Pro-Code methodology
-- family and runtime manifests
-- architecture decision records
-- append-only build and correction ledgers
-- finish-first closure operations
+```yaml
+schema: glaciereq.readme.v1
+profile: glaciereq.readme-impact.v2-draft
+repository: GlacierEQ/AKOS
+canonical_branch: main
+purpose: >-
+  Govern identity, provenance, authority, execution, verification,
+  persistence, completion, and recursive system improvement.
+status:
+  state: PARTIALLY_VERIFIED
+  target_evidence: TEST
+  promotion_rule: >-
+    Promote only after repository-native CI passes with a positive test count
+    and the canonical main branch revalidates the receipt.
+  verified_scope:
+    - foundational laws and architecture contracts are present
+    - executable operational-cognition and finisher modules are present
+    - repository-native verification code is reviewable in source
+  blocked_scope:
+    - provider-side integrations without current provider receipts
+    - irreversible actions without explicit approval
+    - deployment or scale claims without environment-specific evidence
+  unverified_scope:
+    - current canonical-main test result until this CI change is merged
+    - external connectors not exercised by repository-native tests
+interfaces:
+  inputs:
+    - work items and authority context
+    - capability and topology declarations
+    - evidence and provider receipts
+    - runtime and maturity manifests
+  outputs:
+    - execute, confirm, block, or complete decisions
+    - capability and artifact maturity results
+    - exact blockers and missing closure stages
+    - atomic test receipts
+  commands:
+    install: python -m pip install -e ".[dev]"
+    lint: ruff check operational_cognition finisher src scripts tests
+    test: python scripts/verify_repository.py --output artifacts/ci/test-receipt.json
+    verify_readme: python scripts/verify_readme_contract.py
+evidence:
+  workflow: .github/workflows/ci.yml
+  test_runner: scripts/verify_repository.py
+  receipt_schema: glaciereq.akos.test-receipt.v1
+  tests:
+    - operational_cognition/test_*.py
+    - finisher/test_*.py
+    - tests/test_*.py
+relationships:
+  - target: GlacierEQ/job-app-helix
+    relation: GOVERNS
+    combined_value: >-
+      AKOS supplies authority, provenance, and completion semantics;
+      Job-App Helix supplies exact portfolio representation and evidence rollout.
+  - target: GlacierEQ/anthropic-agent-coordinator
+    relation: GOVERNS
+    combined_value: >-
+      Agent motion receives bounded authority, persistence, and completion rules.
+  - target: GlacierEQ/anthropic-safety-monitor
+    relation: GOVERNS
+    combined_value: >-
+      Independent monitoring signals feed explicit review and blocking decisions.
+  - target: GlacierEQ/spacex-mission-control
+    relation: GOVERNS
+    combined_value: >-
+      Mission-state orchestration inherits evidence and completion boundaries.
+limits:
+  - Architecture does not establish provider connectivity.
+  - A relationship does not prove the target repository currently works.
+  - CI verifies repository-local behavior, not external deployment or scale.
+```
 
-## Directory map
+### Canonical machine resources
+
+- [`AKOS_MANIFEST.yaml`](AKOS_MANIFEST.yaml)
+- [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json)
+- [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json)
+- [`manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`](manifests/runtime/AKOS_OPERATIONAL_MATURITY.json)
+- [`schemas/operational_cognition.schema.json`](schemas/operational_cognition.schema.json)
+- [`schemas/operational_maturity.schema.json`](schemas/operational_maturity.schema.json)
+- [`contracts/`](contracts/)
+- [`specs/`](specs/)
+
+<!-- README-MESH:END -->
+
+## Repository map
 
 ```text
 /docs/                     human-readable architecture and integration doctrine
@@ -173,27 +284,24 @@ This repository is the canonical home for:
 /ledger/                   append-only build, correction, and sync receipts
 /finisher/                 deterministic closure engine
 /operational_cognition/    execution, topology, maturity, authority, and closure runtime
+/scripts/                  repository-native verification tooling
 ```
 
 ## Start here
 
 1. Read [`AKOS_MANIFEST.yaml`](AKOS_MANIFEST.yaml).
 2. Read [`BUILD_INDEX.md`](BUILD_INDEX.md) and [`CURRENT_STATE.md`](CURRENT_STATE.md).
-3. Inspect [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json) before diagnosing missing tools or routes.
+3. Inspect [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json) before diagnosing a missing route.
 4. Apply [`AKOS-OC-001`](specs/AKOS-OC-001_OPERATIONAL_COGNITION.md) to execution and [`AKOS-OC-002`](specs/AKOS-OC-002_OPERATIONAL_MATURITY.md) to maturity or closure claims.
-5. Read [`finisher/out/FINISH_QUEUE.md`](finisher/out/FINISH_QUEUE.md) when present.
+5. Run the repository-native verification commands.
 6. Close finishable work before proposing expansion.
-7. Preserve history and append deltas.
+7. Preserve history and append evidence-backed deltas.
 
 ## Repository workflow
 
-`GlacierEQ/AKOS` is a single-operator canonical repository. Coherent, reversible, verified improvements commit directly to `main`. A branch or pull request is used only when a bounded verification or review gate materially benefits the change.
+`GlacierEQ/AKOS` is a single-operator canonical repository. Coherent, reversible, verified improvements may commit directly to `main`; branches and pull requests are used when an independent verification or review gate materially improves confidence.
 
-Rollback uses additive correction or `git revert`; history is not silently rewritten.
-
-## Evidence boundary
-
-AKOS governs systems; it does not convert architecture into fictional capability. Every completion, reliability, deployment, integration, or scale claim must be tied to source, tests, provider receipts, or an explicit `UNASSESSED` state.
+Rollback uses additive correction or `git revert`. Canonical history is not silently rewritten.
 
 ## Operating principle
 
