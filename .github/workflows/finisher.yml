@@ -1,4 +1,4 @@
-name: AKOS Finisher
+name: AKOS Finisher Verification
 
 on:
   pull_request:
@@ -10,63 +10,34 @@ on:
     paths:
       - "finisher/**"
       - ".github/workflows/finisher.yml"
-  workflow_dispatch:
-    inputs:
-      command:
-        description: "Finisher command"
-        required: true
-        default: "scan"
-        type: choice
-        options:
-          - scan
-          - gate
-          - apply
-      confirm_apply:
-        description: "Type YES only for a reviewed apply run"
-        required: false
-        default: "NO"
-        type: string
 
 permissions:
   contents: read
 
+concurrency:
+  group: akos-finisher-verification-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compile
+
+      - name: Compile Finisher
         run: python -m compileall -q finisher
-      - name: Unit tests
+
+      - name: Run Finisher tests
         run: python -m unittest -v finisher.test_finisher
 
-  finish:
-    if: github.event_name == 'workflow_dispatch'
-    needs: test
-    runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.FINISHER_GITHUB_TOKEN }}
-      FINISHER_APPLY: ${{ inputs.confirm_apply }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Require dedicated token
-        run: |
-          test -n "$GITHUB_TOKEN" || {
-            echo "FINISHER_GITHUB_TOKEN is required for the allowlisted private repositories" >&2
-            exit 2
-          }
-      - name: Run Finisher
-        run: python -m finisher.finisher "${{ inputs.command }}" --config finisher/config.json
-      - name: Upload closure receipts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: akos-finisher-receipts-${{ github.run_id }}
-          path: finisher/out/
-          if-no-files-found: warn
+# Governed cross-repository finishing, private-token use, apply operations, and
+# durable workload receipts belong to GlacierEQ/public-actions-runner-host.
+# This workflow intentionally stops at read-only repository-local verification.

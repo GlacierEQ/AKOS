@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "akos-operational-cognition"
+version = "0.6.1"
+description = "Evidence-bound governance, execution authority, operational cognition, and artifact-closure primitives."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Casey Barton" }]
+dependencies = [
+  "PyYAML>=6.0,<7",
+  "requests>=2.32,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+akos-verify = "scripts.verify_repository:main"
+akos-verify-readme = "scripts.verify_readme_contract:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["operational_cognition*", "finisher*", "scripts*"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = [".integrity", "operational_cognition", "finisher", "tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = [
+  ".integrity",
+  "artifacts",
+  "finisher/out",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]

@@ -3,9 +3,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-
 
 MACHINE_CONTRACTS = (
     "schemas/operational_cognition.schema.json",
@@ -54,19 +54,54 @@ def test_artifact_lifecycle_is_complete_and_ordered() -> None:
     assert payload["artifact_lifecycle"] == expected
 
 
-def test_private_repository_owns_no_actions_workflows() -> None:
+def test_repository_local_workflows_are_read_only_verification_only() -> None:
     workflow_root = ROOT / ".github" / "workflows"
-    if not workflow_root.exists():
-        return
-    forbidden = sorted(
-        path.relative_to(ROOT).as_posix()
+    workflows = sorted(
+        path
         for path in workflow_root.iterdir()
         if path.suffix.lower() in {".yml", ".yaml"}
     )
-    assert forbidden == [], (
-        "AKOS is a private workload and policy repository; execution must route "
-        f"through GlacierEQ/public-actions-runner-host, found: {forbidden}"
-    )
+    assert workflows, "AKOS should own repository-local verification workflows"
+
+    for path in workflows:
+        text = path.read_text(encoding="utf-8")
+        payload = yaml.safe_load(text)
+        assert isinstance(payload, dict), f"workflow is not a mapping: {path}"
+        assert payload.get("permissions") == {"contents": "read"}, (
+            f"repository-local workflow permissions must be exactly contents: read: {path}"
+        )
+
+        lowered = text.lower()
+        for forbidden in (
+            "pull_request_target",
+            "secrets.",
+            "apex_private_read_token",
+            "apex_control_token",
+            "workflow_call:",
+        ):
+            assert forbidden not in lowered, f"forbidden workflow capability {forbidden}: {path}"
+
+        jobs = payload.get("jobs")
+        assert isinstance(jobs, dict) and jobs, f"workflow has no jobs: {path}"
+        checkout_steps = []
+        for job in jobs.values():
+            assert isinstance(job, dict), f"workflow job is not a mapping: {path}"
+            steps = job.get("steps")
+            assert isinstance(steps, list) and steps, f"workflow job has no steps: {path}"
+            for step in steps:
+                if not isinstance(step, dict):
+                    continue
+                if str(step.get("uses", "")).startswith("actions/checkout@"):
+                    checkout_steps.append(step)
+                    options = step.get("with") or {}
+                    assert options.get("persist-credentials") is False, (
+                        f"checkout credentials must not persist: {path}"
+                    )
+                    assert "repository" not in options, (
+                        "repository-local verification must not checkout "
+                        f"another repository: {path}"
+                    )
+        assert checkout_steps, f"workflow does not establish a checked-out local source: {path}"
 
 
 def test_verified_reversible_improvements_execute_without_redundant_permission() -> None:
