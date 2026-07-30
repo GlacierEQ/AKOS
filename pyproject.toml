@@ -20,9 +20,13 @@ dev = [
   "ruff>=0.9,<1",
 ]
 
+[project.scripts]
+akos-verify = "scripts.verify_repository:main"
+akos-verify-readme = "scripts.verify_readme_contract:main"
+
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["operational_cognition*", "finisher*"]
+include = ["operational_cognition*", "finisher*", "scripts*"]
 
 [tool.ruff]
 target-version = "py311"
