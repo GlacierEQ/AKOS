@@ -35,7 +35,11 @@ jobs:
         run: python -m pip install --upgrade pip && python -m pip install -e ".[dev]"
 
       - name: Strictly lint the new verification control surface
-        run: ruff check scripts/verify_repository.py scripts/verify_readme_contract.py
+        run: >-
+          ruff check
+          scripts/verify_repository.py
+          scripts/verify_readme_contract.py
+          tests/test_verification_tools.py
 
       - name: Capture preexisting AKOS quality debt without hiding it
         shell: bash
@@ -43,6 +47,7 @@ jobs:
           mkdir -p artifacts/ci
           set +e
           ruff check operational_cognition finisher src tests \
+            --exclude tests/test_verification_tools.py \
             --output-format json > artifacts/ci/ruff-baseline.json
           status=$?
           set -e
@@ -77,10 +82,10 @@ jobs:
           tests
 
       - name: Verify recruiter, expert, and AI README contract
-        run: python scripts/verify_readme_contract.py
+        run: akos-verify-readme
 
       - name: Run all tests and require a positive test count
-        run: python scripts/verify_repository.py --output artifacts/ci/test-receipt.json
+        run: akos-verify --output artifacts/ci/test-receipt.json
 
       - name: Upload AKOS verification evidence
         if: ${{ always() && hashFiles('artifacts/ci/**/*') != '' }}
