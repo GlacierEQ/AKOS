@@ -36,7 +36,7 @@ jobs:
         run: python -m compileall -q finisher
 
       - name: Run Finisher tests
-        run: python -m pytest -q finisher/test_finisher.py
+        run: python -m unittest -v finisher.test_finisher
 
 # Governed cross-repository finishing, private-token use, apply operations, and
 # durable workload receipts belong to GlacierEQ/public-actions-runner-host.
