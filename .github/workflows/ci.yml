@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -40,6 +42,7 @@ jobs:
           scripts/verify_repository.py
           scripts/verify_readme_contract.py
           tests/test_verification_tools.py
+          operational_cognition/test_contracts.py
 
       - name: Capture preexisting AKOS quality debt without hiding it
         shell: bash
@@ -48,6 +51,7 @@ jobs:
           set +e
           ruff check operational_cognition finisher src tests \
             --exclude tests/test_verification_tools.py \
+            --exclude operational_cognition/test_contracts.py \
             --output-format json > artifacts/ci/ruff-baseline.json
           status=$?
           set -e
@@ -84,7 +88,7 @@ jobs:
       - name: Verify recruiter, expert, and AI README contract
         run: akos-verify-readme
 
-      - name: Run all tests and require a positive test count
+      - name: Run exhaustive pytest collection and require a positive count
         run: akos-verify --output artifacts/ci/test-receipt.json
 
       - name: Upload AKOS verification evidence
