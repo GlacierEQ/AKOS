@@ -98,7 +98,8 @@ def test_repository_local_workflows_are_read_only_verification_only() -> None:
                         f"checkout credentials must not persist: {path}"
                     )
                     assert "repository" not in options, (
-                        f"repository-local verification must not checkout another repository: {path}"
+                        "repository-local verification must not checkout "
+                        f"another repository: {path}"
                     )
         assert checkout_steps, f"workflow does not establish a checked-out local source: {path}"
 
