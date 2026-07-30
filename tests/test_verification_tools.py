@@ -21,7 +21,7 @@ class RepositoryVerificationToolTests(unittest.TestCase):
             integrity = root / ".integrity"
             integrity.mkdir()
             expected = integrity / "test_watchdog.py"
-            expected.write_text("import unittest\n", encoding="utf-8")
+            expected.write_text("def test_watchdog():\n    assert True\n", encoding="utf-8")
 
             discovered = discover_test_files(root)
 
@@ -56,10 +56,34 @@ class RepositoryVerificationToolTests(unittest.TestCase):
             receipt = verify_repository(root, output, stream=io.StringIO())
 
             self.assertEqual(receipt["conclusion"], "FAILED")
-            self.assertEqual(receipt["errors"], 1)
-            self.assertEqual(len(receipt["import_errors"]), 1)
-            self.assertEqual(receipt["import_errors"][0]["type"], "RuntimeError")
+            self.assertGreaterEqual(len(receipt["collection_errors"]), 1)
+            self.assertEqual(receipt["tests_run"], 0)
             self.assertTrue(output.is_file())
+
+    def test_pytest_executes_function_and_unittest_styles_together(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tests = root / "tests"
+            tests.mkdir()
+            (tests / "test_function.py").write_text(
+                "def test_function_style():\n    assert 2 + 2 == 4\n",
+                encoding="utf-8",
+            )
+            (tests / "test_class.py").write_text(
+                "import unittest\n\n"
+                "class Example(unittest.TestCase):\n"
+                "    def test_unittest_style(self):\n"
+                "        self.assertTrue(True)\n",
+                encoding="utf-8",
+            )
+            output = root / "receipt.json"
+
+            receipt = verify_repository(root, output, stream=io.StringIO())
+
+            self.assertEqual(receipt["conclusion"], "VERIFIED")
+            self.assertEqual(receipt["collected"], 2)
+            self.assertEqual(receipt["tests_run"], 2)
+            self.assertEqual(receipt["passed"], 2)
 
     def test_atomic_write_replaces_content_without_shared_temp_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
