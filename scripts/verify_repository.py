@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 import argparse
-import importlib.util
+import contextlib
 import json
 import os
 import platform
 import sys
 import tempfile
 import time
-import unittest
 from collections.abc import Sequence
 from pathlib import Path
 from typing import TextIO
+
+import pytest
 
 TEST_ROOTS = (".integrity", "operational_cognition", "finisher", "tests")
 RECEIPT_SCHEMA = "glaciereq.akos.test-receipt.v1"
@@ -27,46 +28,59 @@ def discover_test_files(repository_root: Path) -> tuple[Path, ...]:
     return tuple(sorted(files))
 
 
-def _import_failure_test(relative: Path, error: Exception) -> unittest.FunctionTestCase:
-    def raise_import_error(captured: Exception = error) -> None:
-        raise captured
+class ReceiptPlugin:
+    def __init__(self) -> None:
+        self.collected = 0
+        self.outcomes: dict[str, str] = {}
+        self.collection_errors: list[dict[str, str]] = []
+        self.internal_errors: list[str] = []
 
-    return unittest.FunctionTestCase(
-        raise_import_error,
-        description=f"import {relative.as_posix()}",
-    )
+    def pytest_collection_finish(self, session: pytest.Session) -> None:
+        self.collected = session.testscollected
 
-
-def load_suite(
-    repository_root: Path,
-    test_files: tuple[Path, ...],
-) -> tuple[unittest.TestSuite, tuple[dict[str, str], ...]]:
-    loader = unittest.defaultTestLoader
-    suite = unittest.TestSuite()
-    import_errors: list[dict[str, str]] = []
-
-    for index, path in enumerate(test_files):
-        relative = path.relative_to(repository_root)
-        module_name = "akos_ci_" + "_".join(relative.with_suffix("").parts) + f"_{index}"
-        try:
-            spec = importlib.util.spec_from_file_location(module_name, path)
-            if spec is None or spec.loader is None:
-                raise RuntimeError(f"cannot create an import specification for {relative}")
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[module_name] = module
-            spec.loader.exec_module(module)
-            suite.addTests(loader.loadTestsFromModule(module))
-        except Exception as exc:
-            import_errors.append(
+    def pytest_collectreport(self, report: pytest.CollectReport) -> None:
+        if report.failed:
+            self.collection_errors.append(
                 {
-                    "module": relative.as_posix(),
-                    "type": type(exc).__name__,
-                    "message": str(exc),
+                    "nodeid": report.nodeid,
+                    "message": str(report.longrepr),
                 }
             )
-            suite.addTest(_import_failure_test(relative, exc))
 
-    return suite, tuple(import_errors)
+    def pytest_internalerror(
+        self,
+        excrepr: pytest.ExceptionInfo[BaseException],
+        excinfo: pytest.ExceptionInfo[BaseException],
+    ) -> None:
+        del excinfo
+        self.internal_errors.append(str(excrepr))
+
+    def pytest_runtest_logreport(self, report: pytest.TestReport) -> None:
+        current = self.outcomes.get(report.nodeid)
+        if report.when == "setup":
+            if report.failed:
+                self.outcomes[report.nodeid] = "error"
+            elif report.skipped:
+                self.outcomes[report.nodeid] = "skipped"
+            return
+
+        if report.when == "call":
+            if report.passed:
+                self.outcomes[report.nodeid] = "passed"
+            elif report.failed:
+                self.outcomes[report.nodeid] = "failed"
+            elif report.skipped:
+                self.outcomes[report.nodeid] = "skipped"
+            return
+
+        if report.when == "teardown" and report.failed and current != "failed":
+            self.outcomes[report.nodeid] = "error"
+
+    def summary(self) -> dict[str, int]:
+        return {
+            outcome: sum(value == outcome for value in self.outcomes.values())
+            for outcome in ("passed", "failed", "error", "skipped")
+        }
 
 
 def atomic_write_json(path: Path, payload: dict[str, object]) -> None:
@@ -100,9 +114,9 @@ def _base_receipt(
     return {
         "schema": RECEIPT_SCHEMA,
         "repository": "GlacierEQ/AKOS",
-        "repository_root": str(repository_root),
         "commit": os.getenv("GITHUB_SHA", "LOCAL"),
         "python": platform.python_version(),
+        "pytest": pytest.__version__,
         "started_at_epoch_ns": started_ns,
         "test_modules": [str(path.relative_to(repository_root)) for path in test_files],
     }
@@ -115,6 +129,7 @@ def verify_repository(
     stream: TextIO | None = None,
 ) -> dict[str, object]:
     repository_root = repository_root.resolve()
+    output = output.resolve()
     started_ns = time.time_ns()
     test_files = discover_test_files(repository_root)
     receipt = _base_receipt(repository_root, test_files, started_ns)
@@ -123,11 +138,14 @@ def verify_repository(
         receipt.update(
             {
                 "completed_at_epoch_ns": time.time_ns(),
+                "collected": 0,
                 "tests_run": 0,
+                "passed": 0,
                 "failures": 0,
                 "errors": 0,
                 "skipped": 0,
-                "import_errors": [],
+                "collection_errors": [],
+                "internal_errors": [],
                 "conclusion": "FAILED",
                 "reason": "no test modules were discovered",
             }
@@ -135,25 +153,55 @@ def verify_repository(
         atomic_write_json(output, receipt)
         return receipt
 
-    suite, import_errors = load_suite(repository_root, test_files)
-    result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
+    plugin = ReceiptPlugin()
+    arguments = [
+        "-q",
+        "--disable-warnings",
+        "--rootdir",
+        str(repository_root),
+        *[str(path) for path in test_files],
+    ]
+
+    capture = stream if stream is not None else sys.stdout
+    try:
+        with contextlib.redirect_stdout(capture), contextlib.redirect_stderr(capture):
+            exit_code = pytest.main(arguments, plugins=[plugin])
+    except BaseException as exc:
+        plugin.internal_errors.append(f"{type(exc).__name__}: {exc}")
+        exit_code = pytest.ExitCode.INTERNAL_ERROR
+
+    summary = plugin.summary()
+    tests_run = sum(summary.values())
     receipt.update(
         {
             "completed_at_epoch_ns": time.time_ns(),
-            "tests_run": result.testsRun,
-            "failures": len(result.failures),
-            "errors": len(result.errors),
-            "skipped": len(result.skipped),
-            "import_errors": list(import_errors),
+            "pytest_exit_code": int(exit_code),
+            "collected": plugin.collected,
+            "tests_run": tests_run,
+            "passed": summary["passed"],
+            "failures": summary["failed"],
+            "errors": summary["error"],
+            "skipped": summary["skipped"],
+            "collection_errors": plugin.collection_errors,
+            "internal_errors": plugin.internal_errors,
         }
     )
 
-    if result.testsRun <= 0:
+    if plugin.collected <= 0:
         receipt["conclusion"] = "UNVERIFIED"
-        receipt["reason"] = "test runner exited without a positive test count"
-    elif not result.wasSuccessful():
+        receipt["reason"] = "pytest collected no tests"
+    elif tests_run <= 0:
+        receipt["conclusion"] = "UNVERIFIED"
+        receipt["reason"] = "pytest executed no tests"
+    elif (
+        exit_code != pytest.ExitCode.OK
+        or summary["failed"]
+        or summary["error"]
+        or plugin.collection_errors
+        or plugin.internal_errors
+    ):
         receipt["conclusion"] = "FAILED"
-        receipt["reason"] = "one or more tests failed, errored, or could not import"
+        receipt["reason"] = "pytest reported failure, collection error, or internal error"
     else:
         receipt["conclusion"] = "VERIFIED"
         receipt["evidence_level"] = "TEST"
@@ -164,7 +212,7 @@ def verify_repository(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Run every AKOS unittest module and emit a positive-count receipt."
+        description="Run the exhaustive AKOS pytest surface and emit an atomic receipt."
     )
     parser.add_argument(
         "--repository-root",
