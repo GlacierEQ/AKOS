@@ -7,7 +7,7 @@
 **Canonical repository:** `GlacierEQ/AKOS`  
 **Verification state:** `VERIFIED` at evidence level `TEST` for the current reviewed revision  
 **Verified matrix:** Python `3.11`, `3.12`, and `3.13`  
-**Observed result:** `57 tests`, `0 failures`, `0 errors`, `0 skipped` per interpreter
+**Observed result:** `82 tests`, `12 modules`, `0 failures`, `0 errors`, `0 skipped` per interpreter
 
 AKOS is the governance and operational-cognition layer for large, interconnected engineering systems. It converts identity, provenance, authority, execution, verification, persistence, and completion from informal expectations into inspectable contracts and executable behavior.
 
@@ -17,9 +17,9 @@ AKOS is the governance and operational-cognition layer for large, interconnected
 
 ### What AKOS accomplishes
 
-A sophisticated collection of tools can still fail as a system: work gets duplicated, actions happen in the wrong place, drafts are reported as completion, and important corrections disappear between sessions. AKOS addresses that coordination failure.
+A sophisticated collection of tools can still fail as a system: work gets duplicated, actions happen in the wrong place, drafts are reported as completion, and corrections disappear between sessions. AKOS addresses that coordination failure.
 
-It gives a large engineering portfolio one durable operating model without flattening the individual projects inside it:
+It gives a large engineering portfolio one durable operating model without flattening the projects inside it:
 
 - every important object has a stable identity and provenance;
 - plans, actions, verification, persistence, and completion are different states;
@@ -28,34 +28,35 @@ It gives a large engineering portfolio one durable operating model without flatt
 - corrections become policy, executable guards, regression tests, and receipts;
 - incomplete work reports its exact missing stage instead of an invented percentage.
 
-### Why the design matters
+### Why it matters
 
-AKOS demonstrates systems architecture beyond a single application. It shows how governance can become code, how trust can become an evidence property, and how a portfolio can improve recursively without rewriting history or obscuring responsibility.
+AKOS demonstrates systems architecture beyond a single application. It shows how governance becomes code, how trust becomes an evidence property, and how a portfolio improves recursively without rewriting history or obscuring responsibility.
 
 ### Proof in 60 seconds
 
 | Open or run | What it demonstrates |
 |---|---|
-| [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) | Durable operating laws and non-negotiable system invariants. |
+| [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) | Durable operating laws and system invariants. |
 | [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Deterministic execute, confirm, or block decisions. |
-| [`operational_cognition/engine.py`](operational_cognition/engine.py) | Evidence classes, work routing, phase receipts, and completion logic. |
+| [`operational_cognition/engine.py`](operational_cognition/engine.py) | Evidence classes, routing, phase receipts, and completion logic. |
 | [`finisher/finisher.py`](finisher/finisher.py) | Finish-first analysis and explicit blocker handling. |
 | [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json) | Machine-readable execution and completion policy. |
-| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Positive-count test execution and atomic verification receipt. |
-| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Repository-native verification across three Python versions. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive positive-count testing and atomic receipts. |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Three-version repository-native verification. |
 | [`.github/workflows/integrity.yml`](.github/workflows/integrity.yml) | Adversarial integrity tests and Git-anchor verification. |
 
 ### Evidence summary
 
 The current promotion receipt establishes repository-local behavior at the `TEST` level:
 
-- 10 discovered test modules;
-- 57 executed tests per Python version;
-- 3 supported interpreter versions;
-- 0 failures, errors, or skips;
-- README contract verified;
-- all tracked Python files compiled by the independent integrity gate;
-- checkout verified against the Git anchor.
+- 12 discovered test modules, including the independent integrity watchdog;
+- 82 executed tests on each supported Python version;
+- 0 failures, errors, skips, or import errors;
+- editable package installation with explicit dependencies;
+- strict lint for the new verification control surface;
+- README contract verification;
+- compilation of executable and tracked Python surfaces;
+- checkout verification against the Git anchor.
 
 It does **not** claim that external providers are connected, that deployment scale has been measured, or that every declared integration has been exercised.
 
@@ -113,22 +114,23 @@ The architecture separates five concerns that are frequently collapsed:
 2. **Execution without redundant permission** — beneficial, objective-preserving, recoverable work can proceed within standing authority.
 3. **Receipt-backed completion** — plans and drafts cannot masquerade as changed state.
 4. **System-first routing** — existing planes are discovered and reused before infrastructure is invented.
-5. **Correction-to-cognition** — operator corrections become durable law, runtime behavior, tests, and ledger entries.
+5. **Correction-to-cognition** — corrections become durable law, runtime behavior, tests, and ledger entries.
 6. **Artifact closure** — exact missing stages replace subjective completion percentages.
 7. **Monotonic maturity** — evidence states advance through explicit transitions and cannot silently regress.
 
-### Runtime components
+### Runtime map
 
 | Component | Responsibility |
 |---|---|
 | [`operational_cognition/engine.py`](operational_cognition/engine.py) | Work models, routing, evidence classes, phase receipts, and completion decisions. |
 | [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Standing-authority and confirmation-trigger evaluation. |
 | [`operational_cognition/topology.py`](operational_cognition/topology.py) | Architecture discovery and correct-plane routing. |
-| [`operational_cognition/maturity.py`](operational_cognition/maturity.py) | Evidence-backed capability maturity and artifact closure. |
+| [`operational_cognition/maturity.py`](operational_cognition/maturity.py) | Capability maturity and artifact closure. |
 | [`operational_cognition/master_strand.py`](operational_cognition/master_strand.py) | Branch assessment, extinction gates, and canonical-strand decisions. |
 | [`finisher/finisher.py`](finisher/finisher.py) | Finish-first work classification and closure planning. |
-| [`src/verify_manifest.py`](src/verify_manifest.py) | Machine-readable manifest validation. |
-| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Test discovery, positive-count enforcement, and receipt generation. |
+| [`src/verify_manifest.py`](src/verify_manifest.py) | Canonical manifest validation. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Test discovery, import-failure capture, positive-count proof, and atomic receipts. |
+| [`scripts/verify_readme_contract.py`](scripts/verify_readme_contract.py) | Portable recruiter → expert → AI contract verification. |
 
 ### Correctness and failure behavior
 
@@ -139,63 +141,62 @@ The architecture separates five concerns that are frequently collapsed:
 - Unauthorized writes are blocked.
 - Pipeline and artifact stages reject regression.
 - Architect assertions remain active claims but are not auto-promoted to verified facts.
-- Missing test modules fail verification.
+- Missing test modules return a `FAILED` receipt.
 - A runner that executes zero tests returns `UNVERIFIED`, even with exit code zero.
-- Test failures or import errors return `FAILED`.
-- Receipts are written atomically so stale success cannot survive a failed rerun.
-- Machine-local paths are rejected from the public README contract.
+- Import failures become explicit failed test evidence instead of aborting before receipt creation.
+- Temporary receipt files are exclusive and atomically replaced.
+- README verification is independent of the caller's working directory.
+- macOS, Windows, and file-URL local paths are rejected from the public README.
 
 ### Build and verification
 
 ```bash
-# Install runtime and verification tooling
+# Install runtime and repository-native verification commands
 python -m pip install -e ".[dev]"
 
-# Strictly lint the new verification control surface
-ruff check scripts/verify_repository.py scripts/verify_readme_contract.py
-
-# Record, rather than conceal, preexisting quality debt
-mkdir -p artifacts/ci
-ruff check operational_cognition finisher src tests \
-  --output-format json > artifacts/ci/ruff-baseline.json || true
+# Strictly lint new verification code and its adversarial tests
+ruff check \
+  scripts/verify_repository.py \
+  scripts/verify_readme_contract.py \
+  tests/test_verification_tools.py
 
 # Compile executable surfaces
 python -m compileall -q operational_cognition finisher src scripts tests
 
-# Verify the three-audience README contract
-python scripts/verify_readme_contract.py
+# Verify the public documentation contract
+akos-verify-readme
 
-# Run every AKOS unittest module and emit a positive-count receipt
-python scripts/verify_repository.py --output artifacts/ci/test-receipt.json
+# Run every AKOS test module and emit a positive-count receipt
+akos-verify --output artifacts/ci/test-receipt.json
 ```
 
-The test receipt schema is `glaciereq.akos.test-receipt.v1`. It records the commit, Python version, discovered modules, test count, failures, errors, skips, evidence level, and conclusion.
+The receipt schema is `glaciereq.akos.test-receipt.v1`. It records the revision, Python version, discovered modules, positive test count, import errors, failures, errors, skips, evidence level, and conclusion.
 
-The initial strict audit of the preexisting runtime recorded **117 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned, but it is not misrepresented as a runtime failure: bytecode compilation, 57 behavioral tests, and the independent integrity gate all pass. New verification code is held to a zero-warning strict gate.
+### Quality-debt treatment
 
-### Verification layers
+The initial strict audit of the preexisting runtime recorded **117 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned; it is not mislabeled as fixed, and it is not confused with runtime correctness. New verification code is held to a zero-warning gate while existing debt is reduced through bounded, behavior-preserving changes.
 
-| Layer | Gate | Current result |
-|---|---|---|
-| Packaging | Editable installation with explicit dependencies | Passed on Python 3.11–3.13 |
-| New control-plane quality | Strict Ruff on verification scripts | Passed |
-| Legacy quality baseline | Full Ruff JSON report | 117 findings recorded |
-| Syntax/importability | `compileall` plus integrity compile-all | Passed |
-| README contract | Recruiter → expert → AI order and portability | Passed |
-| Runtime behavior | Positive-count unittest receipt | 57/57 passed per interpreter |
-| Integrity | Adversarial tests plus Git-anchor verification | Passed |
-| Deployment/scale | Environment-specific evidence | Not claimed |
+| Verification layer | Current result |
+|---|---|
+| Packaging and declared dependencies | Passed on Python 3.11–3.13 |
+| New verification-code lint | Passed |
+| Existing-runtime Ruff baseline | 117 findings recorded |
+| Bytecode and tracked-file compilation | Passed |
+| README audience and portability contract | Passed |
+| Runtime and verifier behavior | 82/82 passed per interpreter |
+| Adversarial integrity + Git anchor | Passed |
+| Deployment, performance, and scale | Not claimed |
 
 ### Language fit
 
 | Language / format | Responsibility | Boundary | Proof |
 |---|---|---|---|
-| Python 3.11+ | Operational cognition, authority, topology, maturity, closure, and verification | Executable runtime and test tooling | Three-version CI plus positive-count unittest receipt |
-| JSON | Runtime manifests, topology, maturity, and receipt interchange | Machine-readable policy and evidence records | Parsing and contract tests |
-| YAML | Canonical AKOS manifest and operator-readable configuration | Human-editable system declaration | Manifest verification tests |
-| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review surface | README contract gate and openable evidence |
+| Python 3.11+ | Cognition, authority, topology, maturity, closure, and verification | Executable runtime and tooling | Three-version CI plus positive-count receipt |
+| JSON | Runtime manifests, topology, maturity, and receipts | Machine-readable policy and evidence | Parsing and contract tests |
+| YAML | Canonical manifest and operator-readable configuration | Human-editable declaration | Manifest verification tests |
+| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review | README contract gate and openable evidence |
 
-The repository remains intentionally Python-centered. Additional languages belong only where a workload, safety property, interoperability boundary, or performance requirement creates a measurable advantage.
+The repository remains intentionally Python-centered. Additional languages belong only where a workload, safety property, interoperability boundary, or performance requirement creates measurable value.
 
 ### Evidence-backed operating rules
 
@@ -203,14 +204,10 @@ The repository remains intentionally Python-centered. Additional languages belon
 DISCOVER -> MAP -> REUSE -> EXTEND -> EXECUTE -> VERIFY -> PERSIST
 ```
 
-Capabilities move through observable states:
-
 ```text
 DECLARED -> DISCOVERED -> CONNECTED -> AUTHENTICATED -> AUTHORIZED ->
 INVOKED -> RETURNED -> VERIFIED -> PERSISTED
 ```
-
-Artifacts move through closure stages:
 
 ```text
 LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
@@ -236,20 +233,22 @@ status:
   evidence_level: TEST
   verification_matrix:
     python: ["3.11", "3.12", "3.13"]
-    tests_per_interpreter: 57
-    test_modules: 10
+    tests_per_interpreter: 82
+    test_modules: 12
     failures: 0
     errors: 0
     skipped: 0
+    import_errors: 0
   quality_baseline:
     schema: glaciereq.akos.ruff-baseline.v1
     preexisting_findings: 117
     treatment: recorded_nonblocking_debt
   verified_scope:
     - editable package installation and declared dependencies
-    - strict quality gate for newly introduced verification code
+    - installed akos-verify and akos-verify-readme commands
+    - strict quality gate for new verification code and regression tests
     - compilation of executable and tracked Python surfaces
-    - repository-local operational-cognition, finisher, connector, and manifest tests
+    - operational-cognition, finisher, integrity, connector, manifest, and verifier tests
     - recruiter, expert, and AI README contract
     - adversarial integrity tests and Git-anchor verification
   blocked_scope:
@@ -271,10 +270,12 @@ interfaces:
     - atomic test and quality-baseline receipts
   commands:
     install: python -m pip install -e ".[dev]"
-    lint_new_code: ruff check scripts/verify_repository.py scripts/verify_readme_contract.py
+    lint_new_code: >-
+      ruff check scripts/verify_repository.py
+      scripts/verify_readme_contract.py tests/test_verification_tools.py
     compile: python -m compileall -q operational_cognition finisher src scripts tests
-    test: python scripts/verify_repository.py --output artifacts/ci/test-receipt.json
-    verify_readme: python scripts/verify_readme_contract.py
+    test: akos-verify --output artifacts/ci/test-receipt.json
+    verify_readme: akos-verify-readme
 evidence:
   workflow: .github/workflows/ci.yml
   integrity_workflow: .github/workflows/integrity.yml
@@ -282,6 +283,7 @@ evidence:
   receipt_schema: glaciereq.akos.test-receipt.v1
   quality_schema: glaciereq.akos.ruff-baseline.v1
   tests:
+    - .integrity/test_*.py
     - operational_cognition/test_*.py
     - finisher/test_*.py
     - tests/test_*.py
@@ -293,16 +295,13 @@ relationships:
       Job-App Helix supplies exact portfolio representation and evidence rollout.
   - target: GlacierEQ/anthropic-agent-coordinator
     relation: GOVERNS
-    combined_value: >-
-      Agent motion receives bounded authority, persistence, and completion rules.
+    combined_value: Agent motion receives bounded authority, persistence, and completion rules.
   - target: GlacierEQ/anthropic-safety-monitor
     relation: GOVERNS
-    combined_value: >-
-      Independent monitoring signals feed explicit review and blocking decisions.
+    combined_value: Independent monitoring feeds explicit review and blocking decisions.
   - target: GlacierEQ/spacex-mission-control
     relation: GOVERNS
-    combined_value: >-
-      Mission-state orchestration inherits evidence and completion boundaries.
+    combined_value: Mission orchestration inherits evidence and completion boundaries.
 limits:
   - Architecture does not establish provider connectivity.
   - A relationship does not prove the target repository currently works.
@@ -326,7 +325,7 @@ limits:
 ## Repository map
 
 ```text
-/docs/                     human-readable architecture and integration doctrine
+/docs/                     architecture and integration doctrine
 /specs/                    formal AKOS specifications
 /contracts/                compatibility and authority contracts
 /schemas/                  machine-readable validation schemas
@@ -337,7 +336,7 @@ limits:
 /ledger/                   append-only build, correction, and sync receipts
 /finisher/                 deterministic closure engine
 /operational_cognition/    execution, topology, maturity, authority, and closure runtime
-/scripts/                  repository-native verification tooling
+/scripts/                  installed repository-verification tooling
 ```
 
 ## Start here
@@ -346,15 +345,9 @@ limits:
 2. Read [`BUILD_INDEX.md`](BUILD_INDEX.md) and [`CURRENT_STATE.md`](CURRENT_STATE.md).
 3. Inspect [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json) before diagnosing a missing route.
 4. Apply [`AKOS-OC-001`](specs/AKOS-OC-001_OPERATIONAL_COGNITION.md) to execution and [`AKOS-OC-002`](specs/AKOS-OC-002_OPERATIONAL_MATURITY.md) to maturity or closure claims.
-5. Run the repository-native verification commands.
+5. Run `akos-verify-readme` and `akos-verify`.
 6. Close finishable work before proposing expansion.
 7. Preserve history and append evidence-backed deltas.
-
-## Repository workflow
-
-`GlacierEQ/AKOS` is a single-operator canonical repository. Coherent, reversible, verified improvements may commit directly to `main`; branches and pull requests are used when an independent verification or review gate materially improves confidence.
-
-Rollback uses additive correction or `git revert`. Canonical history is not silently rewritten.
 
 ## Operating principle
 
