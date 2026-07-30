@@ -7,7 +7,7 @@
 **Canonical repository:** `GlacierEQ/AKOS`  
 **Verification state:** `VERIFIED` at evidence level `TEST` for the current reviewed revision  
 **Verified matrix:** Python `3.11`, `3.12`, and `3.13`  
-**Observed result:** `82 tests`, `12 modules`, `0 failures`, `0 errors`, `0 skipped` per interpreter
+**Observed result:** `94 collected`, `94 passed`, `12 modules`, `0 failures`, `0 errors`, `0 skips`
 
 AKOS is the governance and operational-cognition layer for large, interconnected engineering systems. It converts identity, provenance, authority, execution, verification, persistence, and completion from informal expectations into inspectable contracts and executable behavior.
 
@@ -23,7 +23,7 @@ It gives a large engineering portfolio one durable operating model without flatt
 
 - every important object has a stable identity and provenance;
 - plans, actions, verification, persistence, and completion are different states;
-- safe work can proceed under explicit standing authority;
+- safe and recoverable work can proceed under explicit standing authority;
 - high-risk or irreversible work remains gated;
 - corrections become policy, executable guards, regression tests, and receipts;
 - incomplete work reports its exact missing stage instead of an invented percentage.
@@ -39,26 +39,26 @@ AKOS demonstrates systems architecture beyond a single application. It shows how
 | [`specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md`](specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md) | Durable operating laws and system invariants. |
 | [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Deterministic execute, confirm, or block decisions. |
 | [`operational_cognition/engine.py`](operational_cognition/engine.py) | Evidence classes, routing, phase receipts, and completion logic. |
-| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first analysis and explicit blocker handling. |
-| [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json) | Machine-readable execution and completion policy. |
-| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive positive-count testing and atomic receipts. |
-| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Three-version repository-native verification. |
+| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first analysis and exact blocker handling. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive pytest collection and atomic proof receipts. |
+| [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Three-version package, contract, and behavioral verification. |
 | [`.github/workflows/integrity.yml`](.github/workflows/integrity.yml) | Adversarial integrity tests and Git-anchor verification. |
+| [`ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md`](ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md) | Evidence-backed migration of secret-bearing execution to the correct plane. |
 
 ### Evidence summary
 
 The current promotion receipt establishes repository-local behavior at the `TEST` level:
 
-- 12 discovered test modules, including the independent integrity watchdog;
-- 82 executed tests on each supported Python version;
-- 0 failures, errors, skips, or import errors;
-- editable package installation with explicit dependencies;
-- strict lint for the new verification control surface;
-- README contract verification;
+- 12 discovered modules across integrity, operational cognition, Finisher, manifests, and verifier tooling;
+- 94 collected and executed tests on each supported Python version;
+- 94 passes with no failures, errors, skips, collection errors, or internal errors;
+- editable installation with explicit dependencies and installed verification commands;
+- strict zero-warning lint for the new verification control surface;
 - compilation of executable and tracked Python surfaces;
-- checkout verification against the Git anchor.
+- recruiter → expert → AI README contract verification;
+- read-only workflow-policy enforcement and Git-anchor verification.
 
-It does **not** claim that external providers are connected, that deployment scale has been measured, or that every declared integration has been exercised.
+It does **not** claim external-provider connectivity, deployment scale, production reliability, or exercised behavior outside repository-local CI.
 
 ## For senior engineers and domain experts
 
@@ -100,7 +100,7 @@ Execution authority + provider boundary
 Canonical persistence + append-only receipts
 ```
 
-The architecture separates five concerns that are frequently collapsed:
+The architecture separates concerns that are commonly collapsed:
 
 1. **Canonical source** — the authoritative object or record.
 2. **Execution plane** — the system capable of changing target state.
@@ -110,7 +110,7 @@ The architecture separates five concerns that are frequently collapsed:
 
 ### Core innovations
 
-1. **One truth, many views** — canonical objects can have multiple projections without losing identity.
+1. **One truth, many views** — canonical objects support multiple projections without losing identity.
 2. **Execution without redundant permission** — beneficial, objective-preserving, recoverable work can proceed within standing authority.
 3. **Receipt-backed completion** — plans and drafts cannot masquerade as changed state.
 4. **System-first routing** — existing planes are discovered and reused before infrastructure is invented.
@@ -127,74 +127,80 @@ The architecture separates five concerns that are frequently collapsed:
 | [`operational_cognition/topology.py`](operational_cognition/topology.py) | Architecture discovery and correct-plane routing. |
 | [`operational_cognition/maturity.py`](operational_cognition/maturity.py) | Capability maturity and artifact closure. |
 | [`operational_cognition/master_strand.py`](operational_cognition/master_strand.py) | Branch assessment, extinction gates, and canonical-strand decisions. |
-| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first work classification and closure planning. |
+| [`finisher/finisher.py`](finisher/finisher.py) | Finish-first classification and closure planning. |
 | [`src/verify_manifest.py`](src/verify_manifest.py) | Canonical manifest validation. |
-| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Test discovery, import-failure capture, positive-count proof, and atomic receipts. |
-| [`scripts/verify_readme_contract.py`](scripts/verify_readme_contract.py) | Portable recruiter → expert → AI contract verification. |
+| [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive pytest collection, outcome accounting, and atomic receipts. |
+| [`scripts/verify_readme_contract.py`](scripts/verify_readme_contract.py) | Portable public-document contract verification. |
 
 ### Correctness and failure behavior
 
 - A plan is not execution.
-- Execution without a provider receipt cannot establish a provider-side change.
+- Execution without a provider receipt cannot establish provider-side change.
 - Validation without persistence cannot establish durable completion.
 - Irreversible operations require explicit approval.
 - Unauthorized writes are blocked.
-- Pipeline and artifact stages reject regression.
-- Architect assertions remain active claims but are not auto-promoted to verified facts.
-- Missing test modules return a `FAILED` receipt.
-- A runner that executes zero tests returns `UNVERIFIED`, even with exit code zero.
-- Import failures become explicit failed test evidence instead of aborting before receipt creation.
-- Temporary receipt files are exclusive and atomically replaced.
+- Missing test modules produce a `FAILED` receipt.
+- Zero collected or executed tests remain `UNVERIFIED`.
+- Collection, usage, and internal pytest errors produce `FAILED` evidence.
+- Function-style pytest tests and class-based unittest cases share one exhaustive collection.
+- Receipt files use exclusive temporary files and atomic replacement.
 - README verification is independent of the caller's working directory.
 - macOS, Windows, and file-URL local paths are rejected from the public README.
+- Repository workflows are restricted to exact read-only permissions, local checkout, and nonpersistent credentials.
+- Secret-bearing cross-repository finishing is prohibited in AKOS Actions and routed to the governed action face.
 
 ### Build and verification
 
 ```bash
-# Install runtime and repository-native verification commands
+# Install runtime and verification tooling
 python -m pip install -e ".[dev]"
 
-# Strictly lint new verification code and its adversarial tests
+# Strictly lint the newly introduced verification boundary
 ruff check \
   scripts/verify_repository.py \
   scripts/verify_readme_contract.py \
-  tests/test_verification_tools.py
+  tests/test_verification_tools.py \
+  operational_cognition/test_contracts.py
 
 # Compile executable surfaces
 python -m compileall -q operational_cognition finisher src scripts tests
 
-# Verify the public documentation contract
+# Verify the three-audience public contract
 akos-verify-readme
 
-# Run every AKOS test module and emit a positive-count receipt
+# Run exhaustive pytest collection and emit the receipt
 akos-verify --output artifacts/ci/test-receipt.json
 ```
 
-The receipt schema is `glaciereq.akos.test-receipt.v1`. It records the revision, Python version, discovered modules, positive test count, import errors, failures, errors, skips, evidence level, and conclusion.
+The receipt schema is `glaciereq.akos.test-receipt.v1`. It records the revision, interpreter and pytest versions, discovered modules, collected count, executed outcomes, collection and internal errors, evidence level, and conclusion.
+
+### Verification layers
+
+| Layer | Current result |
+|---|---|
+| Packaging and declared dependencies | Passed on Python 3.11–3.13 |
+| New verification-code lint | Passed with zero findings |
+| Existing-runtime Ruff baseline | 117 findings recorded, not hidden or mislabeled as fixed |
+| Bytecode and tracked-file compilation | Passed |
+| README audience and portability contract | Passed |
+| Exhaustive repository behavior | 94/94 passed per interpreter |
+| Workflow authority contract | Passed; exact read-only local verification only |
+| Finisher verification | Passed after secret-bearing execution was retired |
+| Adversarial integrity + Git anchor | Passed |
+| Deployment, performance, and scale | Not claimed |
 
 ### Quality-debt treatment
 
-The initial strict audit of the preexisting runtime recorded **117 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned; it is not mislabeled as fixed, and it is not confused with runtime correctness. New verification code is held to a zero-warning gate while existing debt is reduced through bounded, behavior-preserving changes.
-
-| Verification layer | Current result |
-|---|---|
-| Packaging and declared dependencies | Passed on Python 3.11–3.13 |
-| New verification-code lint | Passed |
-| Existing-runtime Ruff baseline | 117 findings recorded |
-| Bytecode and tracked-file compilation | Passed |
-| README audience and portability contract | Passed |
-| Runtime and verifier behavior | 82/82 passed per interpreter |
-| Adversarial integrity + Git anchor | Passed |
-| Deployment, performance, and scale | Not claimed |
+The initial strict audit of the preexisting runtime recorded **117 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned. It is not confused with behavioral correctness, and it is not represented as remediated. New verification code is held to a zero-warning gate while legacy debt is reduced through bounded, behavior-preserving changes.
 
 ### Language fit
 
 | Language / format | Responsibility | Boundary | Proof |
 |---|---|---|---|
-| Python 3.11+ | Cognition, authority, topology, maturity, closure, and verification | Executable runtime and tooling | Three-version CI plus positive-count receipt |
+| Python 3.11+ | Cognition, authority, topology, maturity, closure, and verification | Executable runtime and proof tooling | Three-version CI plus exhaustive pytest receipt |
 | JSON | Runtime manifests, topology, maturity, and receipts | Machine-readable policy and evidence | Parsing and contract tests |
-| YAML | Canonical manifest and operator-readable configuration | Human-editable declaration | Manifest verification tests |
-| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review | README contract gate and openable evidence |
+| YAML | Canonical manifests and GitHub workflow policy | Human-editable declarations | Manifest and workflow-contract tests |
+| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review | README contract and openable evidence |
 
 The repository remains intentionally Python-centered. Additional languages belong only where a workload, safety property, interoperability boundary, or performance requirement creates measurable value.
 
@@ -233,12 +239,15 @@ status:
   evidence_level: TEST
   verification_matrix:
     python: ["3.11", "3.12", "3.13"]
-    tests_per_interpreter: 82
+    pytest: "8.4.2"
+    tests_per_interpreter: 94
     test_modules: 12
+    passed: 94
     failures: 0
     errors: 0
     skipped: 0
-    import_errors: 0
+    collection_errors: 0
+    internal_errors: 0
   quality_baseline:
     schema: glaciereq.akos.ruff-baseline.v1
     preexisting_findings: 117
@@ -248,12 +257,15 @@ status:
     - installed akos-verify and akos-verify-readme commands
     - strict quality gate for new verification code and regression tests
     - compilation of executable and tracked Python surfaces
+    - exhaustive pytest collection across function and class test styles
     - operational-cognition, finisher, integrity, connector, manifest, and verifier tests
     - recruiter, expert, and AI README contract
+    - read-only workflow authority contract
     - adversarial integrity tests and Git-anchor verification
   blocked_scope:
     - irreversible actions without explicit approval
     - provider-side operations without current provider receipts
+    - secret-bearing or cross-repository execution from AKOS Actions
   unverified_scope:
     - external connectors not exercised by repository-local tests
     - deployment, performance, reliability, and scale outside GitHub Actions
@@ -271,17 +283,19 @@ interfaces:
   commands:
     install: python -m pip install -e ".[dev]"
     lint_new_code: >-
-      ruff check scripts/verify_repository.py
-      scripts/verify_readme_contract.py tests/test_verification_tools.py
+      ruff check scripts/verify_repository.py scripts/verify_readme_contract.py
+      tests/test_verification_tools.py operational_cognition/test_contracts.py
     compile: python -m compileall -q operational_cognition finisher src scripts tests
     test: akos-verify --output artifacts/ci/test-receipt.json
     verify_readme: akos-verify-readme
 evidence:
   workflow: .github/workflows/ci.yml
   integrity_workflow: .github/workflows/integrity.yml
+  finisher_workflow: .github/workflows/finisher.yml
   test_runner: scripts/verify_repository.py
   receipt_schema: glaciereq.akos.test-receipt.v1
   quality_schema: glaciereq.akos.ruff-baseline.v1
+  action_boundary_receipt: ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md
   tests:
     - .integrity/test_*.py
     - operational_cognition/test_*.py
@@ -329,11 +343,11 @@ limits:
 /specs/                    formal AKOS specifications
 /contracts/                compatibility and authority contracts
 /schemas/                  machine-readable validation schemas
-/manifests/                family, topology, cognition, and maturity manifests
+/manifests/                topology, cognition, and maturity manifests
 /templates/                reusable canonical templates
 /methodologies/            Pro-Code and operating methods
 /adr/                      architecture decision records
-/ledger/                   append-only build, correction, and sync receipts
+/ledger/                   append-only build, correction, migration, and sync receipts
 /finisher/                 deterministic closure engine
 /operational_cognition/    execution, topology, maturity, authority, and closure runtime
 /scripts/                  installed repository-verification tooling
