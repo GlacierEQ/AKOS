@@ -187,7 +187,20 @@ def verify_repository(
         }
     )
 
-    if plugin.collected <= 0:
+    infrastructure_failure = (
+        bool(plugin.collection_errors)
+        or bool(plugin.internal_errors)
+        or exit_code
+        in {
+            pytest.ExitCode.INTERRUPTED,
+            pytest.ExitCode.INTERNAL_ERROR,
+            pytest.ExitCode.USAGE_ERROR,
+        }
+    )
+    if infrastructure_failure:
+        receipt["conclusion"] = "FAILED"
+        receipt["reason"] = "pytest reported a collection, usage, or internal error"
+    elif plugin.collected <= 0:
         receipt["conclusion"] = "UNVERIFIED"
         receipt["reason"] = "pytest collected no tests"
     elif tests_run <= 0:
@@ -197,11 +210,9 @@ def verify_repository(
         exit_code != pytest.ExitCode.OK
         or summary["failed"]
         or summary["error"]
-        or plugin.collection_errors
-        or plugin.internal_errors
     ):
         receipt["conclusion"] = "FAILED"
-        receipt["reason"] = "pytest reported failure, collection error, or internal error"
+        receipt["reason"] = "pytest reported one or more failed or errored tests"
     else:
         receipt["conclusion"] = "VERIFIED"
         receipt["evidence_level"] = "TEST"
