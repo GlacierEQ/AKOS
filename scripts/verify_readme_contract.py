@@ -15,36 +15,48 @@ LOCAL_PATH = re.compile(
         (
             re.escape(FILE_URL_PREFIX),
             re.escape(MAC_USER_PREFIX),
-            r"[A-Za-z]:\\\\Users\\\\",
+            r"[A-Za-z]:\\Users\\",
         )
     )
 )
+REQUIRED_EVIDENCE = (
+    ".github/workflows/ci.yml",
+    "scripts/verify_repository.py",
+    "glaciereq.akos.test-receipt.v1",
+    "blocked_scope:",
+    "unverified_scope:",
+    "relationships:",
+)
+
+
+def verify_readme(readme: Path) -> tuple[str, ...]:
+    text = readme.read_text(encoding="utf-8")
+    errors: list[str] = []
+
+    missing = [heading for heading in HEADINGS if heading not in text]
+    if missing:
+        errors.append(f"missing required audience headings: {missing}")
+    else:
+        positions = [text.index(heading) for heading in HEADINGS]
+        if positions != sorted(positions):
+            errors.append("audience headings are out of order")
+
+    if LOCAL_PATH.search(text):
+        errors.append("README exposes a machine-local path")
+
+    missing_evidence = [value for value in REQUIRED_EVIDENCE if value not in text]
+    if missing_evidence:
+        errors.append(f"machine contract is incomplete: {missing_evidence}")
+
+    return tuple(errors)
 
 
 def main() -> int:
-    readme = Path("README.md")
-    text = readme.read_text(encoding="utf-8")
-    missing = [heading for heading in HEADINGS if heading not in text]
-    if missing:
-        raise SystemExit(f"README is missing required audience headings: {missing}")
-
-    positions = [text.index(heading) for heading in HEADINGS]
-    if positions != sorted(positions):
-        raise SystemExit("README audience headings are out of order")
-    if LOCAL_PATH.search(text):
-        raise SystemExit("README exposes a machine-local path")
-
-    required_evidence = (
-        ".github/workflows/ci.yml",
-        "scripts/verify_repository.py",
-        "glaciereq.akos.test-receipt.v1",
-        "blocked_scope:",
-        "unverified_scope:",
-        "relationships:",
-    )
-    missing_evidence = [value for value in required_evidence if value not in text]
-    if missing_evidence:
-        raise SystemExit(f"README machine contract is incomplete: {missing_evidence}")
+    repository_root = Path(__file__).resolve().parents[1]
+    readme = repository_root / "README.md"
+    errors = verify_readme(readme)
+    if errors:
+        raise SystemExit("AKOS README contract failed: " + "; ".join(errors))
 
     print("AKOS README contract verified")
     return 0
