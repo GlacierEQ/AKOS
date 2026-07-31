@@ -1,5 +1,15 @@
 """AKOS operational cognition runtime."""
 
+from .adaptation import (
+    AdaptationAction,
+    AdaptationDecision,
+    AdaptationPolicy,
+    AdaptationReason,
+    AdaptationReceipt,
+    DynamicAdjustmentEngine,
+    RankedCapability,
+    RuntimeSignal,
+)
 from .engine import (
     ArtifactReceipt,
     ArtifactStage,
@@ -63,6 +73,11 @@ from .topology import (
 )
 
 __all__ = [
+    "AdaptationAction",
+    "AdaptationDecision",
+    "AdaptationPolicy",
+    "AdaptationReason",
+    "AdaptationReceipt",
     "ArchitectureSnapshot",
     "ArtifactClosureGate",
     "ArtifactClosureResult",
@@ -83,6 +98,7 @@ __all__ = [
     "Decision",
     "DecisionState",
     "DimensionScore",
+    "DynamicAdjustmentEngine",
     "EvidenceClass",
     "EvidenceLevel",
     "ExecutionAuthorityContext",
@@ -100,8 +116,10 @@ __all__ = [
     "PhaseReceipt",
     "PipelinePhase",
     "ProposalKind",
+    "RankedCapability",
     "ReceiptGroundedScorecard",
     "RouteState",
+    "RuntimeSignal",
     "ScorecardResult",
     "SourceKind",
     "StrandDecision",
