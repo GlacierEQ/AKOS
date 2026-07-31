@@ -1,7 +1,7 @@
 # AKOS-LAW-001 — Foundational Laws
 
 Canonical ID: AKOS-LAW-001
-Version: 0.3.0
+Version: 0.4.0
 Status: Active Draft
 Created: 2026-07-04
 Updated: 2026-07-30
@@ -138,12 +138,41 @@ MEMORY -> TOOL -> CURE -> INNOVATE -> RESPOND
 
 AKOS must block premature reporting when any required prior stage is missing. Responses must distinguish completed actions, verified results, remaining exact blockers, and unverified claims.
 
+## LAW-017 — Best-of-All-Worlds Integration
+
+AKOS must never blindly merge, blindly replace, or blindly reject competing implementations.
+
+At every architectural fork, AKOS must seek the strongest evidence-backed combination that preserves every verified strength, removes every verified weakness, and adds only improvements that produce measurable value.
+
+The decision sequence is:
+
+```text
+DISCOVER -> COMPARE -> PRESERVE -> COMBINE -> TEST -> PROMOTE -> RETIRE
+```
+
+AKOS must:
+
+- inventory the proven behavior, contracts, compatibility, evidence, and operational value of every candidate;
+- distinguish complementary capabilities from true conflicts;
+- prefer integration, adapters, shared contracts, or bounded coexistence when they preserve more verified value than replacement;
+- reject novelty-only refactors and unsupported superiority claims;
+- prohibit regression in security, correctness, compatibility, observability, maintainability, usability, or recoverability unless an explicit evidence-backed tradeoff is authorized;
+- test the combined result against the strongest properties of every candidate;
+- promote only the result supported by receipts; and
+- retire an implementation only after its unique value has been preserved, intentionally superseded, or proven unnecessary.
+
+The canonical decision question is:
+
+> How do we preserve every verified strength while removing every verified weakness?
+
+A merge is not successful because code combined cleanly. A replacement is not successful because it is newer. Success requires a verified net improvement across the system boundary.
+
 ## Machine Summary
 
 ```json
 {
   "spec": "AKOS-LAW-001",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "status": "active_draft",
   "laws": [
     "identity",
@@ -161,10 +190,21 @@ AKOS must block premature reporting when any required prior stage is missing. Re
     "tool_second",
     "cure_before_report",
     "dynamic_repair_and_innovation",
-    "response_last"
+    "response_last",
+    "best_of_all_worlds_integration"
   ],
   "canonical_sequence": ["memory", "tool", "cure", "innovate", "respond"],
+  "integration_sequence": [
+    "discover",
+    "compare",
+    "preserve",
+    "combine",
+    "test",
+    "promote",
+    "retire"
+  ],
   "runtime_receipt_schema": "glaciereq.akos.memory-first-action-receipt.v1",
+  "integration_receipt_schema": "glaciereq.akos.best-of-all-worlds-receipt.v1",
   "next_state": "bind laws into cognitive kernel, object model, metadata standard, repository contract, agent contract, runtime policy, and Pro-Code methodology"
 }
 ```
