@@ -1,0 +1,184 @@
+{
+  "$schema": "https://raw.githubusercontent.com/GlacierEQ/AKOS/main/governance/schemas/glaciereq.aspen-grove-constellation.v1.schema.json",
+  "schema_id": "glaciereq.aspen-grove-constellation.v1",
+  "version": "1.0.0",
+  "generated_at": "2026-07-31T07:20:00-10:00",
+  "canonical_authority": {
+    "repository": "GlacierEQ/AKOS",
+    "path": "governance/glaciereq.aspen-grove-constellation.v1.json"
+  },
+  "operational_projection": {
+    "repository": "GlacierEQ/aspen-grove-core",
+    "path": "ASPEN_GROVE_CONSTELLATION.json"
+  },
+  "parent_nervous_system": {
+    "schema_id": "glaciereq.nervous-system.v1",
+    "repository": "GlacierEQ/AKOS",
+    "path": "governance/glaciereq.nervous-system.v1.json",
+    "bound_node": "GlacierEQ/aspen-grove-core"
+  },
+  "purpose": "Every Aspen Grove is an entry point into the full GlacierEQ nervous system and every sibling Grove.",
+  "operating_sequence": [
+    "memory",
+    "tool",
+    "cure",
+    "innovate",
+    "respond"
+  ],
+  "completion_rule": "No Grove may claim completion without execution evidence, target-state verification, persistence, and a receipt. No Grove may report failure before bounded cure, fallback, and rerouting efforts are exhausted or a hard safety boundary applies.",
+  "root_semantics": {
+    "canonical_operational_root": "GlacierEQ/aspen-grove-core",
+    "governance_authority": "GlacierEQ/AKOS",
+    "integrated_runtime_projection": "GlacierEQ/aspen-grove-apex-unified-v9",
+    "rule": "The integrated runtime projection assembles capabilities but does not supersede the canonical constellation root or AKOS governance authority."
+  },
+  "nervous_system": {
+    "governance": "GlacierEQ/AKOS",
+    "memory_context": "GlacierEQ/aspen-grove-core",
+    "boot": "GlacierEQ/apex-boot-core",
+    "engineering_doctrine": "GlacierEQ/Pro_Code",
+    "engineering_execution": "GlacierEQ/pro-code",
+    "polyglot_governor": "GlacierEQ/the-tower-of-babel"
+  },
+  "grove_entrypoints": {
+    "aspen-grove-core": "GlacierEQ/aspen-grove-core",
+    "aspen-grove-apex-unified-v9": "GlacierEQ/aspen-grove-apex-unified-v9",
+    "aspen-grove-memory": "GlacierEQ/aspen-grove-memory",
+    "aspen-grove-connectors": "GlacierEQ/aspen-grove-connectors",
+    "aspen-grove-supabase": "GlacierEQ/aspen-grove-supabase",
+    "aspen-grove-swarm": "GlacierEQ/aspen-grove-swarm",
+    "aspen-grove-evidence": "GlacierEQ/aspen-grove-evidence",
+    "aspen-grove-legal": "GlacierEQ/aspen-grove-legal",
+    "aspen-grove-kekoa-1fdv": "GlacierEQ/AspenGrove-KEKOA-1FDV-23-0001009"
+  },
+  "nodes": [
+    {
+      "id": "aspen-grove-core",
+      "repository": "GlacierEQ/aspen-grove-core",
+      "tier": 1,
+      "role": "constellation_root_memory_context_router",
+      "domain": "SYSTEM_ROOT",
+      "canonicality": "CANONICAL_OPERATIONAL_ROOT",
+      "required_terms": ["constellation", "memory", "context", "router"],
+      "dependencies": [],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-apex-unified-v9",
+      "repository": "GlacierEQ/aspen-grove-apex-unified-v9",
+      "tier": 2,
+      "role": "integrated_runtime_projection",
+      "domain": "UNIFIED_RUNTIME",
+      "canonicality": "INTEGRATED_PROJECTION_NOT_AUTHORITY",
+      "required_terms": ["integrated", "runtime", "projection", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-memory", "aspen-grove-connectors", "aspen-grove-supabase", "aspen-grove-swarm", "aspen-grove-evidence", "aspen-grove-legal", "aspen-grove-kekoa-1fdv"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-memory",
+      "repository": "GlacierEQ/aspen-grove-memory",
+      "tier": 2,
+      "role": "memory_specialization",
+      "domain": "MEMORY_INTELLIGENCE",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["memory", "context", "continuity", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-supabase", "aspen-grove-connectors"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-connectors",
+      "repository": "GlacierEQ/aspen-grove-connectors",
+      "tier": 2,
+      "role": "connector_specialization",
+      "domain": "CONNECTORS_MCP",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["connector", "routing", "health", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-memory", "aspen-grove-supabase"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-supabase",
+      "repository": "GlacierEQ/aspen-grove-supabase",
+      "tier": 2,
+      "role": "persistence_specialization",
+      "domain": "CANONICAL_PERSISTENCE",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["supabase", "persistence", "security", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-memory", "aspen-grove-connectors"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-swarm",
+      "repository": "GlacierEQ/aspen-grove-swarm",
+      "tier": 2,
+      "role": "agent_orchestration_specialization",
+      "domain": "AGENT_SWARM",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["swarm", "agent", "routing", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-memory", "aspen-grove-connectors"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-evidence",
+      "repository": "GlacierEQ/aspen-grove-evidence",
+      "tier": 2,
+      "role": "evidence_forensics_specialization",
+      "domain": "FORENSICS_EVIDENCE",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["evidence", "provenance", "verification", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-supabase", "aspen-grove-connectors", "aspen-grove-memory"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-legal",
+      "repository": "GlacierEQ/aspen-grove-legal",
+      "tier": 2,
+      "role": "legal_work_product_specialization",
+      "domain": "LEGAL_WORK_PRODUCT",
+      "canonicality": "DOMAIN_SPECIALIZATION",
+      "required_terms": ["legal", "authority", "evidence", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-evidence", "aspen-grove-memory", "aspen-grove-connectors"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    },
+    {
+      "id": "aspen-grove-kekoa-1fdv",
+      "repository": "GlacierEQ/AspenGrove-KEKOA-1FDV-23-0001009",
+      "tier": 2,
+      "role": "case_context_specialization",
+      "domain": "CASE_1FDV_23_0001009",
+      "canonicality": "CASE_SPECIALIZATION",
+      "required_terms": ["case", "context", "evidence", "aspen-grove-core"],
+      "dependencies": ["aspen-grove-core", "aspen-grove-legal", "aspen-grove-evidence", "aspen-grove-memory", "aspen-grove-connectors"],
+      "contract_path": ".glaciereq/aspen-grove.node.json",
+      "status": {"repository": "PRESENT", "governance": "BOUND", "runtime": "NOT_ASSERTED", "ci": "INSTALLED_RUN_UNOBSERVED"}
+    }
+  ],
+  "routing_edges": [
+    {"from": "aspen-grove-core", "to": "*", "relation": "registers_and_routes"},
+    {"from": "aspen-grove-memory", "to": "*", "relation": "provides_context"},
+    {"from": "aspen-grove-connectors", "to": "*", "relation": "provides_tool_access"},
+    {"from": "aspen-grove-supabase", "to": ["aspen-grove-memory", "aspen-grove-evidence", "aspen-grove-legal", "aspen-grove-kekoa-1fdv", "aspen-grove-swarm"], "relation": "persists_canonical_state"},
+    {"from": "aspen-grove-swarm", "to": ["aspen-grove-legal", "aspen-grove-evidence", "aspen-grove-memory", "aspen-grove-connectors", "aspen-grove-supabase"], "relation": "orchestrates"},
+    {"from": "aspen-grove-evidence", "to": ["aspen-grove-legal", "aspen-grove-kekoa-1fdv"], "relation": "supplies_verified_evidence"},
+    {"from": "aspen-grove-legal", "to": ["aspen-grove-evidence", "aspen-grove-kekoa-1fdv"], "relation": "builds_source_grounded_work_product"},
+    {"from": "aspen-grove-kekoa-1fdv", "to": ["aspen-grove-legal", "aspen-grove-evidence", "aspen-grove-memory"], "relation": "supplies_case_context"},
+    {"from": "aspen-grove-apex-unified-v9", "to": "*", "relation": "assembles_runtime_projection"}
+  ],
+  "archives": {
+    "name_prefix": "Z-BACKUP-",
+    "policy": "Historical repositories are lineage sources, not active entry points, unless promoted by a manifest version change."
+  },
+  "verification": {
+    "validator_path": "scripts/validate_aspen_grove.py",
+    "workflow_path": ".github/workflows/aspen-grove-contract.yml",
+    "receipt_schema": "glaciereq.aspen-grove-contract-receipt.v1"
+  }
+}
