@@ -1,0 +1,172 @@
+name: Aspen Grove Contract Reusable
+
+on:
+  workflow_call:
+    inputs:
+      contract_path:
+        description: Local Aspen Grove node contract
+        required: false
+        type: string
+        default: .glaciereq/aspen-grove.node.json
+      readme_path:
+        description: Governed README entry surface
+        required: false
+        type: string
+        default: README.md
+      projection_path:
+        description: Optional local operational projection that must equal the canonical manifest
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out caller repository
+        uses: actions/checkout@v4
+
+      - name: Fetch canonical Aspen Grove manifest as data
+        run: |
+          curl --fail --silent --show-error --location \
+            https://raw.githubusercontent.com/GlacierEQ/AKOS/main/governance/glaciereq.aspen-grove-constellation.v1.json \
+            --output /tmp/glaciereq.aspen-grove-constellation.v1.json
+
+      - name: Validate Grove identity, README, topology, and projection
+        env:
+          REPOSITORY: ${{ github.repository }}
+          CONTRACT_PATH: ${{ inputs.contract_path }}
+          README_PATH: ${{ inputs.readme_path }}
+          PROJECTION_PATH: ${{ inputs.projection_path }}
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import os
+          from pathlib import Path
+          import sys
+
+          manifest_path = Path('/tmp/glaciereq.aspen-grove-constellation.v1.json')
+          contract_path = Path(os.environ['CONTRACT_PATH'])
+          readme_path = Path(os.environ['README_PATH'])
+          projection_value = os.environ.get('PROJECTION_PATH', '').strip()
+          repository = os.environ['REPOSITORY']
+          errors: list[str] = []
+
+          def load_json(path: Path, label: str) -> dict:
+              try:
+                  return json.loads(path.read_text(encoding='utf-8'))
+              except FileNotFoundError:
+                  errors.append(f'{label} missing: {path}')
+              except json.JSONDecodeError as exc:
+                  errors.append(f'{label} is invalid JSON: {path}: {exc}')
+              return {}
+
+          manifest = load_json(manifest_path, 'canonical manifest')
+          contract = load_json(contract_path, 'local node contract')
+          try:
+              readme = readme_path.read_text(encoding='utf-8')
+          except FileNotFoundError:
+              errors.append(f'README missing: {readme_path}')
+              readme = ''
+
+          if manifest.get('schema_id') != 'glaciereq.aspen-grove-constellation.v1':
+              errors.append('canonical manifest schema_id mismatch')
+
+          expected_sequence = ['memory', 'tool', 'cure', 'innovate', 'respond']
+          if manifest.get('operating_sequence') != expected_sequence:
+              errors.append('canonical operating sequence drift')
+
+          node_map = {
+              node.get('repository'): node
+              for node in manifest.get('nodes', [])
+              if isinstance(node, dict)
+          }
+          node = node_map.get(repository)
+          if node is None:
+              errors.append(f'repository is not registered as a Grove: {repository}')
+              node = {}
+
+          exact_fields = {
+              'schema_id': 'glaciereq.aspen-grove-node.v1',
+              'constellation_schema_id': manifest.get('schema_id'),
+              'constellation_version': manifest.get('version'),
+              'repository': repository,
+              'grove_id': node.get('id'),
+              'role': node.get('role'),
+              'domain': node.get('domain'),
+              'canonicality': node.get('canonicality'),
+              'canonical_manifest': 'https://raw.githubusercontent.com/GlacierEQ/AKOS/main/governance/glaciereq.aspen-grove-constellation.v1.json',
+          }
+          for field, expected in exact_fields.items():
+              if contract.get(field) != expected:
+                  errors.append(
+                      f'contract {field} mismatch: expected {expected!r}, got {contract.get(field)!r}'
+                  )
+
+          if contract.get('operating_sequence') != expected_sequence:
+              errors.append('contract operating_sequence mismatch')
+          if contract.get('inherits') != manifest.get('nervous_system'):
+              errors.append('contract inherits map differs from canonical nervous_system map')
+          if contract.get('dependencies') != node.get('dependencies'):
+              errors.append('contract dependencies differ from canonical node dependencies')
+
+          lowered = readme.lower()
+          for term in node.get('required_terms', []):
+              if str(term).lower() not in lowered:
+                  errors.append(f'README missing required role term: {term}')
+
+          required_repositories = set(manifest.get('nervous_system', {}).values())
+          required_repositories.update(manifest.get('grove_entrypoints', {}).values())
+          required_repositories.discard(repository)
+          for required_repository in sorted(required_repositories):
+              url = f'https://github.com/{required_repository}'
+              if url not in readme:
+                  errors.append(f'README missing nervous-system or Grove link: {url}')
+
+          if repository == 'GlacierEQ/aspen-grove-apex-unified-v9':
+              if 'does not supersede' not in lowered:
+                  errors.append(
+                      'unified runtime README must state that it does not supersede Aspen Grove Core or AKOS'
+                  )
+
+          projection_checked = False
+          if projection_value:
+              projection_path = Path(projection_value)
+              projection = load_json(projection_path, 'operational projection')
+              projection_checked = True
+              if projection != manifest:
+                  errors.append(
+                      f'operational projection drift: {projection_path} differs from canonical manifest'
+                  )
+
+          receipt = {
+              'schema_id': 'glaciereq.aspen-grove-contract-receipt.v1',
+              'repository': repository,
+              'grove_id': node.get('id'),
+              'role': node.get('role'),
+              'constellation_version': manifest.get('version'),
+              'projection_checked': projection_checked,
+              'status': 'PASS' if not errors else 'FAIL',
+              'errors': errors,
+          }
+          artifact_dir = Path('artifacts')
+          artifact_dir.mkdir(parents=True, exist_ok=True)
+          receipt_path = artifact_dir / 'aspen-grove-contract-receipt.json'
+          receipt_path.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, indent=2))
+          if errors:
+              sys.exit(1)
+          PY
+
+      - name: Upload validation receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aspen-grove-contract-${{ github.run_id }}
+          path: artifacts/aspen-grove-contract-receipt.json
+          if-no-files-found: error
