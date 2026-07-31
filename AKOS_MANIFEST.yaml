@@ -2,10 +2,10 @@ canonical_id: SYS-AKOS-001
 family_id: FAM-CASEBRAIN
 name: AKOS
 full_name: Apex Knowledge Operating System
-version: 0.5.1
+version: 0.6.2
 status: active_draft
 created_at: "2026-07-04"
-updated_at: "2026-07-23"
+updated_at: "2026-07-30"
 owner: GlacierEQ
 repository: GlacierEQ/AKOS
 default_branch: main
@@ -20,6 +20,9 @@ governance:
     - REPOS
     - pro-code
   truth_protocol: measure_or_unknown
+  integration_doctrine: best_of_all_worlds
+  canonical_integration_question: >-
+    How do we preserve every verified strength while removing every verified weakness?
   hire_surface_excludes:
     - AEON-777
     - legal_case_packs
@@ -57,6 +60,7 @@ secondary_layers:
   - Ledger
 
 active_specs:
+  - AKOS-LAW-001
   - AKOS-CK-001
   - AKOS-OC-001
   - AKOS-OC-002
@@ -74,6 +78,13 @@ required_principles:
   - pro_code_before_canonical
   - one_truth_many_views
   - spiral_engine_evolution
+  - best_of_all_worlds_integration
+  - preserve_verified_strengths
+  - remove_verified_weaknesses
+  - no_novelty_only_refactor
+  - integration_before_replacement_when_value_is_complementary
+  - regression_requires_explicit_evidence_backed_tradeoff
+  - retirement_requires_value_preservation_or_proven_redundancy
   - direct_to_main_for_single_operator_private_repo
   - no_branch_or_pull_request_without_explicit_operator_request
   - architecture_discovery_before_blocker
@@ -119,6 +130,19 @@ relationships:
   supersedes: []
   mirrors:
     - GlacierEQ/mastermind:akos/
+  governs:
+    - canonical_id: SYS-ECHO-001
+      name: ECHO
+      intended_repository: GlacierEQ/ECHO
+      state: repository_not_yet_observed
+      relation: GOVERNS
+      boundary_contract: contracts/AKOS-ECHO-001_INTEGRATION_CONTRACT.md
+      architecture_decision: adr/ADR-0012_ECHO_STANDALONE_GOVERNED_PRODUCT.md
+      ownership: >-
+        ECHO owns cross-platform conversation capture, search, labeling,
+        summarization, export, and memory-portability product behavior. AKOS
+        owns ECHO governance, identity, authority, evidence, maturity,
+        interoperability, and completion contracts.
   depends_on:
     - GlacierEQ/AEON-777@df519315759c077e32de64869998d0d5983af5d4:BRAIN/contracts/CASEBRAIN_UNIFIED_CONTRACT.md
 
@@ -135,14 +159,19 @@ quality_gates:
   - authenticity
   - observability
   - documentation
+  - best_of_all_worlds_comparison
+  - regression_preservation
+  - retirement_proof
 
 metadata:
   confidence: working_canonical
   verification_status: draft
   hash: null
-  last_reviewed: "2026-07-23"
+  last_reviewed: "2026-07-30"
 
 next_actions:
+  - create or locate the canonical GlacierEQ/ECHO repository before claiming product deployment
+  - bootstrap ECHO from contracts/AKOS-ECHO-001_INTEGRATION_CONTRACT.md without embedding product runtime in AKOS
   - merge the public runner registration for akos-operational-cognition-ci
   - dispatch the exact AKOS main commit through the public action face
   - preserve the immutable private execution receipt
