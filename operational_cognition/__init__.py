@@ -1,5 +1,13 @@
 """AKOS operational cognition runtime."""
 
+from .action_protocol import (
+    ActionAttempt,
+    ActionPolicy,
+    ActionStage,
+    AttemptOutcome,
+    MemoryFirstActionProtocol,
+    ResponseGate,
+)
 from .adaptation import (
     AdaptationAction,
     AdaptationDecision,
@@ -73,6 +81,9 @@ from .topology import (
 )
 
 __all__ = [
+    "ActionAttempt",
+    "ActionPolicy",
+    "ActionStage",
     "AdaptationAction",
     "AdaptationDecision",
     "AdaptationPolicy",
@@ -83,6 +94,7 @@ __all__ = [
     "ArtifactClosureResult",
     "ArtifactReceipt",
     "ArtifactStage",
+    "AttemptOutcome",
     "AuthorityDisposition",
     "BranchAssessment",
     "BranchDisposition",
@@ -111,6 +123,7 @@ __all__ = [
     "MaturityBand",
     "MaturityControl",
     "MaturityDimension",
+    "MemoryFirstActionProtocol",
     "OperationClass",
     "OperationalCognitionEngine",
     "PhaseReceipt",
@@ -118,6 +131,7 @@ __all__ = [
     "ProposalKind",
     "RankedCapability",
     "ReceiptGroundedScorecard",
+    "ResponseGate",
     "RouteState",
     "RuntimeSignal",
     "ScorecardResult",
