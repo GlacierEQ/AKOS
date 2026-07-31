@@ -1,0 +1,126 @@
+name: Aspen Grove Manifest
+
+on:
+  push:
+    paths:
+      - governance/glaciereq.aspen-grove-constellation.v1.json
+      - governance/schemas/glaciereq.aspen-grove-constellation.v1.schema.json
+      - .github/workflows/aspen-grove-manifest.yml
+      - .github/workflows/aspen-grove-contract-reusable.yml
+  pull_request:
+    paths:
+      - governance/glaciereq.aspen-grove-constellation.v1.json
+      - governance/schemas/glaciereq.aspen-grove-constellation.v1.schema.json
+      - .github/workflows/aspen-grove-manifest.yml
+      - .github/workflows/aspen-grove-contract-reusable.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate canonical constellation graph
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          from pathlib import Path
+          import sys
+
+          path = Path('governance/glaciereq.aspen-grove-constellation.v1.json')
+          manifest = json.loads(path.read_text(encoding='utf-8'))
+          errors: list[str] = []
+
+          if manifest.get('schema_id') != 'glaciereq.aspen-grove-constellation.v1':
+              errors.append('schema_id mismatch')
+          if manifest.get('version') != '1.0.0':
+              errors.append('unexpected major contract version')
+          if manifest.get('operating_sequence') != ['memory', 'tool', 'cure', 'innovate', 'respond']:
+              errors.append('operating sequence drift')
+
+          expected_nervous_system = {
+              'governance': 'GlacierEQ/AKOS',
+              'memory_context': 'GlacierEQ/aspen-grove-core',
+              'boot': 'GlacierEQ/apex-boot-core',
+              'engineering_doctrine': 'GlacierEQ/Pro_Code',
+              'engineering_execution': 'GlacierEQ/pro-code',
+              'polyglot_governor': 'GlacierEQ/the-tower-of-babel',
+          }
+          if manifest.get('nervous_system') != expected_nervous_system:
+              errors.append('nervous-system inheritance map drift')
+
+          roots = manifest.get('root_semantics', {})
+          if roots.get('canonical_operational_root') != 'GlacierEQ/aspen-grove-core':
+              errors.append('canonical operational root drift')
+          if roots.get('governance_authority') != 'GlacierEQ/AKOS':
+              errors.append('governance authority drift')
+          if roots.get('integrated_runtime_projection') != 'GlacierEQ/aspen-grove-apex-unified-v9':
+              errors.append('integrated runtime projection drift')
+
+          nodes = manifest.get('nodes', [])
+          ids = [node.get('id') for node in nodes]
+          repositories = [node.get('repository') for node in nodes]
+          if len(ids) != len(set(ids)):
+              errors.append('duplicate Grove id')
+          if len(repositories) != len(set(repositories)):
+              errors.append('duplicate Grove repository')
+          if any(not value for value in ids + repositories):
+              errors.append('empty Grove id or repository')
+          if any(str(repo).split('/', 1)[-1].startswith('Z-BACKUP-') for repo in repositories):
+              errors.append('archive repository registered as an active Grove')
+
+          id_set = set(ids)
+          entrypoints = manifest.get('grove_entrypoints', {})
+          expected_entrypoints = {node.get('id'): node.get('repository') for node in nodes}
+          if entrypoints != expected_entrypoints:
+              errors.append('grove_entrypoints do not exactly match nodes')
+
+          for node in nodes:
+              if node.get('contract_path') != '.glaciereq/aspen-grove.node.json':
+                  errors.append(f"invalid contract path for {node.get('id')}")
+              for dependency in node.get('dependencies', []):
+                  if dependency not in id_set:
+                      errors.append(f"unknown dependency {dependency} in {node.get('id')}")
+
+          for edge in manifest.get('routing_edges', []):
+              source = edge.get('from')
+              targets = edge.get('to')
+              if source not in id_set:
+                  errors.append(f'unknown routing source: {source}')
+              target_values = [targets] if isinstance(targets, str) else list(targets or [])
+              for target in target_values:
+                  if target != '*' and target not in id_set:
+                      errors.append(f'unknown routing target: {target}')
+              if not edge.get('relation'):
+                  errors.append(f'missing routing relation from {source}')
+
+          receipt = {
+              'schema_id': 'glaciereq.aspen-grove-manifest-receipt.v1',
+              'version': manifest.get('version'),
+              'node_count': len(nodes),
+              'routing_edge_count': len(manifest.get('routing_edges', [])),
+              'status': 'PASS' if not errors else 'FAIL',
+              'errors': errors,
+          }
+          artifact_dir = Path('artifacts')
+          artifact_dir.mkdir(exist_ok=True)
+          receipt_path = artifact_dir / 'aspen-grove-manifest-receipt.json'
+          receipt_path.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, indent=2))
+          if errors:
+              sys.exit(1)
+          PY
+
+      - name: Upload manifest receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aspen-grove-manifest-${{ github.run_id }}
+          path: artifacts/aspen-grove-manifest-receipt.json
+          if-no-files-found: error
