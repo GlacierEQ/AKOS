@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/GlacierEQ/AKOS/main/governance/schemas/glaciereq.aspen-grove-constellation.v1.schema.json",
+  "title": "GlacierEQ Aspen Grove Constellation v1",
+  "type": "object",
+  "required": [
+    "schema_id",
+    "version",
+    "canonical_authority",
+    "operational_projection",
+    "parent_nervous_system",
+    "operating_sequence",
+    "root_semantics",
+    "nervous_system",
+    "grove_entrypoints",
+    "nodes",
+    "routing_edges",
+    "verification"
+  ],
+  "properties": {
+    "schema_id": {"const": "glaciereq.aspen-grove-constellation.v1"},
+    "version": {"type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$"},
+    "operating_sequence": {
+      "const": ["memory", "tool", "cure", "innovate", "respond"]
+    },
+    "canonical_authority": {"$ref": "#/$defs/filePointer"},
+    "operational_projection": {"$ref": "#/$defs/filePointer"},
+    "parent_nervous_system": {
+      "type": "object",
+      "required": ["schema_id", "repository", "path", "bound_node"],
+      "properties": {
+        "schema_id": {"const": "glaciereq.nervous-system.v1"},
+        "repository": {"const": "GlacierEQ/AKOS"},
+        "path": {"type": "string", "minLength": 1},
+        "bound_node": {"const": "GlacierEQ/aspen-grove-core"}
+      },
+      "additionalProperties": false
+    },
+    "root_semantics": {
+      "type": "object",
+      "required": ["canonical_operational_root", "governance_authority", "integrated_runtime_projection", "rule"],
+      "properties": {
+        "canonical_operational_root": {"const": "GlacierEQ/aspen-grove-core"},
+        "governance_authority": {"const": "GlacierEQ/AKOS"},
+        "integrated_runtime_projection": {"const": "GlacierEQ/aspen-grove-apex-unified-v9"},
+        "rule": {"type": "string", "minLength": 20}
+      },
+      "additionalProperties": false
+    },
+    "nervous_system": {
+      "type": "object",
+      "required": ["governance", "memory_context", "boot", "engineering_doctrine", "engineering_execution", "polyglot_governor"],
+      "additionalProperties": {"type": "string", "pattern": "^GlacierEQ/"}
+    },
+    "grove_entrypoints": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^GlacierEQ/"}
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/node"}
+    },
+    "routing_edges": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/edge"}
+    },
+    "verification": {
+      "type": "object",
+      "required": ["validator_path", "workflow_path", "receipt_schema"],
+      "properties": {
+        "validator_path": {"type": "string", "minLength": 1},
+        "workflow_path": {"type": "string", "minLength": 1},
+        "receipt_schema": {"const": "glaciereq.aspen-grove-contract-receipt.v1"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "filePointer": {
+      "type": "object",
+      "required": ["repository", "path"],
+      "properties": {
+        "repository": {"type": "string", "pattern": "^GlacierEQ/"},
+        "path": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "repository", "tier", "role", "domain", "canonicality", "required_terms", "dependencies", "contract_path", "status"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+        "repository": {"type": "string", "pattern": "^GlacierEQ/"},
+        "tier": {"type": "integer", "minimum": 1},
+        "role": {"type": "string", "minLength": 3},
+        "domain": {"type": "string", "minLength": 3},
+        "canonicality": {"type": "string", "minLength": 3},
+        "required_terms": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "dependencies": {"type": "array", "items": {"type": "string", "pattern": "^[a-z0-9-]+$"}},
+        "contract_path": {"const": ".glaciereq/aspen-grove.node.json"},
+        "status": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to", "relation"],
+      "properties": {
+        "from": {"type": "string", "minLength": 1},
+        "to": {
+          "oneOf": [
+            {"type": "string", "minLength": 1},
+            {"type": "array", "items": {"type": "string", "minLength": 1}}
+          ]
+        },
+        "relation": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}
