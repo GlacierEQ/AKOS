@@ -1,0 +1,51 @@
+{
+  "schema": "glaciereq.akos.echo-paired-system.v1",
+  "version": "1.0.0",
+  "updated_at": "2026-07-30",
+  "architecture": "pillar_piston",
+  "pillar": {
+    "canonical_id": "SYS-AKOS-001",
+    "repository": "GlacierEQ/AKOS",
+    "role": "governance_truth_authority_evidence",
+    "state": "repository_observed"
+  },
+  "piston": {
+    "canonical_id": "SYS-ECHO-001",
+    "name": "ECHO",
+    "full_name": "Engine for Continuity, History, and Orchestration",
+    "intended_repository": "GlacierEQ/ECHO",
+    "role": "continuity_history_orchestration",
+    "implementation_state": "source_tree_built_and_locally_verified",
+    "repository_state": "creation_blocked_by_current_connector_capability",
+    "provider_connectivity": "unverified",
+    "production_deployment": "unverified"
+  },
+  "contract": "specs/AKOS-ECHO-002_PILLAR_PISTON_OPERATING_MODEL.md",
+  "operating_cycle": [
+    "remember",
+    "reconcile",
+    "authorize",
+    "route",
+    "execute",
+    "receipt",
+    "verify",
+    "persist",
+    "observe",
+    "repair",
+    "improve",
+    "repeat"
+  ],
+  "invariants": [
+    "stable_identity",
+    "provenance_required",
+    "idempotent_mutation",
+    "receipt_or_exact_blocker",
+    "bounded_retry",
+    "provider_failure_cannot_destroy_local_continuity",
+    "evidence_bound_capability_claims",
+    "append_preserving_history",
+    "authority_bound_dynamic_routing",
+    "self_evolution_requires_akos_authority",
+    "dual_sided_contract_verification"
+  ]
+}
