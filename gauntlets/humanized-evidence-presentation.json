@@ -1,0 +1,26 @@
+{
+  "schema": "glaciereq.infinity-gauntlet.v1",
+  "id": "gauntlet-humanized-evidence-presentation",
+  "version": "0.1.0",
+  "status": "UNVERIFIED",
+  "purpose": "Present verified evidence with human calibration and recursive refinement.",
+  "stones": [
+    "stone-psysoc-x"
+  ],
+  "upgrades": [
+    "upgrade-do-it-again"
+  ],
+  "authority": {
+    "truth": "AKOS and repository-native evidence",
+    "presentation": "stone-psysoc-x",
+    "refinement": "upgrade-do-it-again"
+  },
+  "precedence": [
+    "kernel constitution",
+    "evidence authority",
+    "stone boundaries",
+    "upgrade invariants",
+    "mission instructions",
+    "style"
+  ]
+}

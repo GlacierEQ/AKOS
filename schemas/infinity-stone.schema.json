@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glaciereq.dev/schemas/infinity-stone.v1.json",
+  "title": "GlacierEQ Infinity Stone Manifest",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "identity",
+    "activation",
+    "capabilities",
+    "judgment",
+    "interfaces",
+    "boundaries",
+    "composition",
+    "verification"
+  ],
+  "properties": {
+    "schema": {
+      "const": "glaciereq.infinity-stone.v1"
+    },
+    "status": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "version",
+        "domain"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^stone-[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "domain": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

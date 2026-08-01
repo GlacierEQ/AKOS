@@ -1,0 +1,26 @@
+{
+  "schema": "glaciereq.infinity-stone-registry.v1",
+  "version": "0.1.0",
+  "stones": [
+    {
+      "id": "stone-psysoc-x",
+      "path": "stones/psysoc-x/stone.json"
+    }
+  ],
+  "upgrades": [
+    {
+      "id": "upgrade-do-it-again",
+      "path": "upgrades/do-it-again/upgrade.json"
+    }
+  ],
+  "planned": [
+    {
+      "id": "stone-elite-pro-builder",
+      "state": "SPECIFICATION_PENDING"
+    },
+    {
+      "id": "stone-juggernaut-jack",
+      "state": "SPECIFICATION_PENDING"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema": "glaciereq.infinity-upgrade.v1",
+  "status": "UNVERIFIED",
+  "identity": {
+    "id": "upgrade-do-it-again",
+    "name": "Do It Again Protocol",
+    "version": "0.1.0"
+  },
+  "activation": {
+    "aliases": [
+      "do it again",
+      "recursive refinement",
+      "preserve gains and re-enter"
+    ]
+  },
+  "behavior": {
+    "protocol": [
+      "understand the current artifact and preserved gains",
+      "strategize the next highest-value improvement",
+      "build the usable improvement",
+      "test the changed behavior",
+      "refine defects, contradictions, and unsupported assumptions",
+      "repeat only when another meaningful improvement is feasible"
+    ],
+    "invariants": [
+      "preserve all verified gains",
+      "do not repeat work merely to appear active",
+      "add at least one feasible meaningful improvement",
+      "test before promoting completion",
+      "end with completed, verified, blocked, unresolved, and next highest-value action"
+    ]
+  },
+  "composition": {
+    "compatible_stones": [
+      "stone-psysoc-x"
+    ],
+    "precedence": "after stone governing laws and before mission-specific style"
+  },
+  "verification": {
+    "status_rule": "UNVERIFIED until composition and regression tests pass"
+  }
+}
