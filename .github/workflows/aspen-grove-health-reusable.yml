@@ -1,0 +1,254 @@
+name: Aspen Grove Health Reusable
+
+on:
+  workflow_call:
+    inputs:
+      profile:
+        description: Grove health profile
+        required: true
+        type: string
+      persist_receipt:
+        description: Commit health/latest.json back to the caller repository
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      SUPABASE_URL:
+        required: false
+      SUPABASE_ANON_KEY:
+        required: false
+      GROVE_HEALTH_URLS:
+        required: false
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Grove health profile
+        required: true
+        type: string
+        default: core
+      persist_receipt:
+        description: Persist latest receipt
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  health:
+    name: health
+    runs-on: ubuntu-latest
+    env:
+      GROVE_PROFILE: ${{ inputs.profile }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      GROVE_HEALTH_URLS: ${{ secrets.GROVE_HEALTH_URLS }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate governed health receipt
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import os
+          import subprocess
+          import sys
+          import urllib.error
+          import urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          root = Path('.')
+          contract_path = root / '.glaciereq' / 'aspen-grove.node.json'
+          readme_path = root / 'README.md'
+          profile = os.environ.get('GROVE_PROFILE', '').strip()
+          repository = os.environ.get('GITHUB_REPOSITORY', '')
+          run_id = os.environ.get('GITHUB_RUN_ID', '')
+
+          checks: list[dict] = []
+
+          def add(name: str, state: str, detail: str, required: bool = True) -> None:
+              checks.append({
+                  'name': name,
+                  'state': state,
+                  'detail': detail,
+                  'required': required,
+              })
+
+          contract = None
+          if contract_path.exists():
+              try:
+                  contract = json.loads(contract_path.read_text(encoding='utf-8'))
+                  add('node_contract', 'PASS', str(contract_path))
+              except Exception as exc:
+                  add('node_contract', 'FAIL', f'invalid JSON: {exc}')
+          else:
+              add('node_contract', 'FAIL', 'missing .glaciereq/aspen-grove.node.json')
+
+          if readme_path.exists():
+              readme = readme_path.read_text(encoding='utf-8')
+              add('readme', 'PASS', 'README.md present')
+          else:
+              readme = ''
+              add('readme', 'FAIL', 'README.md missing')
+
+          if contract:
+              add(
+                  'repository_identity',
+                  'PASS' if contract.get('repository') == repository else 'FAIL',
+                  f"contract={contract.get('repository')} runtime={repository}",
+              )
+              expected_profile = {
+                  'constellation_root_memory_context_router': 'core',
+                  'integrated_runtime_projection': 'runtime',
+                  'memory_specialization': 'memory',
+                  'connector_specialization': 'connectors',
+                  'persistence_specialization': 'persistence',
+                  'agent_orchestration_specialization': 'swarm',
+                  'evidence_forensics_specialization': 'evidence',
+                  'legal_work_product_specialization': 'legal',
+                  'case_context_specialization': 'case',
+              }.get(contract.get('role'))
+              add(
+                  'health_profile',
+                  'PASS' if expected_profile == profile else 'FAIL',
+                  f'expected={expected_profile} configured={profile}',
+              )
+
+          required_terms = {
+              'core': ['constellation', 'router'],
+              'runtime': ['runtime', 'projection'],
+              'memory': ['memory', 'continuity'],
+              'connectors': ['connector', 'health'],
+              'persistence': ['supabase', 'security'],
+              'swarm': ['swarm', 'agent'],
+              'evidence': ['evidence', 'provenance'],
+              'legal': ['legal', 'authority'],
+              'case': ['case', 'evidence'],
+          }.get(profile, [])
+          lower_readme = readme.lower()
+          for term in required_terms:
+              add(
+                  f'readme_term:{term}',
+                  'PASS' if term.lower() in lower_readme else 'FAIL',
+                  f"README contains '{term}'" if term.lower() in lower_readme else f"README missing '{term}'",
+              )
+
+          try:
+              commit_time = subprocess.check_output(
+                  ['git', 'log', '-1', '--format=%cI'], text=True
+              ).strip()
+              add('git_head', 'PASS', commit_time)
+          except Exception as exc:
+              add('git_head', 'DEGRADED', f'unavailable: {exc}', required=False)
+
+          if profile == 'persistence':
+              url = os.environ.get('SUPABASE_URL', '').rstrip('/')
+              key = os.environ.get('SUPABASE_ANON_KEY', '')
+              if not url or not key:
+                  add(
+                      'supabase_endpoint',
+                      'UNCONFIGURED',
+                      'SUPABASE_URL or SUPABASE_ANON_KEY secret missing',
+                      required=False,
+                  )
+              else:
+                  request = urllib.request.Request(
+                      f'{url}/auth/v1/health',
+                      headers={'apikey': key, 'Authorization': f'Bearer {key}'},
+                      method='GET',
+                  )
+                  try:
+                      with urllib.request.urlopen(request, timeout=15) as response:
+                          state = 'PASS' if 200 <= response.status < 400 else 'DEGRADED'
+                          add('supabase_endpoint', state, f'HTTP {response.status}', required=False)
+                  except Exception as exc:
+                      add('supabase_endpoint', 'DEGRADED', str(exc), required=False)
+
+          raw_targets = os.environ.get('GROVE_HEALTH_URLS', '').strip()
+          if raw_targets:
+              try:
+                  targets = json.loads(raw_targets)
+                  if not isinstance(targets, list):
+                      raise ValueError('GROVE_HEALTH_URLS must be a JSON array')
+                  for index, target in enumerate(targets):
+                      if isinstance(target, str):
+                          name, url = f'external:{index + 1}', target
+                      else:
+                          name = str(target.get('name') or f'external:{index + 1}')
+                          url = str(target.get('url') or '')
+                      if not url.startswith(('https://', 'http://')):
+                          add(name, 'DEGRADED', 'invalid URL', required=False)
+                          continue
+                      try:
+                          request = urllib.request.Request(url, method='GET')
+                          with urllib.request.urlopen(request, timeout=15) as response:
+                              state = 'PASS' if 200 <= response.status < 400 else 'DEGRADED'
+                              add(name, state, f'HTTP {response.status}', required=False)
+                      except urllib.error.HTTPError as exc:
+                          add(name, 'DEGRADED', f'HTTP {exc.code}', required=False)
+                      except Exception as exc:
+                          add(name, 'DEGRADED', str(exc), required=False)
+              except Exception as exc:
+                  add('external_targets', 'DEGRADED', f'invalid configuration: {exc}', required=False)
+          else:
+              add('external_targets', 'UNCONFIGURED', 'no GROVE_HEALTH_URLS secret configured', required=False)
+
+          required_failures = [c for c in checks if c['required'] and c['state'] != 'PASS']
+          degraded = [c for c in checks if not c['required'] and c['state'] != 'PASS']
+          status = 'FAIL' if required_failures else ('DEGRADED' if degraded else 'PASS')
+
+          receipt = {
+              'schema_id': 'glaciereq.aspen-grove-health-receipt.v1',
+              'generated_at': datetime.now(timezone.utc).isoformat(),
+              'repository': repository,
+              'grove_id': contract.get('grove_id') if contract else None,
+              'role': contract.get('role') if contract else None,
+              'profile': profile,
+              'status': status,
+              'runtime_claim': 'Only checks represented in this receipt are asserted.',
+              'checks': checks,
+              'source': {
+                  'run_id': run_id,
+                  'sha': os.environ.get('GITHUB_SHA'),
+                  'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              },
+          }
+
+          output = root / 'health' / 'latest.json'
+          output.parent.mkdir(parents=True, exist_ok=True)
+          output.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(receipt, indent=2))
+          if required_failures:
+              sys.exit(1)
+          PY
+
+      - name: Upload health receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aspen-grove-health-${{ github.repository_id }}-${{ github.run_id }}
+          path: health/latest.json
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Persist latest receipt
+        if: ${{ always() && inputs.persist_receipt }}
+        shell: bash
+        run: |
+          if [ ! -f health/latest.json ]; then
+            exit 0
+          fi
+          git config user.name "glaciereq-health-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add health/latest.json
+          if git diff --cached --quiet; then
+            echo "Health receipt unchanged"
+            exit 0
+          fi
+          git commit -m "chore(health): update latest Grove receipt [skip ci]"
+          git push
