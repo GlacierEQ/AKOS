@@ -2,9 +2,9 @@
 
 Canonical ID: AKOS-GOV-001
 Status: Active Draft
-Version: 0.2.0
+Version: 0.3.0
 Created: 2026-07-04
-Updated: 2026-07-28
+Updated: 2026-08-01
 Repository: GlacierEQ/AKOS
 
 ## Purpose
@@ -111,6 +111,22 @@ Before modifying AKOS:
 7. Complete any safe authorized release.
 8. Record the result in the relevant ledger, session note, or build index.
 9. Report the completed result and remaining risk.
+
+## Progress Persistence Rule
+
+For every completed or materially blocked operation, update each applicable
+record layer in the same pass:
+
+1. the detailed report or canonical artifact;
+2. the machine-readable manifest, receipt, or verification record;
+3. the relevant append-only ledger, session note, or build index; and
+4. the source inventory, backlog, or next-action pointer.
+
+A result is not persisted as complete until the applicable layers are updated,
+or an explicit `not_applicable`, `blocked`, or `deferred` state records why a
+layer could not be updated. Records must distinguish completed, verified,
+blocked, deferred, and proposed work. A view may summarize the canonical
+record, but it may not silently replace it.
 
 ## Historical Preservation Rule
 
