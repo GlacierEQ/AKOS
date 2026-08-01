@@ -5,7 +5,6 @@ from infinity_stones.composition import compose_loadout
 from infinity_stones.models import ManifestError
 from infinity_stones.registry import StoneRegistry
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
