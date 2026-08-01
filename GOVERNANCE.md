@@ -2,7 +2,7 @@
 
 Canonical ID: AKOS-GOV-001
 Status: Active Draft
-Version: 0.3.0
+Version: 0.3.1
 Created: 2026-07-04
 Updated: 2026-08-01
 Repository: GlacierEQ/AKOS
@@ -127,6 +127,30 @@ or an explicit `not_applicable`, `blocked`, or `deferred` state records why a
 layer could not be updated. Records must distinguish completed, verified,
 blocked, deferred, and proposed work. A view may summarize the canonical
 record, but it may not silently replace it.
+
+## Failure and Reconciliation Rule
+
+A work item is not complete if any required record layer is missing, stale,
+contradictory, or unverified.
+
+For every completed, materially blocked, failed, or partially successful
+operation:
+
+1. Assign an explicit operation state: `completed`, `verified`, `blocked`,
+   `deferred`, `failed`, `proposed`, or `reconciliation_required`.
+2. Update every applicable record layer in the same pass.
+3. If a layer cannot be updated, record `blocked`, `deferred`, or
+   `reconciliation_required` with the reason, affected path, and next action.
+4. Do not silently omit a required layer or report the work as fully complete.
+5. When reconciling later, preserve the original record, add a dated correction,
+   identify what changed, cite the verification evidence, and record the final
+   disposition.
+6. If records conflict, preserve the conflict until it is explicitly resolved;
+   do not silently overwrite one view with another.
+7. Claim completion only after a final cross-view check confirms that the
+   applicable records agree about state, scope, evidence, and next action.
+
+The reconciliation record is itself part of the append-only history.
 
 ## Historical Preservation Rule
 
