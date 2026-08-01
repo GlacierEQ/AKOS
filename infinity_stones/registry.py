@@ -26,7 +26,7 @@ class StoneRegistry:
         self.aliases = aliases
 
     @classmethod
-    def load(cls, root: Path) -> "StoneRegistry":
+    def load(cls, root: Path) -> StoneRegistry:
         registry_path = root / "registry" / "stones.json"
         data = _read_json(registry_path)
         if data.get("schema") != "glaciereq.infinity-stone-registry.v1":

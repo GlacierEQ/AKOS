@@ -48,7 +48,7 @@ class StoneManifest:
     source_path: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any], source_path: str) -> "StoneManifest":
+    def from_dict(cls, data: dict[str, Any], source_path: str) -> StoneManifest:
         identity = data.get("identity")
         if not isinstance(identity, dict):
             raise ManifestError("identity must be an object")
@@ -110,7 +110,7 @@ class UpgradeManifest:
     source_path: str
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any], source_path: str) -> "UpgradeManifest":
+    def from_dict(cls, data: dict[str, Any], source_path: str) -> UpgradeManifest:
         identity = data.get("identity")
         if not isinstance(identity, dict):
             raise ManifestError("identity must be an object")

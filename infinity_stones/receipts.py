@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import tempfile
+from contextlib import suppress
 from pathlib import Path
 from typing import Any
 
@@ -29,8 +30,6 @@ def write_atomic_json(path: Path, data: Any) -> None:
             os.fsync(handle.fileno())
         os.replace(temporary, path)
     except Exception:
-        try:
+        with suppress(FileNotFoundError):
             os.unlink(temporary)
-        except FileNotFoundError:
-            pass
         raise
