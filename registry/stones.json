@@ -5,6 +5,15 @@
   "evidence_level": "TEST",
   "promotion_receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json",
   "post_promotion_validation": "receipts/2026-08-02_psysoc-x_v0.1.0_post-promotion-validation.json",
+  "latest_exact_head_validation": {
+    "revision": "c0a7c63de5f25ca89c9dd5d49614a1487e999bba",
+    "akos_verification_run": 30750421925,
+    "forge_run": 30750421955,
+    "integrity_run": 30750421923,
+    "aspen_grove_run": 30750421921,
+    "nervous_system_run": 30750421942,
+    "conclusion": "success"
+  },
   "stones": [
     {
       "id": "stone-psysoc-x",
