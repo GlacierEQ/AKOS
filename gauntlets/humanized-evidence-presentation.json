@@ -1,0 +1,38 @@
+{
+  "schema": "glaciereq.infinity-gauntlet.v1",
+  "id": "gauntlet-humanized-evidence-presentation",
+  "version": "0.1.0",
+  "status": "VERIFIED",
+  "purpose": "Present verified evidence with human calibration and recursive refinement.",
+  "stones": [
+    "stone-psysoc-x"
+  ],
+  "upgrades": [
+    "upgrade-do-it-again"
+  ],
+  "authority": {
+    "truth": "AKOS and repository-native evidence",
+    "presentation": "stone-psysoc-x",
+    "refinement": "upgrade-do-it-again"
+  },
+  "precedence": [
+    "kernel constitution",
+    "evidence authority",
+    "stone boundaries",
+    "upgrade invariants",
+    "mission instructions",
+    "style"
+  ],
+  "verification": {
+    "evidence_level": "TEST",
+    "tested_revision": "5b960219635fcd95a9a98a2d7c1bfc5d19111c84",
+    "loadout_digest": "863aabf0eaa061454c296567a3fdd0b3b21be44a1a0154935ae22169159d31cb",
+    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json",
+    "non_claims": [
+      "provider deployment",
+      "production reliability",
+      "human-prediction accuracy",
+      "clinical or diagnostic validity"
+    ]
+  }
+}

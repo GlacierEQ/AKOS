@@ -1,0 +1,89 @@
+{
+  "schema": "glaciereq.psysoc-x-cases.v1",
+  "cases": [
+    {
+      "id": "critical-private-no-humor",
+      "context": {
+        "audience": "family member",
+        "decision": "understand a sensitive event",
+        "stakes": "critical",
+        "skepticism": 7,
+        "cognitive_load": 8,
+        "emotional_weight": 10,
+        "evidence_strength": 5,
+        "humor_allowed": true,
+        "private_or_sensitive": true,
+        "desired_action": "understand"
+      },
+      "expect": {
+        "humor_mode": "none",
+        "tone": "calm-exact-dignified",
+        "density": "progressive-disclosure",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "skeptical-engineer",
+      "context": {
+        "audience": "engineer",
+        "decision": "adopt the architecture",
+        "stakes": "medium",
+        "skepticism": 9,
+        "cognitive_load": 6,
+        "emotional_weight": 2,
+        "evidence_strength": 9,
+        "humor_allowed": true,
+        "private_or_sensitive": false,
+        "desired_action": "adopt"
+      },
+      "expect": {
+        "humor_mode": "dry-technical-wit",
+        "tone": "measured-and-falsifiable",
+        "density": "progressive-disclosure",
+        "confidence": "high-for-presentation-calibration-not-for-human-prediction"
+      }
+    },
+    {
+      "id": "low-stakes-playful",
+      "context": {
+        "audience": "general reader",
+        "decision": "explore the project",
+        "stakes": "low",
+        "skepticism": 2,
+        "cognitive_load": 2,
+        "emotional_weight": 2,
+        "evidence_strength": 7,
+        "humor_allowed": true,
+        "private_or_sensitive": false,
+        "desired_action": "explore"
+      },
+      "expect": {
+        "humor_mode": "light-playful",
+        "tone": "clear-human-and-assured",
+        "density": "moderate-with-context",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "weak-evidence-visible",
+      "context": {
+        "audience": "reviewer",
+        "decision": "assess an emerging claim",
+        "stakes": "high",
+        "skepticism": 8,
+        "cognitive_load": 5,
+        "emotional_weight": 5,
+        "evidence_strength": 2,
+        "humor_allowed": true,
+        "private_or_sensitive": false,
+        "desired_action": "assess"
+      },
+      "expect": {
+        "humor_mode": "restrained-dry-wit-only",
+        "tone": "confident-evidence-first",
+        "density": "compact-with-proof-links",
+        "confidence": "low-evidence-gap-must-remain-visible"
+      }
+    }
+  ]
+}

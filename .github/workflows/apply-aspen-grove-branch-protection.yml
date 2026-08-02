@@ -1,54 +1,37 @@
-name: Apply Aspen Grove Branch Protection
+name: Audit Aspen Grove Branch Protection
 
 on:
   workflow_dispatch:
     inputs:
       required_check:
-        description: Exact GitHub required-check context
+        description: Exact GitHub required-check context to audit
         required: true
         default: Aspen Grove Contract / validate
         type: string
-      dry_run:
-        description: Calculate changes without writing branch protection
-        required: true
-        default: true
-        type: boolean
 
 permissions:
   contents: read
 
 jobs:
-  apply:
+  audit:
     runs-on: ubuntu-latest
-    env:
-      GROVE_ADMIN_TOKEN: ${{ secrets.GROVE_ADMIN_TOKEN }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - name: Require administrative token for live mode
-        if: ${{ !inputs.dry_run }}
+      - name: Calculate proposed protection without writing
         run: |
-          if [ -z "$GROVE_ADMIN_TOKEN" ]; then
-            echo "GROVE_ADMIN_TOKEN is not configured." >&2
-            exit 2
-          fi
+          python governance/apply_aspen_grove_branch_protection.py \
+            --required-check "${{ inputs.required_check }}" \
+            --receipt artifacts/aspen-grove-branch-protection-receipt.json \
+            --dry-run
 
-      - name: Apply and verify protection
-        run: |
-          args=(
-            --required-check "${{ inputs.required_check }}"
-            --receipt artifacts/aspen-grove-branch-protection-receipt.json
-          )
-          if [ "${{ inputs.dry_run }}" = "true" ]; then
-            args+=(--dry-run)
-          fi
-          python governance/apply_aspen_grove_branch_protection.py "${args[@]}"
-
-      - name: Upload protection receipt
+      - name: Upload audit receipt
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: aspen-grove-branch-protection-${{ github.run_id }}
+          name: aspen-grove-branch-protection-audit-${{ github.run_id }}
           path: artifacts/aspen-grove-branch-protection-receipt.json
           if-no-files-found: error
           retention-days: 90

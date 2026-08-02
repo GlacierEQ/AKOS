@@ -1,0 +1,111 @@
+{
+  "schema": "glaciereq.infinity-stone-promotion-receipt.v1",
+  "recorded_date": "2026-08-02",
+  "repository": "GlacierEQ/AKOS",
+  "tested_revision": "5b960219635fcd95a9a98a2d7c1bfc5d19111c84",
+  "evidence_level": "TEST",
+  "subjects": [
+    {
+      "id": "stone-psysoc-x",
+      "version": "0.1.0",
+      "conclusion": "VERIFIED"
+    },
+    {
+      "id": "upgrade-do-it-again",
+      "version": "0.1.0",
+      "conclusion": "VERIFIED"
+    },
+    {
+      "id": "gauntlet-humanized-evidence-presentation",
+      "version": "0.1.0",
+      "conclusion": "VERIFIED"
+    }
+  ],
+  "workflow_runs": [
+    {
+      "name": "Infinity Stone Forge",
+      "run_id": 30749869999,
+      "run_number": 13,
+      "conclusion": "success"
+    },
+    {
+      "name": "AKOS Verification",
+      "run_id": 30749869991,
+      "run_number": 76,
+      "conclusion": "success"
+    },
+    {
+      "name": "AKOS Integrity Gate",
+      "run_id": 30749870031,
+      "run_number": 113,
+      "conclusion": "success"
+    },
+    {
+      "name": "Aspen Grove Manifest",
+      "run_id": 30749870009,
+      "run_number": 10,
+      "conclusion": "success"
+    },
+    {
+      "name": "Nervous System Contract",
+      "run_id": 30749870003,
+      "run_number": 3,
+      "conclusion": "success"
+    }
+  ],
+  "verification": {
+    "python_matrix": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "focused_tests_per_interpreter": 10,
+    "focused_tests_conclusion": "success",
+    "full_akos_tests_per_interpreter": 118,
+    "full_akos_tests_conclusion": "success",
+    "calibration_cases": {
+      "count": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    "loadout_digest": "863aabf0eaa061454c296567a3fdd0b3b21be44a1a0154935ae22169159d31cb",
+    "forge_receipt_digest": "d3745cf4fdd12ba5a8512a50651b90c538b3cd81c9a2f6fe070545a650845b06"
+  },
+  "artifacts": [
+    {
+      "python": "3.11",
+      "artifact_id": 8834079096,
+      "archive_sha256": "8e08c5ad033ec697bdbd81ec14f504a691b79ef1b6480514bf66efe0ceccdbc7"
+    },
+    {
+      "python": "3.12",
+      "artifact_id": 8834080445,
+      "archive_sha256": "a873500565359d8ea1e3f598639f432a9b290947517da1b3557833fcff9fe5eb"
+    },
+    {
+      "python": "3.13",
+      "artifact_id": 8834079601,
+      "archive_sha256": "448c007b3c2bf289cdaed7bab669e77806c8eb2b2b707b8edaf9823c2f131c57"
+    }
+  ],
+  "verified_scope": [
+    "manifest loading and safe-path validation",
+    "activation alias resolution and collision protection",
+    "deterministic stone and upgrade composition",
+    "precedence and duplicate-loadout rejection",
+    "PSYSOC-X deterministic calibration across four representative cases",
+    "humor, tone, density, confidence, dignity, and evidence-gap behavior",
+    "atomic verification receipt generation",
+    "repository-local regression compatibility across the AKOS test estate",
+    "read-only, secretless, nonpersistent workflow authority"
+  ],
+  "non_claims": [
+    "production deployment",
+    "provider-side connectivity",
+    "performance or reliability at external scale",
+    "clinical, diagnostic, or therapeutic validity",
+    "accurate prediction of hidden human traits or motives",
+    "verification of planned stones stone-elite-pro-builder or stone-juggernaut-jack"
+  ],
+  "conclusion": "VERIFIED_FOR_REPOSITORY_LOCAL_TEST_SCOPE"
+}

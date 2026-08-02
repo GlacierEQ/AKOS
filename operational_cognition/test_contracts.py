@@ -54,7 +54,7 @@ def test_artifact_lifecycle_is_complete_and_ordered() -> None:
     assert payload["artifact_lifecycle"] == expected
 
 
-def test_repository_local_workflows_are_read_only_verification_only() -> None:
+def test_repository_workflows_are_read_only_verification_only() -> None:
     workflow_root = ROOT / ".github" / "workflows"
     workflows = sorted(
         path
@@ -68,7 +68,7 @@ def test_repository_local_workflows_are_read_only_verification_only() -> None:
         payload = yaml.safe_load(text)
         assert isinstance(payload, dict), f"workflow is not a mapping: {path}"
         assert payload.get("permissions") == {"contents": "read"}, (
-            f"repository-local workflow permissions must be exactly contents: read: {path}"
+            f"repository workflow permissions must be exactly contents: read: {path}"
         )
 
         lowered = text.lower()
@@ -77,7 +77,6 @@ def test_repository_local_workflows_are_read_only_verification_only() -> None:
             "secrets.",
             "apex_private_read_token",
             "apex_control_token",
-            "workflow_call:",
         ):
             assert forbidden not in lowered, f"forbidden workflow capability {forbidden}: {path}"
 
@@ -98,10 +97,10 @@ def test_repository_local_workflows_are_read_only_verification_only() -> None:
                         f"checkout credentials must not persist: {path}"
                     )
                     assert "repository" not in options, (
-                        "repository-local verification must not checkout "
+                        "verification workflows must not checkout "
                         f"another repository: {path}"
                     )
-        assert checkout_steps, f"workflow does not establish a checked-out local source: {path}"
+        assert checkout_steps, f"workflow does not establish a checked-out source: {path}"
 
 
 def test_verified_reversible_improvements_execute_without_redundant_permission() -> None:

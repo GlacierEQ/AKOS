@@ -1,0 +1,30 @@
+{
+  "schema": "glaciereq.infinity-stone-registry.v1",
+  "version": "0.1.0",
+  "status": "VERIFIED",
+  "evidence_level": "TEST",
+  "promotion_receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json",
+  "post_promotion_validation": "receipts/2026-08-02_psysoc-x_v0.1.0_post-promotion-validation.json",
+  "stones": [
+    {
+      "id": "stone-psysoc-x",
+      "path": "stones/psysoc-x/stone.json"
+    }
+  ],
+  "upgrades": [
+    {
+      "id": "upgrade-do-it-again",
+      "path": "upgrades/do-it-again/upgrade.json"
+    }
+  ],
+  "planned": [
+    {
+      "id": "stone-elite-pro-builder",
+      "state": "SPECIFICATION_PENDING"
+    },
+    {
+      "id": "stone-juggernaut-jack",
+      "state": "SPECIFICATION_PENDING"
+    }
+  ]
+}

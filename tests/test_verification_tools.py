@@ -6,7 +6,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.verify_readme_contract import HEADINGS, REQUIRED_EVIDENCE, verify_readme
+from scripts.verify_readme_contract import (
+    FORBIDDEN_VISIBLE_HEADINGS,
+    HEADINGS,
+    REQUIRED_EVIDENCE,
+    verify_readme,
+)
 from scripts.verify_repository import (
     atomic_write_json,
     discover_test_files,
@@ -120,6 +125,20 @@ class ReadmeContractToolTests(unittest.TestCase):
             errors = verify_readme(readme)
 
             self.assertIn("README exposes a machine-local path", errors)
+
+    def test_generic_visible_audience_heading_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            readme = Path(directory) / "README.md"
+            readme.write_text(
+                self._valid_readme() + FORBIDDEN_VISIBLE_HEADINGS[0] + "\n",
+                encoding="utf-8",
+            )
+
+            errors = verify_readme(readme)
+
+            self.assertTrue(
+                any("forbidden generic visible headings" in error for error in errors)
+            )
 
 
 if __name__ == "__main__":

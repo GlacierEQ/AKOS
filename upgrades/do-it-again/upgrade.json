@@ -1,0 +1,51 @@
+{
+  "schema": "glaciereq.infinity-upgrade.v1",
+  "status": "VERIFIED",
+  "identity": {
+    "id": "upgrade-do-it-again",
+    "name": "Do It Again Protocol",
+    "version": "0.1.0"
+  },
+  "activation": {
+    "aliases": [
+      "do it again",
+      "recursive refinement",
+      "preserve gains and re-enter"
+    ]
+  },
+  "behavior": {
+    "protocol": [
+      "understand the current artifact and preserved gains",
+      "strategize the next highest-value improvement",
+      "build the usable improvement",
+      "test the changed behavior",
+      "refine defects, contradictions, and unsupported assumptions",
+      "repeat only when another meaningful improvement is feasible"
+    ],
+    "invariants": [
+      "preserve all verified gains",
+      "do not repeat work merely to appear active",
+      "add at least one feasible meaningful improvement",
+      "test before promoting completion",
+      "end with completed, verified, blocked, unresolved, and next highest-value action"
+    ]
+  },
+  "composition": {
+    "compatible_stones": [
+      "stone-psysoc-x"
+    ],
+    "precedence": "after stone governing laws and before mission-specific style"
+  },
+  "verification": {
+    "evidence_level": "TEST",
+    "tested_revision": "5b960219635fcd95a9a98a2d7c1bfc5d19111c84",
+    "python_matrix": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "composition_digest": "863aabf0eaa061454c296567a3fdd0b3b21be44a1a0154935ae22169159d31cb",
+    "status_rule": "VERIFIED only for deterministic composition and regression behavior in the recorded TEST scope",
+    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json"
+  }
+}

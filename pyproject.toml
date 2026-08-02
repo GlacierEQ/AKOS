@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "akos-operational-cognition"
-version = "0.6.1"
-description = "Evidence-bound governance, execution authority, operational cognition, and artifact-closure primitives."
+version = "0.7.0"
+description = "Evidence-bound governance, operational cognition, and reversible Infinity Stone runtime specializations."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -24,10 +24,11 @@ dev = [
 [project.scripts]
 akos-verify = "scripts.verify_repository:main"
 akos-verify-readme = "scripts.verify_readme_contract:main"
+akos-verify-stones = "scripts.verify_stones:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["operational_cognition*", "finisher*", "scripts*"]
+include = ["operational_cognition*", "finisher*", "scripts*", "infinity_stones*"]
 
 [tool.pytest.ini_options]
 addopts = "-q"
@@ -44,3 +45,6 @@ extend-exclude = [
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["infinity_stones", "operational_cognition", "finisher", "scripts"]

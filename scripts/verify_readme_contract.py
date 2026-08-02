@@ -4,9 +4,17 @@ import re
 from pathlib import Path
 
 HEADINGS = (
+    "<!-- README-ACT:HUMAN -->",
+    "<!-- README-ACT:MASTER -->",
+    "<!-- README-ACT:MACHINE -->",
+    "<!-- README-ACT:MESH -->",
+)
+FORBIDDEN_VISIBLE_HEADINGS = (
     "## For recruiters and non-technical reviewers",
     "## For senior engineers and domain experts",
     "## For AI systems and toolchains",
+    "## Repository mesh",
+    "## Portfolio mesh",
 )
 FILE_URL_PREFIX = "file:" + "/" * 3
 MAC_USER_PREFIX = "/" + "Users" + "/"
@@ -35,11 +43,15 @@ def verify_readme(readme: Path) -> tuple[str, ...]:
 
     missing = [heading for heading in HEADINGS if heading not in text]
     if missing:
-        errors.append(f"missing required audience headings: {missing}")
+        errors.append(f"missing required four-act markers: {missing}")
     else:
         positions = [text.index(heading) for heading in HEADINGS]
         if positions != sorted(positions):
-            errors.append("audience headings are out of order")
+            errors.append("four-act README markers are out of order")
+
+    bland = [heading for heading in FORBIDDEN_VISIBLE_HEADINGS if heading in text]
+    if bland:
+        errors.append(f"README uses forbidden generic visible headings: {bland}")
 
     if LOCAL_PATH.search(text):
         errors.append("README exposes a machine-local path")
