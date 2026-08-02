@@ -2,20 +2,23 @@
 
 [![AKOS Verification](https://github.com/GlacierEQ/AKOS/actions/workflows/ci.yml/badge.svg)](https://github.com/GlacierEQ/AKOS/actions/workflows/ci.yml)
 [![AKOS Integrity Gate](https://github.com/GlacierEQ/AKOS/actions/workflows/integrity.yml/badge.svg)](https://github.com/GlacierEQ/AKOS/actions/workflows/integrity.yml)
+[![Infinity Stone Forge](https://github.com/GlacierEQ/AKOS/actions/workflows/infinity-stones.yml/badge.svg)](https://github.com/GlacierEQ/AKOS/actions/workflows/infinity-stones.yml)
 
-**Version:** `0.6.1`  
+**Version:** `0.7.0`  
 **Canonical repository:** `GlacierEQ/AKOS`  
-**Verification state:** `VERIFIED` at evidence level `TEST` for the current reviewed revision  
+**Verification state:** `VERIFIED` at evidence level `TEST` for the recorded repository-local scope  
 **Verified matrix:** Python `3.11`, `3.12`, and `3.13`  
-**Observed result:** `94 collected`, `94 passed`, `12 modules`, `0 failures`, `0 errors`, `0 skips`
+**Promotion basis:** `118/118` full AKOS tests, `10/10` focused Forge tests, and `4/4` PSYSOC-X calibration cases on tested revision `5b960219635fcd95a9a98a2d7c1bfc5d19111c84`
 
 AKOS is the governance and operational-cognition layer for large, interconnected engineering systems. It converts identity, provenance, authority, execution, verification, persistence, and completion from informal expectations into inspectable contracts and executable behavior.
 
 <!-- README-MESH:BEGIN -->
 
-## For recruiters and non-technical reviewers
+<!-- README-ACT:HUMAN -->
 
-### What AKOS accomplishes
+## The Operating System That Refuses to Call a Draft Done
+
+*Recruiter lens · what AKOS changes, why it matters, and where the proof lives*
 
 A sophisticated collection of tools can still fail as a system: work gets duplicated, actions happen in the wrong place, drafts are reported as completion, and corrections disappear between sessions. AKOS addresses that coordination failure.
 
@@ -26,7 +29,8 @@ It gives a large engineering portfolio one durable operating model without flatt
 - safe and recoverable work can proceed under explicit standing authority;
 - high-risk or irreversible work remains gated;
 - corrections become policy, executable guards, regression tests, and receipts;
-- incomplete work reports its exact missing stage instead of an invented percentage.
+- incomplete work reports its exact missing stage instead of an invented percentage;
+- practiced AI instincts can become versioned, reversible, testable Infinity Stones.
 
 ### Why it matters
 
@@ -40,27 +44,37 @@ AKOS demonstrates systems architecture beyond a single application. It shows how
 | [`operational_cognition/execution_authority.py`](operational_cognition/execution_authority.py) | Deterministic execute, confirm, or block decisions. |
 | [`operational_cognition/engine.py`](operational_cognition/engine.py) | Evidence classes, routing, phase receipts, and completion logic. |
 | [`finisher/finisher.py`](finisher/finisher.py) | Finish-first analysis and exact blocker handling. |
+| [`infinity_stones/README.md`](infinity_stones/README.md) | The executable Infinity Stone Forge and its verified first release. |
+| [`stones/psysoc-x/STONE.md`](stones/psysoc-x/STONE.md) | PSYSOC-X’s human-calibration purpose, limits, interfaces, and proof. |
+| [`receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json`](receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json) | Exact promotion basis, workflow runs, hashes, scope, and non-claims. |
 | [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive pytest collection and atomic proof receipts. |
 | [`.github/workflows/ci.yml`](.github/workflows/ci.yml) | Three-version package, contract, and behavioral verification. |
+| [`.github/workflows/infinity-stones.yml`](.github/workflows/infinity-stones.yml) | Three-version Forge lint, compile, test, receipt, and artifact verification. |
 | [`.github/workflows/integrity.yml`](.github/workflows/integrity.yml) | Adversarial integrity tests and Git-anchor verification. |
 | [`ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md`](ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md) | Evidence-backed migration of secret-bearing execution to the correct plane. |
 
 ### Evidence summary
 
-The current promotion receipt establishes repository-local behavior at the `TEST` level:
+The promotion receipt establishes repository-local behavior at the `TEST` level:
 
-- 12 discovered modules across integrity, operational cognition, Finisher, manifests, and verifier tooling;
-- 94 collected and executed tests on each supported Python version;
-- 94 passes with no failures, errors, skips, collection errors, or internal errors;
+- 17 discovered test modules across integrity, operational cognition, Finisher, manifests, Forge behavior, and verifier tooling;
+- 118 collected and executed full-repository tests on each supported Python version at the tested promotion revision;
+- 118 passes with no failures, errors, skips, collection errors, or internal errors;
+- 10 focused Forge tests on each supported Python version;
+- 4 of 4 manifest-driven PSYSOC-X calibration cases passed;
 - editable installation with explicit dependencies and installed verification commands;
-- strict zero-warning lint for the new verification control surface;
+- strict zero-warning lint for the Forge and new verification control surfaces;
 - compilation of executable and tracked Python surfaces;
-- recruiter → expert → AI README contract verification;
-- read-only workflow-policy enforcement and Git-anchor verification.
+- four-act README contract verification;
+- read-only, secretless workflow-policy enforcement and Git-anchor verification.
 
-It does **not** claim external-provider connectivity, deployment scale, production reliability, or exercised behavior outside repository-local CI.
+It does **not** claim external-provider connectivity, deployment scale, production reliability, clinical validity, hidden-trait prediction, or exercised behavior outside repository-local CI.
 
-## For senior engineers and domain experts
+<!-- README-ACT:MASTER -->
+
+## Where Governance Becomes Executable
+
+*Master section · architecture, authority, correctness, failure behavior, and tradeoffs*
 
 ### System boundary
 
@@ -73,9 +87,10 @@ AKOS owns:
 - execution, validation, persistence, and handoff semantics;
 - artifact-closure stages and exact blocker reporting;
 - correction-to-policy persistence;
-- governance contracts for connected repositories and agents.
+- governance contracts for connected repositories and agents;
+- Infinity Stone identity, composition, boundaries, and repository-local verification.
 
-AKOS does **not** convert a declared integration into a connected one, a connected provider into an authorized one, or an architecture diagram into executed state. Those transitions require their own receipts.
+AKOS does **not** convert a declared integration into a connected one, a connected provider into an authorized one, an architecture diagram into executed state, or a deterministic calibration engine into a claim of psychological prediction. Those transitions require their own receipts.
 
 ### Architecture
 
@@ -86,17 +101,21 @@ Prime purpose + foundational laws
        Canonical object model
  identity • provenance • relationships
                 │
-        ┌───────┴────────┐
-        ▼                ▼
-Operational cognition   Maturity + closure
-route • decide • act     measure • gate • finish
-        │                │
-        └───────┬────────┘
-                ▼
+        ┌───────┴──────────────┐
+        ▼                      ▼
+Operational cognition     Infinity Stone Forge
+route • decide • act      package • compose • verify
+        │                      │
+        └──────────┬───────────┘
+                   ▼
+          Maturity + closure
+         measure • gate • finish
+                   │
+                   ▼
 Execution authority + provider boundary
  execute • confirm • block • verify
-                │
-                ▼
+                   │
+                   ▼
 Canonical persistence + append-only receipts
 ```
 
@@ -107,6 +126,7 @@ The architecture separates concerns that are commonly collapsed:
 3. **Control plane** — policy governing whether and how work proceeds.
 4. **Receipt plane** — evidence that an action occurred and was validated.
 5. **Projection plane** — human and machine views that never replace the source.
+6. **Specialization plane** — reversible stone packages that shape judgment or presentation without mutating the base model or evidence.
 
 ### Core innovations
 
@@ -117,6 +137,7 @@ The architecture separates concerns that are commonly collapsed:
 5. **Correction-to-cognition** — corrections become durable law, runtime behavior, tests, and ledger entries.
 6. **Artifact closure** — exact missing stages replace subjective completion percentages.
 7. **Monotonic maturity** — evidence states advance through explicit transitions and cannot silently regress.
+8. **Reversible specialization** — named AI instincts become inspectable stone manifests, engines, skills, upgrades, gauntlets, tests, and receipts.
 
 ### Runtime map
 
@@ -127,10 +148,14 @@ The architecture separates concerns that are commonly collapsed:
 | [`operational_cognition/topology.py`](operational_cognition/topology.py) | Architecture discovery and correct-plane routing. |
 | [`operational_cognition/maturity.py`](operational_cognition/maturity.py) | Capability maturity and artifact closure. |
 | [`operational_cognition/master_strand.py`](operational_cognition/master_strand.py) | Branch assessment, extinction gates, and canonical-strand decisions. |
+| [`operational_cognition/adaptation.py`](operational_cognition/adaptation.py) | Bounded dynamic routing and unhealthy-signal backoff. |
 | [`finisher/finisher.py`](finisher/finisher.py) | Finish-first classification and closure planning. |
-| [`src/verify_manifest.py`](src/verify_manifest.py) | Canonical manifest validation. |
+| [`infinity_stones/registry.py`](infinity_stones/registry.py) | Safe manifest loading, identity validation, and alias collision protection. |
+| [`infinity_stones/composition.py`](infinity_stones/composition.py) | Deterministic stone and upgrade composition with loadout hashing. |
+| [`infinity_stones/psysoc_x.py`](infinity_stones/psysoc_x.py) | Bounded human-calibration profiles from explicit context. |
+| [`scripts/verify_stones.py`](scripts/verify_stones.py) | Manifest-driven calibration verification and atomic Forge receipts. |
 | [`scripts/verify_repository.py`](scripts/verify_repository.py) | Exhaustive pytest collection, outcome accounting, and atomic receipts. |
-| [`scripts/verify_readme_contract.py`](scripts/verify_readme_contract.py) | Portable public-document contract verification. |
+| [`scripts/verify_readme_contract.py`](scripts/verify_readme_contract.py) | Distinctive four-act public-document contract verification. |
 
 ### Correctness and failure behavior
 
@@ -145,9 +170,12 @@ The architecture separates concerns that are commonly collapsed:
 - Function-style pytest tests and class-based unittest cases share one exhaustive collection.
 - Receipt files use exclusive temporary files and atomic replacement.
 - README verification is independent of the caller's working directory.
+- Generic visible audience headings are rejected; hidden markers preserve deterministic four-act parsing.
 - macOS, Windows, and file-URL local paths are rejected from the public README.
-- Repository workflows are restricted to exact read-only permissions, local checkout, and nonpersistent credentials.
-- Secret-bearing cross-repository finishing is prohibited in AKOS Actions and routed to the governed action face.
+- Repository workflows are restricted to exact read-only permissions, local checkout, nonpersistent credentials, and no secret-bearing execution.
+- Reusable verification may inspect a caller repository but cannot inherit mutation authority.
+- Explicitly unhealthy adaptation signals cannot earn a healthy routing score from latency, cost, queue, or confidence alone.
+- PSYSOC-X cannot alter evidence state, diagnose a person, infer protected traits, or exploit fear, shame, grief, dependency, or confusion.
 
 ### Build and verification
 
@@ -155,52 +183,61 @@ The architecture separates concerns that are commonly collapsed:
 # Install runtime and verification tooling
 python -m pip install -e ".[dev]"
 
-# Strictly lint the newly introduced verification boundary
+# Strictly lint the new verification and Forge boundaries
 ruff check \
+  infinity_stones \
   scripts/verify_repository.py \
   scripts/verify_readme_contract.py \
+  scripts/verify_stones.py \
   tests/test_verification_tools.py \
+  tests/test_infinity_stones.py \
+  tests/test_psysoc_x.py \
   operational_cognition/test_contracts.py
 
 # Compile executable surfaces
-python -m compileall -q operational_cognition finisher src scripts tests
+python -m compileall -q operational_cognition finisher infinity_stones src scripts tests
 
-# Verify the three-audience public contract
+# Verify the four-act public contract
 akos-verify-readme
 
-# Run exhaustive pytest collection and emit the receipt
+# Verify the stone registry, composition, and calibration cases
+akos-verify-stones --output artifacts/ci/infinity-stone-receipt.json
+
+# Run exhaustive pytest collection and emit the repository receipt
 akos-verify --output artifacts/ci/test-receipt.json
 ```
 
-The receipt schema is `glaciereq.akos.test-receipt.v1`. It records the revision, interpreter and pytest versions, discovered modules, collected count, executed outcomes, collection and internal errors, evidence level, and conclusion.
+The repository receipt schema is `glaciereq.akos.test-receipt.v1`. The Forge receipt schema is `glaciereq.infinity-stone-verification-receipt.v1`. Both distinguish observed test behavior from deployment, provider, scale, or human-prediction claims.
 
 ### Verification layers
 
 | Layer | Current result |
 |---|---|
-| Packaging and declared dependencies | Passed on Python 3.11–3.13 |
-| New verification-code lint | Passed with zero findings |
-| Existing-runtime Ruff baseline | 117 findings recorded, not hidden or mislabeled as fixed |
+| Packaging and declared dependencies | Passed on Python 3.11–3.13 at the tested promotion revision |
+| New verification and Forge lint | Passed with zero findings |
+| Existing-runtime Ruff baseline | 136 findings recorded, not hidden or mislabeled as fixed |
 | Bytecode and tracked-file compilation | Passed |
-| README audience and portability contract | Passed |
-| Exhaustive repository behavior | 94/94 passed per interpreter |
-| Workflow authority contract | Passed; exact read-only local verification only |
-| Finisher verification | Passed after secret-bearing execution was retired |
+| README four-act and portability contract | Passed |
+| Focused Forge behavior | 10/10 passed per interpreter |
+| PSYSOC-X calibration cases | 4/4 passed per interpreter |
+| Exhaustive repository behavior | 118/118 passed per interpreter at the tested promotion revision |
+| Workflow authority contract | Passed; exact read-only, secretless, local verification only |
+| Nervous-system and Aspen Grove contracts | Passed |
 | Adversarial integrity + Git anchor | Passed |
-| Deployment, performance, and scale | Not claimed |
+| Deployment, performance, human-prediction accuracy, and scale | Not claimed |
 
 ### Quality-debt treatment
 
-The initial strict audit of the preexisting runtime recorded **117 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned. It is not confused with behavioral correctness, and it is not represented as remediated. New verification code is held to a zero-warning gate while legacy debt is reduced through bounded, behavior-preserving changes.
+The current strict audit records **136 Ruff findings** in `glaciereq.akos.ruff-baseline.v1`. That debt is visible and versioned. It is not confused with behavioral correctness, and it is not represented as remediated. New verification and Forge code are held to zero-warning gates while legacy debt is reduced through bounded, behavior-preserving changes.
 
 ### Language fit
 
 | Language / format | Responsibility | Boundary | Proof |
 |---|---|---|---|
-| Python 3.11+ | Cognition, authority, topology, maturity, closure, and verification | Executable runtime and proof tooling | Three-version CI plus exhaustive pytest receipt |
-| JSON | Runtime manifests, topology, maturity, and receipts | Machine-readable policy and evidence | Parsing and contract tests |
+| Python 3.11+ | Cognition, authority, topology, maturity, closure, stone composition, calibration, and verification | Executable runtime and proof tooling | Three-version CI plus exhaustive and Forge receipts |
+| JSON | Runtime manifests, topology, maturity, stone contracts, gauntlets, and receipts | Machine-readable policy and evidence | Parsing, composition, and contract tests |
 | YAML | Canonical manifests and GitHub workflow policy | Human-editable declarations | Manifest and workflow-contract tests |
-| Markdown | Laws, specifications, ADRs, ledgers, and three-audience communication | Human governance and review | README contract and openable evidence |
+| Markdown | Laws, specifications, skills, ADRs, ledgers, and four-act communication | Human governance and review | README contract and openable evidence |
 
 The repository remains intentionally Python-centered. Additional languages belong only where a workload, safety property, interoperability boundary, or performance requirement creates measurable value.
 
@@ -220,29 +257,43 @@ LOCATED -> ACQUIRED -> HASHED -> PRESERVED -> PARSED -> CLASSIFIED ->
 CORRELATED -> DRAFTED -> VERIFIED -> PACKAGED -> STORED -> LOGGED -> READY_FOR_USE
 ```
 
+```text
+INSTINCT -> IDENTITY -> SKILLS -> JUDGMENT -> BOUNDARIES -> COMPOSITION ->
+TESTS -> RECEIPTS -> TEST-VERIFIED SPECIALIZATION
+```
+
 Unmeasured means `UNASSESSED`, not an invented score.
 
-## For AI systems and toolchains
+<!-- README-ACT:MACHINE -->
+
+## Enter Through the Contracts, Exit With Receipts
+
+*Machine section · canonical resources, exact commands, evidence classes, and retrieval boundaries*
 
 ### Machine contract
 
 ```yaml
 schema: glaciereq.readme.v1
-profile: glaciereq.readme-impact.v2-draft
+profile: glaciereq.readme-impact.v2.1
 repository: GlacierEQ/AKOS
 canonical_branch: main
 purpose: >-
   Govern identity, provenance, authority, execution, verification,
-  persistence, completion, and recursive system improvement.
+  persistence, completion, reversible specialization, and recursive improvement.
 status:
   state: VERIFIED
   evidence_level: TEST
+  promotion_receipt: receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json
+  tested_revision: 5b960219635fcd95a9a98a2d7c1bfc5d19111c84
   verification_matrix:
     python: ["3.11", "3.12", "3.13"]
     pytest: "8.4.2"
-    tests_per_interpreter: 94
-    test_modules: 12
-    passed: 94
+    full_akos_tests_per_interpreter: 118
+    focused_forge_tests_per_interpreter: 10
+    psysoc_x_cases_per_interpreter: 4
+    passed_full_akos: 118
+    passed_forge: 10
+    passed_psysoc_x_cases: 4
     failures: 0
     errors: 0
     skipped: 0
@@ -250,52 +301,70 @@ status:
     internal_errors: 0
   quality_baseline:
     schema: glaciereq.akos.ruff-baseline.v1
-    preexisting_findings: 117
+    preexisting_findings: 136
     treatment: recorded_nonblocking_debt
   verified_scope:
     - editable package installation and declared dependencies
-    - installed akos-verify and akos-verify-readme commands
-    - strict quality gate for new verification code and regression tests
+    - installed akos-verify, akos-verify-readme, and akos-verify-stones commands
+    - strict quality gate for new verification and Forge code
     - compilation of executable and tracked Python surfaces
     - exhaustive pytest collection across function and class test styles
-    - operational-cognition, finisher, integrity, connector, manifest, and verifier tests
-    - recruiter, expert, and AI README contract
-    - read-only workflow authority contract
-    - adversarial integrity tests and Git-anchor verification
+    - operational-cognition, finisher, integrity, connector, manifest, Forge, and verifier tests
+    - deterministic stone registry, alias resolution, composition, and loadout hashing
+    - bounded PSYSOC-X calibration across four manifest-driven cases
+    - four-act README contract
+    - read-only, secretless workflow authority contract
+    - nervous-system, Aspen Grove, adversarial integrity, and Git-anchor verification
   blocked_scope:
     - irreversible actions without explicit approval
     - provider-side operations without current provider receipts
-    - secret-bearing or cross-repository execution from AKOS Actions
+    - secret-bearing or cross-repository mutation from AKOS Actions
+    - evidence promotion by a stone or presentation engine
   unverified_scope:
     - external connectors not exercised by repository-local tests
     - deployment, performance, reliability, and scale outside GitHub Actions
+    - clinical, diagnostic, or therapeutic validity
+    - hidden-trait or motive prediction
+    - planned stones stone-elite-pro-builder and stone-juggernaut-jack
 interfaces:
   inputs:
     - work items and authority context
     - capability and topology declarations
     - evidence and provider receipts
     - runtime and maturity manifests
+    - explicit audience, decision, stakes, skepticism, load, privacy, and evidence context
   outputs:
     - execute, confirm, block, or complete decisions
     - capability and artifact maturity results
     - exact blockers and missing closure stages
-    - atomic test and quality-baseline receipts
+    - deterministic stone loadouts and digests
+    - human-resonance profiles with humor, tone, density, logic, dignity, and warnings
+    - atomic repository, Forge, and quality-baseline receipts
   commands:
     install: python -m pip install -e ".[dev]"
     lint_new_code: >-
-      ruff check scripts/verify_repository.py scripts/verify_readme_contract.py
-      tests/test_verification_tools.py operational_cognition/test_contracts.py
-    compile: python -m compileall -q operational_cognition finisher src scripts tests
+      ruff check infinity_stones scripts/verify_repository.py
+      scripts/verify_readme_contract.py scripts/verify_stones.py
+      tests/test_verification_tools.py tests/test_infinity_stones.py
+      tests/test_psysoc_x.py operational_cognition/test_contracts.py
+    compile: >-
+      python -m compileall -q operational_cognition finisher
+      infinity_stones src scripts tests
     test: akos-verify --output artifacts/ci/test-receipt.json
     verify_readme: akos-verify-readme
+    verify_stones: >-
+      akos-verify-stones --output artifacts/ci/infinity-stone-receipt.json
 evidence:
   workflow: .github/workflows/ci.yml
   integrity_workflow: .github/workflows/integrity.yml
-  finisher_workflow: .github/workflows/finisher.yml
+  forge_workflow: .github/workflows/infinity-stones.yml
+  nervous_system_workflow: .github/workflows/nervous-system-contract.yml
+  aspen_grove_workflow: .github/workflows/aspen-grove-manifest.yml
   test_runner: scripts/verify_repository.py
+  forge_runner: scripts/verify_stones.py
   receipt_schema: glaciereq.akos.test-receipt.v1
-  quality_schema: glaciereq.akos.ruff-baseline.v1
-  action_boundary_receipt: ledger/2026-07-30_FINISHER_ACTION_BOUNDARY.md
+  forge_receipt_schema: glaciereq.infinity-stone-verification-receipt.v1
+  promotion_receipt: receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json
   tests:
     - .integrity/test_*.py
     - operational_cognition/test_*.py
@@ -305,7 +374,7 @@ relationships:
   - target: GlacierEQ/job-app-helix
     relation: GOVERNS
     combined_value: >-
-      AKOS supplies authority, provenance, and completion semantics;
+      AKOS supplies authority, provenance, completion, and reversible-specialization semantics;
       Job-App Helix supplies exact portfolio representation and evidence rollout.
   - target: GlacierEQ/anthropic-agent-coordinator
     relation: GOVERNS
@@ -320,6 +389,7 @@ limits:
   - Architecture does not establish provider connectivity.
   - A relationship does not prove the target repository currently works.
   - CI verifies repository-local behavior, not external deployment or scale.
+  - PSYSOC-X presentation calibration is not human diagnosis or hidden-trait prediction.
   - Recorded lint debt is not represented as remediated.
 ```
 
@@ -329,14 +399,25 @@ limits:
 - [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json)
 - [`manifests/runtime/AKOS_OPERATIONAL_COGNITION.json`](manifests/runtime/AKOS_OPERATIONAL_COGNITION.json)
 - [`manifests/runtime/AKOS_OPERATIONAL_MATURITY.json`](manifests/runtime/AKOS_OPERATIONAL_MATURITY.json)
+- [`registry/stones.json`](registry/stones.json)
+- [`stones/psysoc-x/stone.json`](stones/psysoc-x/stone.json)
+- [`upgrades/do-it-again/upgrade.json`](upgrades/do-it-again/upgrade.json)
+- [`gauntlets/humanized-evidence-presentation.json`](gauntlets/humanized-evidence-presentation.json)
+- [`receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json`](receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json)
 - [`schemas/operational_cognition.schema.json`](schemas/operational_cognition.schema.json)
 - [`schemas/operational_maturity.schema.json`](schemas/operational_maturity.schema.json)
+- [`schemas/infinity-stone.schema.json`](schemas/infinity-stone.schema.json)
+- [`schemas/infinity-upgrade.schema.json`](schemas/infinity-upgrade.schema.json)
 - [`contracts/`](contracts/)
 - [`specs/`](specs/)
 
 <!-- README-MESH:END -->
 
+<!-- README-ACT:MESH -->
+
 ## The Nervous System Behind the Forge
+
+*Mesh section · how governance, memory, engineering, language boundaries, and specializations combine without collapsing authority*
 
 AKOS governs the stone forge, but it does not pretend to contain every specialized capability itself. It inherits memory, boot, engineering doctrine, execution practice, and polyglot governance through an explicit nervous system:
 
@@ -358,7 +439,7 @@ The links define inheritance and routing, not automatic connectivity or runtime 
 ## Repository map
 
 ```text
-/docs/                     architecture and integration doctrine
+/docs/                     architecture, ontology, and integration doctrine
 /specs/                    formal AKOS specifications
 /contracts/                compatibility and authority contracts
 /schemas/                  machine-readable validation schemas
@@ -367,6 +448,7 @@ The links define inheritance and routing, not automatic connectivity or runtime 
 /methodologies/            Pro-Code and operating methods
 /adr/                      architecture decision records
 /ledger/                   append-only build, correction, migration, and sync receipts
+/receipts/                 immutable promotion and verification evidence
 /finisher/                 deterministic closure engine
 /operational_cognition/    execution, topology, maturity, authority, and closure runtime
 /infinity_stones/          executable stone registry, composition, calibration, and receipts
@@ -381,11 +463,12 @@ The links define inheritance and routing, not automatic connectivity or runtime 
 1. Read [`AKOS_MANIFEST.yaml`](AKOS_MANIFEST.yaml).
 2. Read [`BUILD_INDEX.md`](BUILD_INDEX.md) and [`CURRENT_STATE.md`](CURRENT_STATE.md).
 3. Inspect [`manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json`](manifests/runtime/AKOS_SYSTEM_TOPOLOGY.json) before diagnosing a missing route.
-4. Apply [`AKOS-OC-001`](specs/AKOS-OC-001_OPERATIONAL_COGNITION.md) to execution and [`AKOS-OC-002`](specs/AKOS-OC-002_OPERATIONAL_MATURITY.md) to maturity or closure claims.
-5. Run `akos-verify-readme` and `akos-verify`.
-6. Close finishable work before proposing expansion.
-7. Preserve history and append evidence-backed deltas.
+4. Read [`infinity_stones/README.md`](infinity_stones/README.md) and the [PSYSOC-X promotion receipt](receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json).
+5. Apply [`AKOS-OC-001`](specs/AKOS-OC-001_OPERATIONAL_COGNITION.md) to execution and [`AKOS-OC-002`](specs/AKOS-OC-002_OPERATIONAL_MATURITY.md) to maturity or closure claims.
+6. Run `akos-verify-readme`, `akos-verify-stones`, and `akos-verify`.
+7. Close finishable work before proposing expansion.
+8. Preserve history and append evidence-backed deltas.
 
 ## Operating principle
 
-Build in layers. Preserve history. Reuse before rebuilding. Finish before expanding. Verify before claiming. Persist before reporting closure. Never confuse a mirror with the source of truth, a wrong-plane failure with missing infrastructure, or a compelling explanation with completed work.
+Build in layers. Preserve history. Reuse before rebuilding. Finish before expanding. Verify before claiming. Persist before reporting closure. Never confuse a mirror with the source of truth, a wrong-plane failure with missing infrastructure, a stone with its invocation sentence, or a compelling explanation with completed work.
