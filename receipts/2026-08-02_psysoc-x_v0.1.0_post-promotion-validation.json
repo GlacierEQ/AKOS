@@ -1,0 +1,77 @@
+{
+  "schema": "glaciereq.infinity-stone-post-promotion-validation.v1",
+  "recorded_date": "2026-08-02",
+  "repository": "GlacierEQ/AKOS",
+  "validated_revision": "80cbf2548f77251dc54563e5fad9187aba7b7bb6",
+  "subjects": [
+    "stone-psysoc-x@0.1.0",
+    "upgrade-do-it-again@0.1.0",
+    "gauntlet-humanized-evidence-presentation@0.1.0"
+  ],
+  "evidence_level": "TEST",
+  "workflow_runs": [
+    {
+      "name": "AKOS Verification",
+      "run_id": 30750226335,
+      "run_number": 85,
+      "conclusion": "success",
+      "matrix": [
+        "3.11",
+        "3.12",
+        "3.13"
+      ],
+      "tests_per_interpreter": 119,
+      "passed_per_interpreter": 119,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "Infinity Stone Forge",
+      "run_id": 30750226344,
+      "run_number": 22,
+      "conclusion": "success",
+      "matrix": [
+        "3.11",
+        "3.12",
+        "3.13"
+      ],
+      "focused_tests_per_interpreter": 10,
+      "calibration_cases_per_interpreter": 4
+    },
+    {
+      "name": "AKOS Integrity Gate",
+      "run_id": 30750226315,
+      "run_number": 122,
+      "conclusion": "success"
+    },
+    {
+      "name": "Aspen Grove Manifest",
+      "run_id": 30750226346,
+      "run_number": 19,
+      "conclusion": "success"
+    },
+    {
+      "name": "Nervous System Contract",
+      "run_id": 30750226342,
+      "run_number": 12,
+      "conclusion": "success"
+    }
+  ],
+  "newly_validated_behavior": [
+    "promoted manifests remain loadable and composable",
+    "promotion and proof documentation preserve the four-act README contract",
+    "generic visible audience headings are rejected",
+    "read-only, secretless, credentialless workflow authority remains enforced",
+    "the complete AKOS regression estate remains green after promotion"
+  ],
+  "non_claims": [
+    "production deployment",
+    "provider connectivity",
+    "clinical or diagnostic validity",
+    "hidden-trait prediction",
+    "external reliability or scale",
+    "verification of planned Elite Pro Builder or Juggernaut Jack stones"
+  ],
+  "conclusion": "POST_PROMOTION_VALIDATED"
+}
