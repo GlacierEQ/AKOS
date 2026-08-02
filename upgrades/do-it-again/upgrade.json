@@ -1,6 +1,6 @@
 {
   "schema": "glaciereq.infinity-upgrade.v1",
-  "status": "UNVERIFIED",
+  "status": "VERIFIED",
   "identity": {
     "id": "upgrade-do-it-again",
     "name": "Do It Again Protocol",
@@ -37,6 +37,15 @@
     "precedence": "after stone governing laws and before mission-specific style"
   },
   "verification": {
-    "status_rule": "UNVERIFIED until composition and regression tests pass"
+    "evidence_level": "TEST",
+    "tested_revision": "5b960219635fcd95a9a98a2d7c1bfc5d19111c84",
+    "python_matrix": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "composition_digest": "863aabf0eaa061454c296567a3fdd0b3b21be44a1a0154935ae22169159d31cb",
+    "status_rule": "VERIFIED only for deterministic composition and regression behavior in the recorded TEST scope",
+    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json"
   }
 }
