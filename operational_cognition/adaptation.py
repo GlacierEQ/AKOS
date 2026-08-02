@@ -85,7 +85,13 @@ class AdaptationPolicy:
             raise ValueError("maximum interval must not be below minimum interval")
         if self.maximum_backoff_seconds <= 0:
             raise ValueError("maximum_backoff_seconds must be positive")
-        total = self.cost_weight + self.latency_weight + self.reliability_weight + self.confidence_weight + self.queue_weight
+        total = (
+            self.cost_weight
+            + self.latency_weight
+            + self.reliability_weight
+            + self.confidence_weight
+            + self.queue_weight
+        )
         if abs(total - 1.0) > 1e-9:
             raise ValueError("adaptation weights must sum to 1.0")
 
@@ -129,7 +135,11 @@ class AdaptationReceipt:
                 "next_interval_seconds": self.decision.next_interval_seconds,
                 "exact_blocker": self.decision.exact_blocker,
                 "ranked": [
-                    {"capability": item.capability, "score": item.score, "reasons": list(item.reasons)}
+                    {
+                        "capability": item.capability,
+                        "score": item.score,
+                        "reasons": list(item.reasons),
+                    }
                     for item in self.decision.ranked
                 ],
             },
@@ -159,6 +169,7 @@ class DynamicAdjustmentEngine:
         )
         reasons: list[str] = []
         if not signal.healthy:
+            score *= 0.25
             reasons.append("unhealthy")
         if signal.rate_limited:
             score *= 0.20
@@ -169,7 +180,11 @@ class DynamicAdjustmentEngine:
             reasons.append("queue_above_limit")
         if signal.success_rate < policy.minimum_health_score:
             reasons.append("success_below_threshold")
-        return RankedCapability(signal.capability, round(max(0.0, min(score, 1.0)), 6), tuple(reasons))
+        return RankedCapability(
+            signal.capability,
+            round(max(0.0, min(score, 1.0)), 6),
+            tuple(reasons),
+        )
 
     def decide(
         self,
@@ -185,38 +200,138 @@ class DynamicAdjustmentEngine:
         if not 0 <= activity_pressure <= 1:
             raise ValueError("activity_pressure must be between 0 and 1")
         signal_list = list(signals)
-        ranked = tuple(sorted((self.score(signal) for signal in signal_list), key=lambda item: (-item.score, item.capability)))
+        ranked = tuple(
+            sorted(
+                (self.score(signal) for signal in signal_list),
+                key=lambda item: (-item.score, item.capability),
+            )
+        )
         signal_names = {item.capability for item in ranked}
-        interval = self._next_interval(activity_pressure=activity_pressure, consecutive_failures=consecutive_failures)
+        interval = self._next_interval(
+            activity_pressure=activity_pressure,
+            consecutive_failures=consecutive_failures,
+        )
         if manual_override is not None:
             if manual_override not in signal_names:
-                return AdaptationDecision(AdaptationAction.BLOCK, AdaptationReason.MANUAL_OVERRIDE, None, current_capability, interval, ranked, "manual override capability has no current runtime signal")
-            return AdaptationDecision(AdaptationAction.KEEP if manual_override == current_capability else AdaptationAction.SWITCH, AdaptationReason.MANUAL_OVERRIDE, manual_override, current_capability, interval, ranked)
+                return AdaptationDecision(
+                    AdaptationAction.BLOCK,
+                    AdaptationReason.MANUAL_OVERRIDE,
+                    None,
+                    current_capability,
+                    interval,
+                    ranked,
+                    "manual override capability has no current runtime signal",
+                )
+            return AdaptationDecision(
+                AdaptationAction.KEEP
+                if manual_override == current_capability
+                else AdaptationAction.SWITCH,
+                AdaptationReason.MANUAL_OVERRIDE,
+                manual_override,
+                current_capability,
+                interval,
+                ranked,
+            )
         if not ranked:
-            return AdaptationDecision(AdaptationAction.BLOCK, AdaptationReason.HEALTH_DEGRADED, None, current_capability, interval, ranked, "no runtime signals were supplied")
+            return AdaptationDecision(
+                AdaptationAction.BLOCK,
+                AdaptationReason.HEALTH_DEGRADED,
+                None,
+                current_capability,
+                interval,
+                ranked,
+                "no runtime signals were supplied",
+            )
         best = ranked[0]
-        current = next((item for item in ranked if item.capability == current_capability), None)
+        current = next(
+            (item for item in ranked if item.capability == current_capability),
+            None,
+        )
         if best.score < self.policy.minimum_health_score:
-            return AdaptationDecision(AdaptationAction.BACKOFF, AdaptationReason.ERROR_BUDGET_EXHAUSTED, current_capability, current_capability, interval, ranked, "all observed capabilities are below the health threshold")
+            return AdaptationDecision(
+                AdaptationAction.BACKOFF,
+                AdaptationReason.ERROR_BUDGET_EXHAUSTED,
+                current_capability,
+                current_capability,
+                interval,
+                ranked,
+                "all observed capabilities are below the health threshold",
+            )
         if current is None:
-            return AdaptationDecision(AdaptationAction.SWITCH, AdaptationReason.INITIAL_SELECTION, best.capability, current_capability, interval, ranked)
-        if best.capability != current.capability and best.score - current.score >= self.policy.switch_margin:
-            return AdaptationDecision(AdaptationAction.SWITCH, self._switch_reason(signal_list, current.capability), best.capability, current.capability, interval, ranked)
-        return AdaptationDecision(AdaptationAction.KEEP, AdaptationReason.RECOVERY_PROBE, current.capability, current.capability, interval, ranked)
+            return AdaptationDecision(
+                AdaptationAction.SWITCH,
+                AdaptationReason.INITIAL_SELECTION,
+                best.capability,
+                current_capability,
+                interval,
+                ranked,
+            )
+        if (
+            best.capability != current.capability
+            and best.score - current.score >= self.policy.switch_margin
+        ):
+            return AdaptationDecision(
+                AdaptationAction.SWITCH,
+                self._switch_reason(signal_list, current.capability),
+                best.capability,
+                current.capability,
+                interval,
+                ranked,
+            )
+        return AdaptationDecision(
+            AdaptationAction.KEEP,
+            AdaptationReason.RECOVERY_PROBE,
+            current.capability,
+            current.capability,
+            interval,
+            ranked,
+        )
 
-    def receipt(self, decision: AdaptationDecision, *, signal_count: int) -> AdaptationReceipt:
-        return AdaptationReceipt(decision=decision, signal_count=signal_count, policy_fingerprint=self._policy_fingerprint())
+    def receipt(
+        self,
+        decision: AdaptationDecision,
+        *,
+        signal_count: int,
+    ) -> AdaptationReceipt:
+        return AdaptationReceipt(
+            decision=decision,
+            signal_count=signal_count,
+            policy_fingerprint=self._policy_fingerprint(),
+        )
 
-    def _next_interval(self, *, activity_pressure: float, consecutive_failures: int) -> int:
+    def _next_interval(
+        self,
+        *,
+        activity_pressure: float,
+        consecutive_failures: int,
+    ) -> int:
         policy = self.policy
-        activity_interval = int(policy.base_interval_seconds - activity_pressure * (policy.base_interval_seconds - policy.minimum_interval_seconds))
-        failure_backoff = min(policy.maximum_backoff_seconds, policy.base_interval_seconds * (2 ** min(consecutive_failures, 8)))
-        interval = max(activity_interval, failure_backoff if consecutive_failures else 0)
-        return max(policy.minimum_interval_seconds, min(interval, policy.maximum_interval_seconds))
+        activity_interval = int(
+            policy.base_interval_seconds
+            - activity_pressure
+            * (policy.base_interval_seconds - policy.minimum_interval_seconds)
+        )
+        failure_backoff = min(
+            policy.maximum_backoff_seconds,
+            policy.base_interval_seconds * (2 ** min(consecutive_failures, 8)),
+        )
+        interval = max(
+            activity_interval,
+            failure_backoff if consecutive_failures else 0,
+        )
+        return max(
+            policy.minimum_interval_seconds,
+            min(interval, policy.maximum_interval_seconds),
+        )
 
     @staticmethod
-    def _switch_reason(signals: Sequence[RuntimeSignal], current_capability: str) -> AdaptationReason:
-        current = next(signal for signal in signals if signal.capability == current_capability)
+    def _switch_reason(
+        signals: Sequence[RuntimeSignal],
+        current_capability: str,
+    ) -> AdaptationReason:
+        current = next(
+            signal for signal in signals if signal.capability == current_capability
+        )
         if current.rate_limited:
             return AdaptationReason.RATE_LIMITED
         if not current.healthy or current.success_rate < 0.5:
@@ -229,10 +344,18 @@ class DynamicAdjustmentEngine:
 
     def _policy_fingerprint(self) -> str:
         values = (
-            self.policy.minimum_health_score, self.policy.switch_margin, self.policy.target_latency_ms,
-            self.policy.maximum_queue_depth, self.policy.cost_weight, self.policy.latency_weight,
-            self.policy.reliability_weight, self.policy.confidence_weight, self.policy.queue_weight,
-            self.policy.base_interval_seconds, self.policy.minimum_interval_seconds,
-            self.policy.maximum_interval_seconds, self.policy.maximum_backoff_seconds,
+            self.policy.minimum_health_score,
+            self.policy.switch_margin,
+            self.policy.target_latency_ms,
+            self.policy.maximum_queue_depth,
+            self.policy.cost_weight,
+            self.policy.latency_weight,
+            self.policy.reliability_weight,
+            self.policy.confidence_weight,
+            self.policy.queue_weight,
+            self.policy.base_interval_seconds,
+            self.policy.minimum_interval_seconds,
+            self.policy.maximum_interval_seconds,
+            self.policy.maximum_backoff_seconds,
         )
         return "|".join(str(value) for value in values)
