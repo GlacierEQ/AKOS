@@ -4,36 +4,19 @@ on:
   workflow_call:
     inputs:
       profile:
-        description: Grove health profile
+        description: Grove structural-health profile
         required: true
         type: string
-      persist_receipt:
-        description: Commit health/latest.json back to the caller repository
-        required: false
-        default: true
-        type: boolean
-    secrets:
-      SUPABASE_URL:
-        required: false
-      SUPABASE_ANON_KEY:
-        required: false
-      GROVE_HEALTH_URLS:
-        required: false
   workflow_dispatch:
     inputs:
       profile:
-        description: Grove health profile
+        description: Grove structural-health profile
         required: true
         type: string
         default: core
-      persist_receipt:
-        description: Persist latest receipt
-        required: false
-        type: boolean
-        default: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   health:
@@ -41,13 +24,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GROVE_PROFILE: ${{ inputs.profile }}
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-      GROVE_HEALTH_URLS: ${{ secrets.GROVE_HEALTH_URLS }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
-      - name: Generate governed health receipt
+      - name: Generate governed structural-health receipt
         shell: bash
         run: |
           python - <<'PY'
@@ -57,8 +39,6 @@ jobs:
           import os
           import subprocess
           import sys
-          import urllib.error
-          import urllib.request
           from datetime import datetime, timezone
           from pathlib import Path
 
@@ -68,7 +48,6 @@ jobs:
           profile = os.environ.get('GROVE_PROFILE', '').strip()
           repository = os.environ.get('GITHUB_REPOSITORY', '')
           run_id = os.environ.get('GITHUB_RUN_ID', '')
-
           checks: list[dict] = []
 
           def add(name: str, state: str, detail: str, required: bool = True) -> None:
@@ -135,73 +114,26 @@ jobs:
               add(
                   f'readme_term:{term}',
                   'PASS' if term.lower() in lower_readme else 'FAIL',
-                  f"README contains '{term}'" if term.lower() in lower_readme else f"README missing '{term}'",
+                  f"README contains '{term}'"
+                  if term.lower() in lower_readme
+                  else f"README missing '{term}'",
               )
 
           try:
               commit_time = subprocess.check_output(
-                  ['git', 'log', '-1', '--format=%cI'], text=True
+                  ['git', 'log', '-1', '--format=%cI'],
+                  text=True,
               ).strip()
               add('git_head', 'PASS', commit_time)
           except Exception as exc:
-              add('git_head', 'DEGRADED', f'unavailable: {exc}', required=False)
+              add('git_head', 'FAIL', f'unavailable: {exc}')
 
-          if profile == 'persistence':
-              url = os.environ.get('SUPABASE_URL', '').rstrip('/')
-              key = os.environ.get('SUPABASE_ANON_KEY', '')
-              if not url or not key:
-                  add(
-                      'supabase_endpoint',
-                      'UNCONFIGURED',
-                      'SUPABASE_URL or SUPABASE_ANON_KEY secret missing',
-                      required=False,
-                  )
-              else:
-                  request = urllib.request.Request(
-                      f'{url}/auth/v1/health',
-                      headers={'apikey': key, 'Authorization': f'Bearer {key}'},
-                      method='GET',
-                  )
-                  try:
-                      with urllib.request.urlopen(request, timeout=15) as response:
-                          state = 'PASS' if 200 <= response.status < 400 else 'DEGRADED'
-                          add('supabase_endpoint', state, f'HTTP {response.status}', required=False)
-                  except Exception as exc:
-                      add('supabase_endpoint', 'DEGRADED', str(exc), required=False)
-
-          raw_targets = os.environ.get('GROVE_HEALTH_URLS', '').strip()
-          if raw_targets:
-              try:
-                  targets = json.loads(raw_targets)
-                  if not isinstance(targets, list):
-                      raise ValueError('GROVE_HEALTH_URLS must be a JSON array')
-                  for index, target in enumerate(targets):
-                      if isinstance(target, str):
-                          name, url = f'external:{index + 1}', target
-                      else:
-                          name = str(target.get('name') or f'external:{index + 1}')
-                          url = str(target.get('url') or '')
-                      if not url.startswith(('https://', 'http://')):
-                          add(name, 'DEGRADED', 'invalid URL', required=False)
-                          continue
-                      try:
-                          request = urllib.request.Request(url, method='GET')
-                          with urllib.request.urlopen(request, timeout=15) as response:
-                              state = 'PASS' if 200 <= response.status < 400 else 'DEGRADED'
-                              add(name, state, f'HTTP {response.status}', required=False)
-                      except urllib.error.HTTPError as exc:
-                          add(name, 'DEGRADED', f'HTTP {exc.code}', required=False)
-                      except Exception as exc:
-                          add(name, 'DEGRADED', str(exc), required=False)
-              except Exception as exc:
-                  add('external_targets', 'DEGRADED', f'invalid configuration: {exc}', required=False)
-          else:
-              add('external_targets', 'UNCONFIGURED', 'no GROVE_HEALTH_URLS secret configured', required=False)
-
-          required_failures = [c for c in checks if c['required'] and c['state'] != 'PASS']
-          degraded = [c for c in checks if not c['required'] and c['state'] != 'PASS']
-          status = 'FAIL' if required_failures else ('DEGRADED' if degraded else 'PASS')
-
+          required_failures = [
+              check
+              for check in checks
+              if check['required'] and check['state'] != 'PASS'
+          ]
+          status = 'FAIL' if required_failures else 'PASS'
           receipt = {
               'schema_id': 'glaciereq.aspen-grove-health-receipt.v1',
               'generated_at': datetime.now(timezone.utc).isoformat(),
@@ -210,7 +142,8 @@ jobs:
               'role': contract.get('role') if contract else None,
               'profile': profile,
               'status': status,
-              'runtime_claim': 'Only checks represented in this receipt are asserted.',
+              'scope': 'repository-local structural verification only',
+              'runtime_claim': 'No provider connectivity or external health is asserted.',
               'checks': checks,
               'source': {
                   'run_id': run_id,
@@ -219,7 +152,7 @@ jobs:
               },
           }
 
-          output = root / 'health' / 'latest.json'
+          output = root / 'artifacts' / 'aspen-grove-health-receipt.json'
           output.parent.mkdir(parents=True, exist_ok=True)
           output.write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
           print(json.dumps(receipt, indent=2))
@@ -232,23 +165,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: aspen-grove-health-${{ github.repository_id }}-${{ github.run_id }}
-          path: health/latest.json
+          path: artifacts/aspen-grove-health-receipt.json
           if-no-files-found: error
           retention-days: 90
-
-      - name: Persist latest receipt
-        if: ${{ always() && inputs.persist_receipt }}
-        shell: bash
-        run: |
-          if [ ! -f health/latest.json ]; then
-            exit 0
-          fi
-          git config user.name "glaciereq-health-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add health/latest.json
-          if git diff --cached --quiet; then
-            echo "Health receipt unchanged"
-            exit 0
-          fi
-          git commit -m "chore(health): update latest Grove receipt [skip ci]"
-          git push
