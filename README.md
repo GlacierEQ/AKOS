@@ -336,6 +336,25 @@ limits:
 
 <!-- README-MESH:END -->
 
+## The Nervous System Behind the Forge
+
+AKOS governs the stone forge, but it does not pretend to contain every specialized capability itself. It inherits memory, boot, engineering doctrine, execution practice, and polyglot governance through an explicit nervous system:
+
+```text
+MEMORY → TOOL → CURE → INNOVATE → RESPOND
+```
+
+| System | Role in the living architecture |
+|---|---|
+| [Aspen Grove Core](https://github.com/GlacierEQ/aspen-grove-core) | Canonical memory and context-routing root. |
+| [Apex Boot Core](https://github.com/GlacierEQ/apex-boot-core) | Boot sequence and runtime initialization boundary. |
+| [Pro_Code](https://github.com/GlacierEQ/Pro_Code) | Engineering doctrine and quality constitution. |
+| [pro-code](https://github.com/GlacierEQ/pro-code) | Engineering execution and implementation practice. |
+| [The Tower of Babel](https://github.com/GlacierEQ/the-tower-of-babel) | Polyglot language-boundary governance. |
+| [Infinity Stone Forge](infinity_stones/README.md) | Versioned, reversible specialization packages, composition, and proof receipts. |
+
+The links define inheritance and routing, not automatic connectivity or runtime success. Each connected system retains its own source, authority boundary, evidence state, and verification burden.
+
 ## Repository map
 
 ```text
@@ -350,6 +369,10 @@ limits:
 /ledger/                   append-only build, correction, migration, and sync receipts
 /finisher/                 deterministic closure engine
 /operational_cognition/    execution, topology, maturity, authority, and closure runtime
+/infinity_stones/          executable stone registry, composition, calibration, and receipts
+/stones/                   authored runtime-specialization packages
+/upgrades/                 cross-stone behavior modifiers
+/gauntlets/                governed stone and upgrade compositions
 /scripts/                  installed repository-verification tooling
 ```
 
