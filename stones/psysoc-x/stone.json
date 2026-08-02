@@ -1,6 +1,6 @@
 {
   "schema": "glaciereq.infinity-stone.v1",
-  "status": "UNVERIFIED",
+  "status": "VERIFIED",
   "identity": {
     "id": "stone-psysoc-x",
     "name": "PSYSOC-X",
@@ -132,12 +132,25 @@
     ]
   },
   "verification": {
+    "evidence_level": "TEST",
+    "tested_revision": "5b960219635fcd95a9a98a2d7c1bfc5d19111c84",
+    "python_matrix": [
+      "3.11",
+      "3.12",
+      "3.13"
+    ],
+    "focused_tests_per_interpreter": 10,
+    "calibration_cases": {
+      "passed": 4,
+      "failed": 0
+    },
+    "full_akos_tests_per_interpreter": 118,
     "tests": [
       "tests/test_infinity_stones.py",
       "tests/test_psysoc_x.py",
       "stones/psysoc-x/tests/cases.json"
     ],
-    "status_rule": "UNVERIFIED until exact-head CI and receipt pass",
-    "receipt": "artifacts/ci/infinity-stone-receipt.json"
+    "status_rule": "VERIFIED only for the repository-local TEST scope recorded in the promotion receipt",
+    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json"
   }
 }
