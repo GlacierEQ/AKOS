@@ -162,6 +162,8 @@ def test_platform_verifier_detects_tampering_and_undeclared_files(source: Path, 
     build(source, output)
     (output / "profiles/linkedin.md").write_text("tampered", encoding="utf-8")
     assert verify_career_platform(output, resume_verifier=fake_resume_verifier)["state"] == "FAILED"
+    output.unlink(missing_ok=True) if output.is_file() else None
+
     clean = tmp_path / "clean"
     build(source, clean)
     (clean / "extra.txt").write_text("unexpected", encoding="utf-8")
@@ -176,3 +178,32 @@ def test_output_symlink_is_rejected(source: Path, tmp_path: Path) -> None:
     output.symlink_to(real, target_is_directory=True)
     with pytest.raises(Exception, match="symlink"):
         build(source, output)
+
+
+def test_resource_index_marks_mid_read_failure_unavailable(
+    graph_data: dict[str, object], tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    import career_intelligence.resources_index as resource_module
+
+    evidence = tmp_path / "evidence.txt"
+    evidence.write_text("evidence", encoding="utf-8")
+    monkeypatch.setattr(resource_module, "sha256_file", lambda _: (_ for _ in ()).throw(OSError("gone")))
+    record = build_resource_index(graph_data, local_paths=[evidence])["local_resources"][0]
+    assert record["state"] == "UNAVAILABLE"
+    assert record["reason"] == "file became inaccessible during indexing"
+
+
+def test_missing_ats_projection_returns_clear_build_error(source: Path, tmp_path: Path) -> None:
+    def missing_ats_builder(source: Path, output_dir: Path, *, target: object) -> FakeBuild:
+        result = fake_resume_builder(source, output_dir, target=target)
+        (output_dir / "resume.txt").unlink()
+        return result
+
+    with pytest.raises(Exception, match="failed to read ATS resume for scoring"):
+        build_career_platform(
+            source,
+            tmp_path / "platform",
+            target_role="Principal Engineer",
+            resume_builder=missing_ats_builder,
+            resume_verifier=lambda _: {"state": "VERIFIED"},
+        )

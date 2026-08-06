@@ -34,12 +34,25 @@ def index_local_resources(paths: Iterable[Path]) -> list[dict[str, Any]]:
                 }
             )
             continue
+        try:
+            resolved = path.resolve()
+            file_size = path.stat().st_size
+            file_hash = sha256_file(path)
+        except (OSError, RuntimeError):
+            records.append(
+                {
+                    "path": path.as_posix(),
+                    "state": "UNAVAILABLE",
+                    "reason": "file became inaccessible during indexing",
+                }
+            )
+            continue
         records.append(
             {
-                "path": path.resolve().as_posix(),
+                "path": resolved.as_posix(),
                 "name": path.name,
-                "bytes": path.stat().st_size,
-                "sha256": sha256_file(path),
+                "bytes": file_size,
+                "sha256": file_hash,
                 "media_type": mimetypes.guess_type(path.name)[0] or "application/octet-stream",
                 "state": "INDEXED_LOCAL",
             }

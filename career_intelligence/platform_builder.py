@@ -178,7 +178,10 @@ def build_career_platform(
             ]
         )
 
-        ats_text = (temporary / "resumes/ats/resume.txt").read_text(encoding="utf-8")
+        try:
+            ats_text = (temporary / "resumes/ats/resume.txt").read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as exc:
+            raise CareerGraphError(f"failed to read ATS resume for scoring: {exc}") from exc
         ats_report = score_ats_text(ats_text, analysis)
         boundaries = {
             "schema": "glaciereq.career-platform-boundaries.v1",
