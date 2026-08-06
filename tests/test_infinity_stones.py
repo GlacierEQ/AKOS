@@ -9,12 +9,24 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class InfinityStoneRegistryTests(unittest.TestCase):
-    def test_registry_loads_canonical_stone_and_upgrade(self) -> None:
+    def test_registry_loads_canonical_stones_and_upgrades(self) -> None:
         registry = StoneRegistry.load(ROOT)
-        self.assertEqual(sorted(registry.stones), ["stone-psysoc-x"])
-        self.assertEqual(sorted(registry.upgrades), ["upgrade-do-it-again"])
+        self.assertEqual(
+            sorted(registry.stones),
+            ["stone-psysoc-x", "stone-resume-master", "stone-web-design-pro"],
+        )
+        self.assertEqual(
+            sorted(registry.upgrades),
+            ["upgrade-do-it-again", "upgrade-resume-do-it-again"],
+        )
         self.assertEqual(registry.resolve("PSYSOC-X"), "stone-psysoc-x")
+        self.assertEqual(registry.resolve("resume master"), "stone-resume-master")
+        self.assertEqual(registry.resolve("web design pro"), "stone-web-design-pro")
         self.assertEqual(registry.resolve("do it again"), "upgrade-do-it-again")
+        self.assertEqual(
+            registry.resolve("resume do it again"),
+            "upgrade-resume-do-it-again",
+        )
 
     def test_composition_is_deterministic_and_preserves_kernel_precedence(self) -> None:
         registry = StoneRegistry.load(ROOT)
