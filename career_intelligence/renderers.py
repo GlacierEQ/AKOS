@@ -102,6 +102,14 @@ def render_markdown(graph: CareerGraph, view: TargetedView | None = None) -> str
     out.extend(["## Capabilities", ""])
     for group, values in graph.capabilities.items():
         out.append(f"- **{group.replace('_', ' ').title()}:** {', '.join(values)}")
+    out.extend(["", "## Education", ""])
+    for item in graph.education:
+        period = (
+            _period(item.get("start", ""), item.get("end"))
+            if item.get("start")
+            else str(item.get("end", ""))
+        )
+        out.append(f"- **{item['program']}** — {item['institution']} · {period}")
     out.extend(["", "## Evidence boundary", ""])
     out.extend(f"- {item}" for item in graph.evidence_limits)
     return "\n".join(out).strip() + "\n"
@@ -157,7 +165,14 @@ def render_html(graph: CareerGraph, view: TargetedView | None = None) -> str:
         for group, values in graph.capabilities.items()
     )
     limits = "".join(f"<li>{esc(item)}</li>" for item in graph.evidence_limits)
-    json_ld = render_json_ld(graph).replace("</", "<\\/")
+    json_ld = (
+        render_json_ld(graph)
+        .replace("&", "\\u0026")
+        .replace("<", "\\u003c")
+        .replace(">", "\\u003e")
+        .replace("\u2028", "\\u2028")
+        .replace("\u2029", "\\u2029")
+    )
     target_note = ""
     if view is not None:
         target_note = (

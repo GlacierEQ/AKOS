@@ -69,7 +69,7 @@ def main() -> int:
         verification = verify_package(args.output)
         print(json.dumps(verification, indent=2, sort_keys=True))
         return 0 if verification["state"] == "VERIFIED" else 1
-    except (CareerGraphError, OSError) as exc:
+    except (CareerGraphError, OSError, UnicodeDecodeError) as exc:
         print(json.dumps({"state": "FAILED", "error": str(exc)}, indent=2))
         return 1
 

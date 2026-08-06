@@ -145,7 +145,7 @@ def _pdf_escape(value: str) -> str:
     return value.replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
 
 
-def render_pdf(text: str, *, title: str) -> bytes:
+def render_pdf(text: str, *, title: str, author: str) -> bytes:
     """Create a deterministic multipage text PDF using only the standard library."""
 
     lines: list[str] = []
@@ -193,8 +193,9 @@ def render_pdf(text: str, *, title: str) -> bytes:
 
     info_id = max(objects) + 1
     safe_title = _pdf_escape(_ascii_pdf_text(title))
+    safe_author = _pdf_escape(_ascii_pdf_text(author))
     objects[info_id] = (
-        f"<< /Title ({safe_title}) /Author (Casey Barton) "
+        f"<< /Title ({safe_title}) /Author ({safe_author}) "
         "/Creator (AKOS Career Intelligence) /Producer (AKOS deterministic PDF) >>"
     ).encode("latin-1")
 

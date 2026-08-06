@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import re
 from collections import Counter
 from dataclasses import dataclass
@@ -59,8 +60,9 @@ def target_graph(graph: CareerGraph, target: TargetProfile) -> TargetedView:
 
     matched_proof_ids: list[str] = []
     for item in graph.proof:
-        haystack = " ".join((str(item.get("label", "")), str(item.get("claim", "")))).casefold()
-        if any(keyword.casefold() in haystack for keyword in keywords):
+        haystack = " ".join((str(item.get("label", "")), str(item.get("claim", ""))))
+        terms = {_normalize(token) for token in _TOKEN.findall(haystack)}
+        if terms & keyword_set:
             matched_proof_ids.append(str(item["id"]))
 
     score = min(100, len(set(matched_capabilities)) * 5 + len(set(matched_proof_ids)) * 10)
@@ -75,11 +77,14 @@ def target_graph(graph: CareerGraph, target: TargetProfile) -> TargetedView:
 
 
 def target_to_dict(view: TargetedView) -> dict[str, Any]:
+    job_bytes = view.target.job_text.encode("utf-8")
     return {
         "target": {
             "role": view.target.role,
             "audience": view.target.audience,
             "max_keywords": view.target.max_keywords,
+            "job_text_bytes": len(job_bytes),
+            "job_text_sha256": hashlib.sha256(job_bytes).hexdigest(),
         },
         "keywords": list(view.keywords),
         "matched_capabilities": list(view.matched_capabilities),

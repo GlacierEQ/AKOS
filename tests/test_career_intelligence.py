@@ -66,8 +66,8 @@ def test_documents_are_deterministic_and_structurally_valid() -> None:
     text = "CASEY BARTON\n\nPROFESSIONAL SUMMARY\nEvidence-bound systems.\n"
     first_docx = render_docx(text, title="Casey Barton Resume", creator="Casey Barton")
     second_docx = render_docx(text, title="Casey Barton Resume", creator="Casey Barton")
-    first_pdf = render_pdf(text, title="Casey Barton Resume")
-    second_pdf = render_pdf(text, title="Casey Barton Resume")
+    first_pdf = render_pdf(text, title="Casey Barton Resume", author="Casey Barton")
+    second_pdf = render_pdf(text, title="Casey Barton Resume", author="Casey Barton")
     assert first_docx == second_docx
     assert first_pdf == second_pdf
     assert verify_docx(first_docx) == (True, "")
@@ -146,3 +146,137 @@ def test_invalid_graph_returns_specific_issues(tmp_path: Path) -> None:
     codes = {(item.path, item.code) for item in issues}
     assert ("identity.name", "REQUIRED") in codes
     assert ("artifacts[0].sha256", "HASH") in codes
+
+
+def test_validator_requires_renderer_fields_and_education_shape(tmp_path: Path) -> None:
+    graph = json.loads(SOURCE.read_text(encoding="utf-8"))
+    graph["proof"][0].pop("label")
+    graph["experience"][0].pop("location")
+    graph["education"][0].pop("institution")
+    path = tmp_path / "invalid-renderer-fields.json"
+    atomic_write_json(path, graph)
+    issues = validate_graph(load_graph(path))
+    codes = {(item.path, item.code) for item in issues}
+    assert ("proof[0].label", "REQUIRED") in codes
+    assert ("experience[0].location", "REQUIRED") in codes
+    assert ("education[0].institution", "REQUIRED") in codes
+
+
+def test_validator_rejects_unsafe_identity_urls(tmp_path: Path) -> None:
+    graph = json.loads(SOURCE.read_text(encoding="utf-8"))
+    graph["identity"]["github"] = "javascript:alert(1)"
+    graph["identity"]["portfolio"] = "https://user:secret@example.com/"
+    path = tmp_path / "unsafe-urls.json"
+    atomic_write_json(path, graph)
+    issues = validate_graph(load_graph(path))
+    codes = {(item.path, item.code) for item in issues}
+    assert ("identity.github", "URL") in codes
+    assert ("identity.portfolio", "URL") in codes
+
+
+def test_markdown_includes_canonical_education() -> None:
+    from career_intelligence.renderers import render_markdown
+
+    graph = load_graph(SOURCE)
+    markdown = render_markdown(graph)
+    assert "## Education" in markdown
+    assert all(item["institution"] in markdown for item in graph.education)
+
+
+def test_json_ld_script_escapes_case_insensitive_terminators(tmp_path: Path) -> None:
+    graph_data = json.loads(SOURCE.read_text(encoding="utf-8"))
+    graph_data["identity"]["display_name"] = "payload </SCRIPT><script>alert(1)</script>"
+    path = tmp_path / "script-payload.json"
+    atomic_write_json(path, graph_data)
+    graph = load_graph(path)
+    page = render_html(graph)
+    assert "</SCRIPT>" not in page
+    assert "<script>alert(1)</script>" not in page
+    assert "\\u003c/SCRIPT\\u003e" in page
+    assert page.count("<script") == 1
+
+
+def test_target_contract_binds_job_text_digest() -> None:
+    from career_intelligence.targeting import target_to_dict
+
+    graph = load_graph(SOURCE)
+    first = target_to_dict(target_graph(graph, TargetProfile(job_text="Python MCP")))
+    second = target_to_dict(target_graph(graph, TargetProfile(job_text="Python MCP.")))
+    assert first["target"]["job_text_sha256"] != second["target"]["job_text_sha256"]
+    assert first["target"]["job_text_bytes"] == len("Python MCP".encode("utf-8"))
+
+
+def test_proof_matching_uses_normalized_token_boundaries() -> None:
+    graph = load_graph(SOURCE)
+    punctuation = target_graph(graph, TargetProfile(job_text="CI/CD."))
+    plain = target_graph(graph, TargetProfile(job_text="CI/CD"))
+    assert punctuation.matched_proof_ids == plain.matched_proof_ids
+    false_positive = target_graph(graph, TargetProfile(job_text="ai"))
+    assert "proof-agent-coordinator" not in false_positive.matched_proof_ids
+
+
+def test_pdf_metadata_uses_source_author() -> None:
+    payload = render_pdf("ADA LOVELACE\n", title="Resume", author="Ada Lovelace")
+    assert b"/Author (Ada Lovelace)" in payload
+    assert b"/Author (Casey Barton)" not in payload
+
+
+def test_verifier_rejects_executable_or_remote_scripts() -> None:
+    from career_intelligence.builder import _has_only_json_ld_script
+
+    assert _has_only_json_ld_script(
+        '<script type="application/ld+json">{"name":"Casey"}</script>'
+    )
+    assert not _has_only_json_ld_script(
+        '<script>alert(1)</script><p>application/ld+json</p>'
+    )
+    assert not _has_only_json_ld_script(
+        '<script type="application/ld+json" src="https://example.com/data.js"></script>'
+    )
+
+
+def test_invalid_utf8_artifacts_return_failed(tmp_path: Path) -> None:
+    output = tmp_path / "package"
+    build_package(SOURCE, output)
+    (output / "index.html").write_bytes(b"\xff\xfe")
+    verification = verify_package(output)
+    assert verification["state"] == "FAILED"
+    assert any("HTML artifact unreadable" in error for error in verification["errors"])
+
+
+def test_undeclared_files_are_rejected(tmp_path: Path) -> None:
+    output = tmp_path / "package"
+    build_package(SOURCE, output)
+    (output / "untracked.js").write_text("alert(1)", encoding="utf-8")
+    verification = verify_package(output)
+    assert verification["state"] == "FAILED"
+    assert "undeclared package file: untracked.js" in verification["errors"]
+
+
+def test_failed_publication_restores_previous_package(tmp_path: Path, monkeypatch) -> None:
+    import career_intelligence.builder as builder_module
+
+    output = tmp_path / "package"
+    original = build_package(SOURCE, output)
+    previous_manifest = original.manifest_sha256
+    real_replace = builder_module.os.replace
+    calls = 0
+
+    def fail_install(source, destination):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("simulated install failure")
+        return real_replace(source, destination)
+
+    monkeypatch.setattr(builder_module.os, "replace", fail_install)
+    try:
+        build_package(SOURCE, output, target=TargetProfile(role="Different role"))
+    except OSError as exc:
+        assert "simulated install failure" in str(exc)
+    else:
+        raise AssertionError("publication failure was not raised")
+
+    assert output.is_dir()
+    assert sha256_file(output / "manifest.json") == previous_manifest
+    assert verify_package(output)["state"] == "VERIFIED"

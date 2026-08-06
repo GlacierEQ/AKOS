@@ -8,6 +8,7 @@ import re
 import shutil
 import tempfile
 from dataclasses import dataclass
+from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -26,6 +27,7 @@ from .targeting import target_graph, target_to_dict
 from .validation import validate_graph
 
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
+_PACKAGE_METADATA = {"manifest.json", "receipt.json"}
 _REQUIRED_OUTPUTS = {
     "canonical-source.json",
     "index.html",
@@ -47,6 +49,46 @@ class BuildResult:
     files: tuple[Path, ...]
     manifest_sha256: str
     build_id: str
+
+
+class _ScriptInspector(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.scripts: list[dict[str, str | None]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.casefold() == "script":
+            self.scripts.append({name.casefold(): value for name, value in attrs})
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+
+def _has_only_json_ld_script(html_text: str) -> bool:
+    inspector = _ScriptInspector()
+    inspector.feed(html_text)
+    inspector.close()
+    return len(inspector.scripts) == 1 and inspector.scripts[0].get("type", "").casefold() == "application/ld+json" and "src" not in inspector.scripts[0]
+
+
+def _publish_directory(temporary: Path, output_dir: Path) -> None:
+    if not output_dir.exists():
+        os.replace(temporary, output_dir)
+        return
+    if output_dir.is_symlink():
+        raise CareerGraphError("refusing to replace symlink output directory")
+    backup = Path(tempfile.mkdtemp(prefix=f".{output_dir.name}.previous-", dir=output_dir.parent))
+    backup.rmdir()
+    os.replace(output_dir, backup)
+    try:
+        os.replace(temporary, output_dir)
+    except Exception:
+        os.replace(backup, output_dir)
+        raise
+    if backup.is_dir():
+        shutil.rmtree(backup)
+    else:
+        backup.unlink(missing_ok=True)
 
 
 def _safe_relative_path(value: object) -> PurePosixPath | None:
@@ -106,6 +148,7 @@ def build_package(
             "resume.pdf": render_pdf(
                 ats,
                 title=f"{graph.identity['display_name']} Resume",
+                author=graph.identity["name"],
             ),
         }
         for relative, payload in document_payloads.items():
@@ -182,12 +225,7 @@ def build_package(
                 "generated package verification failed: " + "; ".join(verification["errors"])
             )
 
-        if output_dir.exists():
-            if output_dir.is_dir():
-                shutil.rmtree(output_dir)
-            else:
-                output_dir.unlink()
-        os.replace(temporary, output_dir)
+        _publish_directory(temporary, output_dir)
         return BuildResult(
             output_dir=output_dir,
             manifest_path=output_dir / "manifest.json",
@@ -208,7 +246,7 @@ def verify_package(output_dir: Path) -> dict[str, Any]:
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         return {"state": "FAILED", "errors": [f"package metadata unreadable: {exc}"]}
     if not isinstance(manifest, dict) or not isinstance(receipt, dict):
         return {"state": "FAILED", "errors": ["package metadata roots must be objects"]}
@@ -258,6 +296,17 @@ def verify_package(output_dir: Path) -> dict[str, Any]:
 
     missing_required = sorted(_REQUIRED_OUTPUTS - declared_paths)
     errors.extend(f"required output missing from manifest: {item}" for item in missing_required)
+    try:
+        actual_paths = {
+            path.relative_to(output_dir).as_posix()
+            for path in output_dir.rglob("*")
+            if path.is_file() or path.is_symlink()
+        }
+    except OSError as exc:
+        errors.append(f"unable to enumerate package files: {exc}")
+        actual_paths = set()
+    undeclared = sorted(actual_paths - declared_paths - _PACKAGE_METADATA)
+    errors.extend(f"undeclared package file: {item}" for item in undeclared)
 
     manifest_hash = sha256_file(manifest_path) if manifest_path.is_file() else ""
     if receipt.get("manifest_sha256") != manifest_hash:
@@ -272,10 +321,26 @@ def verify_package(output_dir: Path) -> dict[str, Any]:
     css_path = output_dir / "styles.css"
     docx_path = output_dir / "resume.docx"
     pdf_path = output_dir / "resume.pdf"
-    html_text = html_path.read_text(encoding="utf-8") if html_path.is_file() else ""
-    css_text = css_path.read_text(encoding="utf-8") if css_path.is_file() else ""
-    docx_ok, docx_error = verify_docx(docx_path.read_bytes()) if docx_path.is_file() else (False, "missing DOCX")
-    pdf_ok, pdf_error = verify_pdf(pdf_path.read_bytes()) if pdf_path.is_file() else (False, "missing PDF")
+    try:
+        html_text = html_path.read_text(encoding="utf-8") if html_path.is_file() else ""
+    except (OSError, UnicodeDecodeError) as exc:
+        errors.append(f"HTML artifact unreadable: {exc}")
+        html_text = ""
+    try:
+        css_text = css_path.read_text(encoding="utf-8") if css_path.is_file() else ""
+    except (OSError, UnicodeDecodeError) as exc:
+        errors.append(f"CSS artifact unreadable: {exc}")
+        css_text = ""
+    try:
+        docx_payload = docx_path.read_bytes() if docx_path.is_file() else b""
+        docx_ok, docx_error = verify_docx(docx_payload) if docx_payload else (False, "missing DOCX")
+    except OSError as exc:
+        docx_ok, docx_error = False, f"DOCX artifact unreadable: {exc}"
+    try:
+        pdf_payload = pdf_path.read_bytes() if pdf_path.is_file() else b""
+        pdf_ok, pdf_error = verify_pdf(pdf_payload) if pdf_payload else (False, "missing PDF")
+    except OSError as exc:
+        pdf_ok, pdf_error = False, f"PDF artifact unreadable: {exc}"
     forbidden_tracker_tokens = (
         "google-analytics",
         "googletagmanager",
@@ -286,8 +351,7 @@ def verify_package(output_dir: Path) -> dict[str, Any]:
     checks = {
         "semantic_main": '<main id="main">' in html_text,
         "skip_link": 'class="skip-link"' in html_text,
-        "json_ld_only_script": html_text.count("<script") == 1
-        and "application/ld+json" in html_text,
+        "json_ld_only_script": _has_only_json_ld_script(html_text),
         "artifact_links": all(
             value in html_text for value in ("resume.pdf", "resume.docx", "resume.txt")
         ),
@@ -295,6 +359,9 @@ def verify_package(output_dir: Path) -> dict[str, Any]:
         "print_css": "@media print" in css_text,
         "focus_css": ":focus-visible" in css_text,
         "zero_trackers": not any(token in html_text.casefold() for token in forbidden_tracker_tokens),
+        "no_remote_css": "@import" not in css_text.casefold()
+        and "http://" not in css_text.casefold()
+        and "https://" not in css_text.casefold(),
         "docx_structure": docx_ok,
         "pdf_structure": pdf_ok,
     }
