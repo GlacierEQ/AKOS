@@ -1,0 +1,59 @@
+{
+  "schema": "glaciereq.career-local-verification.v2",
+  "state": "VERIFIED_LOCAL",
+  "date": "2026-08-06",
+  "runtime": {
+    "python": "3.13.5",
+    "network_queries": 0,
+    "external_actions": 0
+  },
+  "source": {
+    "path": "career_intelligence/resources/casey-barton.career-runtime.v1.json",
+    "sha256": "bd8fe299f47761a5ea1b320973ce6dc7f0b320f10e5e203ffcaa77427208b9bb"
+  },
+  "tests": {
+    "file": "tests/test_career_intelligence.py",
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0
+  },
+  "build": {
+    "role": "Principal AI Systems Engineer",
+    "audience": "technical hiring panel",
+    "build_id": "f6af8c3d11cee68e7ab5cc86a699de385f5db1553f5f2a46a3679f6847b41aaa",
+    "manifest_sha256": "d58d26b6c0a43c7687cfb4db7a5fb273f6c14e85d900db86db4fd92d7313fe21",
+    "receipt_sha256": "d60c3b5aec45a4a0f047e499d8a08fb8a7d8bc5c94143b987d36ba1d5fa38fb8",
+    "file_count": 9
+  },
+  "checks": {
+    "artifact_links": true,
+    "docx_structure": true,
+    "focus_css": true,
+    "json_ld_only_script": true,
+    "no_remote_css": true,
+    "pdf_structure": true,
+    "print_css": true,
+    "responsive_css": true,
+    "semantic_main": true,
+    "skip_link": true,
+    "zero_trackers": true
+  },
+  "security_regressions": {
+    "unsafe_https_links_rejected": true,
+    "json_ld_script_terminators_escaped": true,
+    "executable_scripts_rejected": true,
+    "path_traversal_rejected": true,
+    "undeclared_files_rejected": true,
+    "invalid_utf8_returns_failed": true,
+    "failed_publication_restores_previous_package": true
+  },
+  "non_claims": [
+    "GitHub Actions matrix success",
+    "Ruff execution",
+    "production deployment",
+    "ATS-vendor acceptance",
+    "accessibility certification",
+    "recruiter response",
+    "hiring outcome"
+  ]
+}

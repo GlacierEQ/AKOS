@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "akos-operational-cognition"
-version = "0.7.0"
-description = "Evidence-bound governance, operational cognition, and reversible Infinity Stone runtime specializations."
+version = "0.8.0"
+description = "Evidence-bound governance, reversible Infinity Stone specializations, and deterministic career intelligence."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -25,10 +25,17 @@ dev = [
 akos-verify = "scripts.verify_repository:main"
 akos-verify-readme = "scripts.verify_readme_contract:main"
 akos-verify-stones = "scripts.verify_stones:main"
+akos-career = "career_intelligence.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["operational_cognition*", "finisher*", "scripts*", "infinity_stones*"]
+include = [
+  "operational_cognition*",
+  "finisher*",
+  "scripts*",
+  "infinity_stones*",
+  "career_intelligence*",
+]
 
 [tool.pytest.ini_options]
 addopts = "-q"
@@ -47,4 +54,18 @@ extend-exclude = [
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["infinity_stones", "operational_cognition", "finisher", "scripts"]
+known-first-party = [
+  "infinity_stones",
+  "operational_cognition",
+  "finisher",
+  "scripts",
+  "career_intelligence",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"career_intelligence/builder.py" = ["E501"]
+"career_intelligence/cli.py" = ["E501"]
+"career_intelligence/documents.py" = ["E501"]
+"career_intelligence/renderers.py" = ["E501"]
+"career_intelligence/validation.py" = ["E501"]
+"tests/test_career_intelligence.py" = ["E501"]
