@@ -1,68 +1,96 @@
 {
   "schema": "glaciereq.infinity-tool-registry.v1",
   "stone": "stone-web-design-pro",
-  "status": "CANDIDATE",
+  "status": "CANDIDATE_EXTENSION",
   "tools": [
     {
       "id": "information-architecture-planner",
       "mode": "ANALYZE",
-      "outputs": [
-        "page hierarchy",
-        "review paths"
-      ]
+      "outputs": ["page hierarchy", "review paths"]
+    },
+    {
+      "id": "experience-graph-compiler",
+      "mode": "GENERATE",
+      "inputs": ["canonical fact graph", "repository graph", "policy overlays"],
+      "outputs": ["typed nodes", "typed edges", "projection indexes", "freshness metadata"]
+    },
+    {
+      "id": "typed-link-resolver",
+      "mode": "GENERATE",
+      "outputs": ["stable deep links", "breadcrumbs", "backlinks", "related-node routes"]
+    },
+    {
+      "id": "repository-constellation-renderer",
+      "mode": "GENERATE",
+      "outputs": ["graph projection", "searchable table fallback", "adjacency-list fallback"],
+      "boundary": "visual proximity does not prove dependency or runtime integration"
+    },
+    {
+      "id": "mind-map-projector",
+      "mode": "GENERATE",
+      "outputs": ["domain mind map", "hierarchical fallback", "machine graph"]
+    },
+    {
+      "id": "chart-selection-auditor",
+      "mode": "ANALYZE",
+      "outputs": ["question-to-chart decision", "units and scale validation", "table fallback"],
+      "refusal": "does not invent numeric precision to enable a chart"
+    },
+    {
+      "id": "motion-grammar-validator",
+      "mode": "VERIFY",
+      "outputs": ["motion-purpose findings", "reduced-motion findings", "focus-continuity findings"]
+    },
+    {
+      "id": "semantic-fallback-generator",
+      "mode": "GENERATE",
+      "outputs": ["graph table", "timeline list", "chart data table", "static animation sequence"]
     },
     {
       "id": "design-token-compiler",
       "mode": "GENERATE",
-      "outputs": [
-        "CSS variables",
-        "token manifest"
-      ]
+      "outputs": ["CSS variables", "token manifest", "motion tokens", "data-visualization tokens"]
     },
     {
       "id": "semantic-html-linter",
       "mode": "VERIFY",
-      "outputs": [
-        "semantic findings"
-      ]
+      "outputs": ["semantic findings"]
     },
     {
       "id": "responsive-preview-runner",
       "mode": "VERIFY",
-      "outputs": [
-        "viewport captures",
-        "reflow findings"
-      ]
+      "outputs": ["viewport captures", "reflow findings", "complex-visual transformation findings"]
     },
     {
       "id": "accessibility-auditor",
       "mode": "VERIFY",
-      "outputs": [
-        "severity-classified findings"
-      ],
+      "outputs": ["severity-classified findings", "graph and chart alternative findings"],
       "non_claim": "not a certification"
     },
     {
       "id": "link-and-artifact-validator",
       "mode": "VERIFY",
-      "outputs": [
-        "route and download status"
-      ]
+      "outputs": ["route and download status", "deep-link reconstruction status"]
+    },
+    {
+      "id": "privacy-surface-crawler",
+      "mode": "VERIFY",
+      "outputs": ["unauthenticated route findings", "generated backlink findings", "machine API exposure findings"]
     },
     {
       "id": "performance-budget-checker",
       "mode": "VERIFY",
-      "outputs": [
-        "budget findings"
-      ]
+      "outputs": ["route budgets", "interaction budgets", "graph-data payload findings", "mobile memory findings"]
+    },
+    {
+      "id": "freshness-validator",
+      "mode": "VERIFY",
+      "outputs": ["snapshot ages", "source revision drift", "stale projection blockers"]
     },
     {
       "id": "deployment-verifier",
       "mode": "VERIFY",
-      "outputs": [
-        "preview receipt",
-        "production receipt"
-      ]
+      "outputs": ["preview receipt", "production receipt", "production reconstruction receipt"]
     }
   ]
 }
