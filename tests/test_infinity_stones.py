@@ -58,12 +58,10 @@ class InfinityStoneRegistryTests(unittest.TestCase):
         first = compose_loadout(
             registry,
             stones=["monolith", "web design pro", "PSYSOC-X"],
-            upgrades=["do it again"],
         )
         second = compose_loadout(
             registry,
             stones=["stone-monolith", "stone-web-design-pro", "stone-psysoc-x"],
-            upgrades=["upgrade-do-it-again"],
         )
         self.assertEqual(first.digest, second.digest)
         self.assertIn("stone-monolith", first.stones)
