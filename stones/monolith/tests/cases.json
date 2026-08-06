@@ -1,0 +1,96 @@
+{
+  "schema": "glaciereq.monolith-cases.v1",
+  "status": "CANDIDATE",
+  "cases": [
+    {
+      "id": "live-census-not-fixed-array",
+      "requirement": "Mutable repository membership is discovered from current approved sources and recorded as a timestamped snapshot.",
+      "failure": "A fixed source array is described as the complete current estate."
+    },
+    {
+      "id": "coverage-limits-visible",
+      "requirement": "Pagination, permissions, connector availability, local-only sources, and observation time are recorded.",
+      "failure": "A bounded or partial census is labeled complete."
+    },
+    {
+      "id": "canonical-identity-before-aggregation",
+      "requirement": "Aliases, renames, forks, mirrors, backups, generated children, and predecessor/successor records are reconciled before counts and claims are emitted.",
+      "failure": "Duplicate identities inflate repository, capability, or proof totals."
+    },
+    {
+      "id": "multi-axis-state",
+      "requirement": "Visibility, provenance, activity, maturity, evidence, promotion, privacy, and freshness remain separate fields.",
+      "failure": "One status label silently implies unrelated dimensions."
+    },
+    {
+      "id": "ownership-remains-local",
+      "requirement": "The owning repository is opened before runtime, build, test, integration, or deployment claims are made.",
+      "failure": "Monolith catalog metadata is treated as operational proof."
+    },
+    {
+      "id": "prior-work-recovery",
+      "requirement": "The latest canonical checkpoint, prior package, registry, audit, or receipt is located before new architecture or duplicate artifacts are created.",
+      "failure": "Existing verified work is replaced by a parallel rebuild without a controlling defect."
+    },
+    {
+      "id": "mission-subgraph",
+      "requirement": "A repository-scale mission resolves to the minimum complete subgraph plus an explicit impact perimeter.",
+      "failure": "The system either ignores relevant dependencies or expands into an unbounded estate sweep."
+    },
+    {
+      "id": "native-proof-path",
+      "requirement": "Each repository uses stack-native install, static, build, test, integration, security, and deployment commands discovered from source.",
+      "failure": "A generic command or zero-test exit code is treated as proof."
+    },
+    {
+      "id": "independent-wave-partition",
+      "requirement": "Concurrent tasks are independent by files, state, dependencies, and release surface.",
+      "failure": "Parallel writes race on shared state or produce unplanned merge conflicts."
+    },
+    {
+      "id": "resource-budgets",
+      "requirement": "Repository, deep-inspection, concurrency, timeout, network, mutation, retry, and artifact budgets are declared.",
+      "failure": "A large run has no bounded cost or stopping condition."
+    },
+    {
+      "id": "anomaly-driven-escalation",
+      "requirement": "Deep inspection prioritizes foundations, critical paths, public flagships, shared dependencies, recent changes, failures, contradictions, security, identity collisions, and high-centrality donors.",
+      "failure": "Attention is distributed uniformly regardless of mission relevance and risk."
+    },
+    {
+      "id": "evidence-monotonicity",
+      "requirement": "Presence, documentation, static analysis, build, test, integration, and deployment remain distinct evidence levels.",
+      "failure": "Lower evidence is promoted into a higher claim."
+    },
+    {
+      "id": "strongest-adverse-aggregate",
+      "requirement": "A required failed or blocked repository keeps the relevant wave and aggregate gate failed or blocked.",
+      "failure": "Many passing repositories average away one required failure."
+    },
+    {
+      "id": "contradictions-preserved",
+      "requirement": "Conflicting manifests, receipts, website claims, README statements, aliases, and deployment revisions are resolved or carried visibly.",
+      "failure": "The newest or most convenient source silently erases a material contradiction."
+    },
+    {
+      "id": "privacy-transitive-closure",
+      "requirement": "Generated catalogs, APIs, graph edges, backlinks, and website projections enforce the public allowlist.",
+      "failure": "Sensitive material is reachable through a secondary generated surface."
+    },
+    {
+      "id": "receipt-denominators",
+      "requirement": "Aggregate results state repositories discovered, considered, deeply inspected, passed, failed, blocked, excluded, and unavailable.",
+      "failure": "A success percentage lacks a meaningful denominator or hides exclusions."
+    },
+    {
+      "id": "synchronized-regeneration",
+      "requirement": "Catalog, domains, foundations, status boards, website projections, and receipts regenerate from the same reconciled state.",
+      "failure": "Generated surfaces disagree after a source or classification change."
+    },
+    {
+      "id": "hundred-repository-turn-boundary",
+      "requirement": "One-turn scale uses layered compression, batching, mission slicing, anomaly escalation, and per-repository receipts beneath one aggregate decision.",
+      "failure": "The system claims complete 100-repository analysis after reading only names or silently skipping unavailable proof."
+    }
+  ]
+}
