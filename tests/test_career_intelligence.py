@@ -280,3 +280,15 @@ def test_failed_publication_restores_previous_package(tmp_path: Path, monkeypatc
     assert output.is_dir()
     assert sha256_file(output / "manifest.json") == previous_manifest
     assert verify_package(output)["state"] == "VERIFIED"
+
+
+def test_validator_checks_selected_systems_and_cross_domain_foundation(tmp_path: Path) -> None:
+    graph = json.loads(SOURCE.read_text(encoding="utf-8"))
+    graph["selected_systems"][0].pop("boundary")
+    graph["cross_domain_foundation"][0].pop("record")
+    path = tmp_path / "invalid-secondary-records.json"
+    atomic_write_json(path, graph)
+    issues = validate_graph(load_graph(path))
+    codes = {(item.path, item.code) for item in issues}
+    assert ("selected_systems[0].boundary", "REQUIRED") in codes
+    assert ("cross_domain_foundation[0].record", "REQUIRED") in codes

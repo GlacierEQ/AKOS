@@ -13,7 +13,7 @@
   },
   "tests": {
     "file": "tests/test_career_intelligence.py",
-    "passed": 23,
+    "passed": 24,
     "failed": 0,
     "skipped": 0
   },

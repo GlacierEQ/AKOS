@@ -174,6 +174,48 @@ def validate_graph(graph: CareerGraph) -> tuple[ValidationIssue, ...]:
                 if key in item and item[key] is not None and not _string(item[key]):
                     issues.append(ValidationIssue(f"{prefix}.{key}", "TYPE", "value must be text"))
 
+    selected_systems = data.get("selected_systems", [])
+    if not isinstance(selected_systems, list):
+        issues.append(
+            ValidationIssue("selected_systems", "TYPE", "selected_systems must be a list")
+        )
+    else:
+        for index, item in enumerate(selected_systems):
+            prefix = f"selected_systems[{index}]"
+            if not isinstance(item, dict):
+                issues.append(
+                    ValidationIssue(prefix, "TYPE", "selected system must be an object")
+                )
+                continue
+            for key in ("name", "state", "evidence", "boundary"):
+                if not _string(item.get(key)):
+                    issues.append(
+                        ValidationIssue(f"{prefix}.{key}", "REQUIRED", "missing value")
+                    )
+
+    cross_domain = data.get("cross_domain_foundation", [])
+    if not isinstance(cross_domain, list):
+        issues.append(
+            ValidationIssue(
+                "cross_domain_foundation",
+                "TYPE",
+                "cross_domain_foundation must be a list",
+            )
+        )
+    else:
+        for index, item in enumerate(cross_domain):
+            prefix = f"cross_domain_foundation[{index}]"
+            if not isinstance(item, dict):
+                issues.append(
+                    ValidationIssue(prefix, "TYPE", "cross-domain item must be an object")
+                )
+                continue
+            for key in ("domain", "record"):
+                if not _string(item.get(key)):
+                    issues.append(
+                        ValidationIssue(f"{prefix}.{key}", "REQUIRED", "missing value")
+                    )
+
     artifacts = data.get("artifacts")
     if not isinstance(artifacts, list) or not artifacts:
         issues.append(
