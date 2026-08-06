@@ -1,0 +1,179 @@
+{
+  "schema": "glaciereq.monolith.operating-model.v1",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "source_authority": {
+    "cartography_repository": "GlacierEQ/monolith",
+    "governance_repository": "GlacierEQ/AKOS",
+    "ownership_rule": "Implementation and runtime authority remain with each owning repository."
+  },
+  "stable_contract": {
+    "hard_code": [
+      "schemas",
+      "state machines",
+      "authority rules",
+      "privacy policy",
+      "evidence ladder",
+      "classification dimensions",
+      "failure semantics",
+      "acceptance gates",
+      "resource budgets"
+    ],
+    "discover": [
+      "repositories",
+      "organizations",
+      "branches",
+      "commits",
+      "workflows",
+      "companies",
+      "roles",
+      "connectors",
+      "dependencies",
+      "capability donors",
+      "evidence state",
+      "deployment state",
+      "freshness",
+      "priority"
+    ]
+  },
+  "layers": [
+    {"id": "L0", "name": "census", "output": "timestamped estate snapshot"},
+    {"id": "L1", "name": "identity", "output": "canonical identities and alias decisions"},
+    {"id": "L2", "name": "classification", "output": "multi-axis repository records"},
+    {"id": "L3", "name": "relationship_graph", "output": "typed dependency and capability edges"},
+    {"id": "L4", "name": "mission_slice", "output": "minimum complete mission subgraph"},
+    {"id": "L5", "name": "native_proof_plan", "output": "per-repository command and evidence plan"},
+    {"id": "L6", "name": "wave_execution", "output": "per-repository receipts"},
+    {"id": "L7", "name": "reconciliation", "output": "resolved state, contradictions, and aggregate decision"},
+    {"id": "L8", "name": "projection", "output": "website, presentation, recruiter, engineering, and machine views"}
+  ],
+  "classification_dimensions": [
+    "domain",
+    "whole_or_part",
+    "ownership_authority",
+    "visibility",
+    "provenance",
+    "activity",
+    "maturity",
+    "evidence_level",
+    "promotion_state",
+    "privacy_class",
+    "freshness",
+    "release_relevance"
+  ],
+  "repository_states": [
+    "DISCOVERED",
+    "IDENTITY_UNRESOLVED",
+    "CLASSIFIED",
+    "CATALOGUED",
+    "REFERENCE_ONLY",
+    "VERIFICATION_PLANNED",
+    "BLOCKED",
+    "FAILED",
+    "PARTIALLY_VERIFIED",
+    "VERIFIED",
+    "PROMOTED",
+    "QUARANTINED",
+    "ARCHIVED",
+    "SUPERSEDED"
+  ],
+  "evidence_ladder": [
+    "PRESENCE",
+    "DOCUMENTATION",
+    "STATIC_ANALYSIS",
+    "BUILD",
+    "TEST",
+    "INTEGRATION",
+    "DEPLOYMENT"
+  ],
+  "edge_types": [
+    "depends_on",
+    "imports",
+    "consumes_api",
+    "shares_schema",
+    "deploys_with",
+    "generates",
+    "supersedes",
+    "duplicates",
+    "fork_of",
+    "mirror_of",
+    "donates_capability_to",
+    "governed_by",
+    "verified_by",
+    "relevant_to_company",
+    "relevant_to_role"
+  ],
+  "wave_model": [
+    {"id": "A", "name": "read_only_census", "write_allowed": false},
+    {"id": "B", "name": "identity_and_classification_anomalies", "write_allowed": false},
+    {"id": "C", "name": "independent_repository_verification", "write_allowed": false},
+    {"id": "D", "name": "shared_dependency_and_integration_checks", "write_allowed": false},
+    {"id": "E", "name": "bounded_repairs", "write_allowed": true, "human_authority_required": true},
+    {"id": "F", "name": "projection_and_release_reconciliation", "write_allowed": true, "human_authority_required": true}
+  ],
+  "default_budgets": {
+    "repositories_in_initial_census": 2000,
+    "repositories_in_mission_slice": 100,
+    "deep_inspections": 20,
+    "concurrency": 8,
+    "command_timeout_seconds": 900,
+    "mutation_repositories": 0,
+    "retries_per_command": 1,
+    "policy": "Defaults are ceilings, not targets. Mission-specific budgets must be explicit."
+  },
+  "escalation_rules": [
+    "foundation or whole system",
+    "critical-path dependency",
+    "publicly promoted repository",
+    "shared dependency",
+    "recent material change",
+    "contradictory state",
+    "failed or blocked gate",
+    "security or privacy sensitivity",
+    "identity collision",
+    "high centrality",
+    "high-value capability donor"
+  ],
+  "failure_semantics": {
+    "missing_source": "BLOCKED",
+    "partial_pagination": "INCOMPLETE_SCOPE",
+    "stale_snapshot": "STALE",
+    "alias_collision": "IDENTITY_UNRESOLVED",
+    "unknown_provenance": "EXCLUDE_FROM_AUTHORSHIP_CLAIMS",
+    "zero_test_success": "UNVERIFIED",
+    "required_failure": "AGGREGATE_FAILED",
+    "unauthorized_mutation": "REFUSED",
+    "projection_drift": "RELEASE_BLOCKED",
+    "conflicting_receipts": "RECONCILIATION_REQUIRED"
+  },
+  "receipt_contract": {
+    "required_fields": [
+      "mission",
+      "scope",
+      "discovery_sources",
+      "snapshot_ids",
+      "coverage_limits",
+      "repositories_considered",
+      "repositories_deeply_inspected",
+      "exclusions",
+      "unavailable_sources",
+      "identity_decisions",
+      "per_repository_results",
+      "contradictions",
+      "changes",
+      "source_revisions",
+      "tests",
+      "artifacts",
+      "aggregate_decision",
+      "unresolved",
+      "next_highest_value_action"
+    ]
+  },
+  "projection_contract": {
+    "website": "Compose with stone-web-design-pro and preserve scope, evidence, ownership, privacy, and freshness.",
+    "presentation": "Summarize without discarding adverse states or denominators.",
+    "resume": "Compose with stone-resume-master and emit only ledger-approved claims.",
+    "audience_calibration": "Compose with stone-psysoc-x; order may change, truth may not.",
+    "machine": "Expose stable IDs, typed edges, revisions, hashes, and limitations."
+  }
+}
