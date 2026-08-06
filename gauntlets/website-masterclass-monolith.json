@@ -1,7 +1,7 @@
 {
   "schema": "glaciereq.infinity-gauntlet.v1",
   "id": "gauntlet-website-masterclass-monolith",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "status": "CANDIDATE",
   "purpose": "Turn the current GlacierEQ fact, evidence, repository, capability, company, and release graph into one accessible multidimensional website that operates as portfolio, technical proof surface, and domain master class.",
   "stones": [
@@ -10,9 +10,16 @@
     "stone-psysoc-x",
     "stone-resume-master"
   ],
-  "upgrades": [
-    "upgrade-do-it-again",
-    "upgrade-resume-do-it-again"
+  "upgrades": [],
+  "optional_upgrades": [
+    {
+      "id": "upgrade-do-it-again",
+      "activation_scope": "Apply only to a compatible selected Stone loadout until broader compatibility receives its own verification receipt."
+    },
+    {
+      "id": "upgrade-resume-do-it-again",
+      "activation_scope": "Apply only to the verified Resume Master, PSYSOC-X, and Web Design Pro sub-loadout."
+    }
   ],
   "authority": {
     "truth": "canonical fact and evidence sources plus owning-repository proof",
@@ -20,7 +27,7 @@
     "experience_architecture": "stone-web-design-pro",
     "audience_calibration": "stone-psysoc-x",
     "career_fact_projection": "stone-resume-master",
-    "recursive_improvement": "upgrade-do-it-again",
+    "recursive_improvement": "optional and compatibility-gated",
     "external_actions": "explicit human authorization"
   },
   "activation": [
@@ -132,7 +139,6 @@
     "PSYSOC-X dignity and audience calibration",
     "Resume Master fact and artifact boundaries",
     "Web Design Pro semantic, accessibility, interaction, and release boundaries",
-    "recursive improvement invariants",
     "mission instructions",
     "style"
   ],
