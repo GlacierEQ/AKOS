@@ -13,7 +13,12 @@ class InfinityStoneRegistryTests(unittest.TestCase):
         registry = StoneRegistry.load(ROOT)
         self.assertEqual(
             sorted(registry.stones),
-            ["stone-psysoc-x", "stone-resume-master", "stone-web-design-pro"],
+            [
+                "stone-monolith",
+                "stone-psysoc-x",
+                "stone-resume-master",
+                "stone-web-design-pro",
+            ],
         )
         self.assertEqual(
             sorted(registry.upgrades),
@@ -22,6 +27,9 @@ class InfinityStoneRegistryTests(unittest.TestCase):
         self.assertEqual(registry.resolve("PSYSOC-X"), "stone-psysoc-x")
         self.assertEqual(registry.resolve("resume master"), "stone-resume-master")
         self.assertEqual(registry.resolve("web design pro"), "stone-web-design-pro")
+        self.assertEqual(registry.resolve("website masterclass"), "stone-web-design-pro")
+        self.assertEqual(registry.resolve("monolith"), "stone-monolith")
+        self.assertEqual(registry.resolve("100 repos"), "stone-monolith")
         self.assertEqual(registry.resolve("do it again"), "upgrade-do-it-again")
         self.assertEqual(
             registry.resolve("resume do it again"),
@@ -44,6 +52,24 @@ class InfinityStoneRegistryTests(unittest.TestCase):
         self.assertEqual(first.precedence[0], "kernel-constitution")
         self.assertEqual(first.precedence[-1], "mission-specific-instructions")
         self.assertIn("preserve all verified gains", first.governing_laws)
+
+    def test_web_monolith_composition_is_deterministic(self) -> None:
+        registry = StoneRegistry.load(ROOT)
+        first = compose_loadout(
+            registry,
+            stones=["monolith", "web design pro", "PSYSOC-X"],
+            upgrades=["do it again"],
+        )
+        second = compose_loadout(
+            registry,
+            stones=["stone-monolith", "stone-web-design-pro", "stone-psysoc-x"],
+            upgrades=["upgrade-do-it-again"],
+        )
+        self.assertEqual(first.digest, second.digest)
+        self.assertIn("stone-monolith", first.stones)
+        self.assertIn("stone-web-design-pro", first.stones)
+        self.assertIn("reconciled-monolith-receipt", first.outputs)
+        self.assertIn("multidimensional-experience-graph", first.outputs)
 
     def test_composition_rejects_duplicate_stones(self) -> None:
         registry = StoneRegistry.load(ROOT)
