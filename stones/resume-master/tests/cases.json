@@ -1,0 +1,62 @@
+{
+  "schema": "glaciereq.resume-master-cases.v1",
+  "cases": [
+    {
+      "id": "reject-fabricated-metric",
+      "input": {
+        "claim": "Reduced costs by 40%",
+        "source": null
+      },
+      "expected": {
+        "decision": "REJECT",
+        "reason": "unsupported metric"
+      }
+    },
+    {
+      "id": "preserve-test-state",
+      "input": {
+        "claim": "Job Application Helix passed 148/148 recorded repository tests"
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "evidence_state": "RECORDED_TESTS",
+        "must_not_promote_to": "PRODUCTION_VERIFIED"
+      }
+    },
+    {
+      "id": "targeted-role-projection",
+      "input": {
+        "target": "Agent Infrastructure Engineer"
+      },
+      "expected": {
+        "lead_with": [
+          "agent infrastructure",
+          "tool contracts",
+          "deterministic coordination"
+        ],
+        "facts_invariant": true
+      }
+    },
+    {
+      "id": "artifact-identity",
+      "input": {
+        "artifact": "V18 PDF",
+        "sha256": "56799cbe9d8ed2a65e72e504490ac94ee3c28a08ead81a81ce577bf59b321ab5"
+      },
+      "expected": {
+        "decision": "ALLOW",
+        "bytes_required_for_reverification": true
+      }
+    },
+    {
+      "id": "private-material-exclusion",
+      "input": {
+        "source_class": "private legal or family material"
+      },
+      "expected": {
+        "decision": "BLOCK",
+        "human_approval_required": true
+      }
+    }
+  ]
+}

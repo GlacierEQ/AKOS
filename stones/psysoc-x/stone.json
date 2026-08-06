@@ -117,11 +117,14 @@
   "composition": {
     "compatible_stones": [
       "stone-elite-pro-builder",
-      "stone-juggernaut-jack"
+      "stone-juggernaut-jack",
+      "stone-resume-master",
+      "stone-web-design-pro"
     ],
     "incompatible_stones": [],
     "compatible_upgrades": [
-      "upgrade-do-it-again"
+      "upgrade-do-it-again",
+      "upgrade-resume-do-it-again"
     ],
     "precedence": [
       "kernel constitution",
@@ -150,7 +153,8 @@
       "tests/test_psysoc_x.py",
       "stones/psysoc-x/tests/cases.json"
     ],
-    "status_rule": "VERIFIED only for the repository-local TEST scope recorded in the promotion receipt",
-    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json"
+    "status_rule": "VERIFIED only for the repository-local TEST scope recorded in the promotion receipt; new composition compatibility remains candidate until exact-head verification",
+    "receipt": "receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json",
+    "candidate_composition_extension": "resume-master-psysoc-x-web-design-pro"
   }
 }

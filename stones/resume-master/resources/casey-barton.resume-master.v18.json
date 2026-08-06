@@ -1,0 +1,268 @@
+{
+  "schema": "glaciereq.resume-master.v1",
+  "version": "18.1.0-candidate",
+  "status": "CANDIDATE",
+  "facts_invariant": true,
+  "identity": {
+    "name": "Casey Del Carpio Barton",
+    "display_name": "Casey Barton",
+    "location": "Honolulu, Hawaii",
+    "phone": "+1-808-936-5654",
+    "email": "glacier.equilibrium@gmail.com",
+    "portfolio": "https://casey-barton-glaciereq.vercel.app/",
+    "github": "https://github.com/GlacierEQ",
+    "role_labels": [
+      "Applied AI Systems Architect",
+      "Agent Infrastructure Engineer",
+      "Forward-Deployed AI Engineer"
+    ]
+  },
+  "positioning": {
+    "headline": "Evidence-bound execution for ambitious systems and high-consequence decisions.",
+    "summary": "Applied AI systems architect and agent infrastructure engineer who builds the operating layer between model capability and dependable outcomes using explicit authority, bounded tool use, deterministic evidence, controlled failure, continuity, and completion receipts.",
+    "method": [
+      "observe the actual system",
+      "separate evidence from inference",
+      "isolate the governing failure",
+      "bound authority and risk",
+      "build the narrowest useful mechanism",
+      "test the stated behavior",
+      "expose the limit",
+      "leave a verifiable artifact"
+    ]
+  },
+  "proof": [
+    {
+      "id": "proof-receipt-router",
+      "label": "Portfolio Receipt Router",
+      "evidence_state": "TEST_VERIFIED",
+      "claim": "69 of 69 tests passed through direct and reusable CI; artifact 8910423397; zero external queries and actions.",
+      "metrics": {
+        "tests_passed": 69,
+        "tests_total": 69,
+        "artifact_id": 8910423397,
+        "external_actions": 0
+      }
+    },
+    {
+      "id": "proof-bounded-infrastructure",
+      "label": "Bounded infrastructure sources",
+      "evidence_state": "RECORDED_TESTS",
+      "claim": "166 source tests plus 19 degraded-mode Energy memory tests and five hashed artifacts.",
+      "metrics": {
+        "source_tests": 166,
+        "memory_tests": 19,
+        "hashed_artifacts": 5
+      }
+    },
+    {
+      "id": "proof-job-application-helix",
+      "label": "Job Application Helix",
+      "evidence_state": "RECORDED_TESTS",
+      "claim": "148 of 148 recorded repository tests for evidence-governed hiring and portfolio orchestration.",
+      "metrics": {
+        "tests_passed": 148,
+        "tests_total": 148
+      }
+    },
+    {
+      "id": "proof-agent-coordinator",
+      "label": "Agent Coordinator",
+      "evidence_state": "RECORDED_TESTS",
+      "claim": "62 of 62 recorded Python tests for deterministic ownership, dependencies, capacity, priority, and shared budgets.",
+      "metrics": {
+        "tests_passed": 62,
+        "tests_total": 62
+      }
+    }
+  ],
+  "experience": [
+    {
+      "organization": "GlacierEQ",
+      "role": "Founder / Applied AI Systems Builder",
+      "location": "Honolulu, Hawaii",
+      "start": "2025-01",
+      "end": null,
+      "highlights": [
+        "Design and implement evidence-bound systems spanning agent orchestration, application intelligence, document and evidence pipelines, memory and continuity, infrastructure governance, and human-machine interfaces.",
+        "Convert ambiguous architecture into typed contracts, runnable slices, deterministic tests, explicit refusal behavior, machine-readable facts, and reviewable completion receipts.",
+        "Built a public Portfolio Receipt Router that replaced unsupported autonomous-control semantics with a local fail-closed evidence system.",
+        "Govern a multi-repository portfolio by separating source presence, review, execution, deployment, authority, and verified completion."
+      ]
+    },
+    {
+      "organization": "Diamond Head Home Inspections",
+      "role": "Certified Home Inspector",
+      "location": "Honolulu, Hawaii",
+      "start": "2020",
+      "end": "2024",
+      "highlights": [
+        "Inspected residential structural, roofing, electrical, plumbing, HVAC, moisture, and safety conditions and translated field evidence into decision-ready reports.",
+        "Developed disciplined habits around uncertainty labeling, defect prioritization, interacting-system analysis, client communication, and avoiding unsupported conclusions."
+      ]
+    },
+    {
+      "organization": "Hi-Class Home Services / Hi Class Maintenance Oahu LLC",
+      "role": "Owner-Operator, Building Systems and Field Services",
+      "location": "Honolulu, Hawaii",
+      "start": "2017",
+      "end": null,
+      "highlights": [
+        "Scope residential repair and service work, prepare estimates, coordinate execution, and communicate assumptions, constraints, and completion status.",
+        "Translate incomplete real-world requirements into bounded work packages and usable closeout artifacts."
+      ]
+    }
+  ],
+  "capabilities": {
+    "agent_infrastructure_and_governance": [
+      "multi-agent orchestration",
+      "Model Context Protocol",
+      "tool contracts",
+      "capability and authority separation",
+      "approval models",
+      "state machines",
+      "bounded retries",
+      "failure and recovery",
+      "human-in-the-loop systems"
+    ],
+    "evidence_and_release_engineering": [
+      "provenance",
+      "claim-to-source mapping",
+      "deterministic testing",
+      "JSON Schema",
+      "CI/CD",
+      "static analysis",
+      "dependency auditing",
+      "integrity hashing",
+      "release receipts",
+      "machine-readable interfaces"
+    ],
+    "application_and_document_intelligence": [
+      "role research",
+      "evidence-qualified resume generation",
+      "document extraction",
+      "structured artifacts",
+      "human and machine presentation layers"
+    ],
+    "primary_technology": [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "SQL",
+      "Bash",
+      "Node.js",
+      "React",
+      "Next.js",
+      "FastAPI",
+      "REST",
+      "JSON-RPC 2.0",
+      "MCP",
+      "GitHub Actions",
+      "Docker",
+      "Vercel"
+    ]
+  },
+  "selected_systems": [
+    {
+      "name": "Portfolio Receipt Router",
+      "state": "TEST_VERIFIED",
+      "evidence": "69/69 tests; direct and reusable CI; artifact 8910423397; zero external actions.",
+      "boundary": "Independent technical exhibit; no datacenter control, company affiliation, or production-operation claim."
+    },
+    {
+      "name": "Job Application Helix",
+      "state": "RECORDED_148_OF_148",
+      "evidence": "148/148 recorded repository tests.",
+      "boundary": "Release-specific current-SHA and deployment gates remain separate."
+    },
+    {
+      "name": "Agent Coordinator",
+      "state": "RECORDED_62_OF_62",
+      "evidence": "62/62 recorded Python tests.",
+      "boundary": "Hosted matrix and build-wheel promotion remain separate."
+    },
+    {
+      "name": "Microcode Governance",
+      "state": "REVIEWED_EXECUTION_BLOCKED",
+      "evidence": "132-check generated contract; static review found no critical defect.",
+      "boundary": "Not test verified and performs no firmware mutation."
+    },
+    {
+      "name": "PSYSOC-X",
+      "state": "BOUNDED_TEST_SCOPE",
+      "evidence": "Deterministic profile and invariant cases in AKOS.",
+      "boundary": "No diagnosis, covert persuasion, or manipulation capability is claimed."
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Hawaii at Manoa",
+      "program": "Bachelor of Science, Marine Biology",
+      "end": "2016"
+    },
+    {
+      "institution": "AWS Cloud Institute",
+      "program": "Cloud Application Development professional program",
+      "start": "2025",
+      "end": "2026",
+      "state": "IN_PROGRESS_IN_SOURCE_RECORD"
+    }
+  ],
+  "cross_domain_foundation": [
+    {
+      "domain": "scientific measurement",
+      "record": "University of Hawaii sea-urchin morphometric research, 2016-2017."
+    },
+    {
+      "domain": "compressed-gas systems",
+      "record": "Scuba Tank Technician, Hawaiian Diving Adventures and UH Dive Office, 2016-2017."
+    },
+    {
+      "domain": "historical leadership",
+      "record": "Civil Air Patrol Cadet Commander and Search-and-Rescue Ground Team Leader, 2007-2011; historical context, not formal professional people-management evidence."
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_WEB_DESIGN_PRO_2026-08-06.docx",
+      "format": "docx",
+      "bytes": 42815,
+      "sha256": "a458bf7b79aaeb83675cfa1c87305fb8a6c52d3515f26a738fc94a52d9942cbe",
+      "state": "GENERATED_RENDER_INSPECTED"
+    },
+    {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_WEB_DESIGN_PRO_2026-08-06.pdf",
+      "format": "pdf",
+      "bytes": 94294,
+      "sha256": "56799cbe9d8ed2a65e72e504490ac94ee3c28a08ead81a81ce577bf59b321ab5",
+      "state": "GENERATED_RENDER_INSPECTED"
+    },
+    {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_ATS.txt",
+      "format": "text",
+      "bytes": 4230,
+      "sha256": "7296e3b1fd952b2a313d4e6ea253346be851e9cee83179516cc041a7cd86cb05",
+      "state": "GENERATED"
+    },
+    {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_MANIFEST.json",
+      "format": "json",
+      "bytes": 1898,
+      "sha256": "f98c39f9bddb7b511b7a634f25992512762dfef6b6685e1420386075f0b680b8",
+      "state": "GENERATED"
+    },
+    {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_WEB_DESIGN_PRO_2026-08-06.zip",
+      "format": "zip",
+      "bytes": 100924,
+      "sha256": "d92ed3260e003567a6a7a6756504bfb4838b611dd34ed746f4d301454fc593a9",
+      "state": "PACKAGED"
+    }
+  ],
+  "evidence_limits": [
+    "No company affiliation is inferred from company-oriented repositories.",
+    "No production use, customer impact, formal people management, proprietary access, current certification status, or hardware validation is claimed without direct evidence.",
+    "Reviewed or generated work is not represented as executed proof.",
+    "The V18 artifacts were generated and inspected outside this AKOS branch; this branch binds their identities but does not contain their binary bytes."
+  ]
+}

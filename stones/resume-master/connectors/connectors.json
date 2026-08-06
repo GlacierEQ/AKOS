@@ -1,0 +1,89 @@
+{
+  "schema": "glaciereq.infinity-connector-registry.v1",
+  "stone": "stone-resume-master",
+  "status": "CANDIDATE",
+  "connectors": [
+    {
+      "id": "github",
+      "role": "source control, repository receipts, branches, pull requests",
+      "state": "DECLARED",
+      "authority": [
+        "read source",
+        "write reviewed candidate branches"
+      ],
+      "forbidden": [
+        "treating repository presence as proof"
+      ]
+    },
+    {
+      "id": "chatgpt-files",
+      "role": "prior resume packages, library artifacts, generated files",
+      "state": "DECLARED",
+      "authority": [
+        "search",
+        "read",
+        "materialize",
+        "persist approved artifacts"
+      ],
+      "forbidden": [
+        "guessing file content from a title"
+      ]
+    },
+    {
+      "id": "google-drive",
+      "role": "optional source records and prior documents",
+      "state": "OPTIONAL",
+      "authority": [
+        "read-only retrieval unless separately approved"
+      ],
+      "forbidden": [
+        "silent mutation"
+      ]
+    },
+    {
+      "id": "dropbox",
+      "role": "optional archive and artifact retrieval",
+      "state": "OPTIONAL",
+      "authority": [
+        "read-only retrieval unless separately approved"
+      ],
+      "forbidden": [
+        "silent mutation"
+      ]
+    },
+    {
+      "id": "box",
+      "role": "optional enterprise document retrieval",
+      "state": "OPTIONAL",
+      "authority": [
+        "read-only retrieval unless separately approved"
+      ],
+      "forbidden": [
+        "silent mutation"
+      ]
+    },
+    {
+      "id": "job-description",
+      "role": "target role context from user, job board, or saved posting",
+      "state": "INPUT_REQUIRED_FOR_TARGETED_PROJECTION",
+      "authority": [
+        "role vocabulary and requirements"
+      ],
+      "forbidden": [
+        "changing source facts"
+      ]
+    },
+    {
+      "id": "document-rendering",
+      "role": "DOCX/PDF render and page inspection",
+      "state": "REQUIRED_FOR_RELEASE",
+      "authority": [
+        "render",
+        "inspect"
+      ],
+      "forbidden": [
+        "declaring release from source-only inspection"
+      ]
+    }
+  ]
+}

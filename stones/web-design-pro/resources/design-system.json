@@ -1,0 +1,55 @@
+{
+  "schema": "glaciereq.web-design-pro.design-system.v1",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "principles": [
+    "proof before spectacle",
+    "high contrast without visual aggression",
+    "progressive disclosure",
+    "script-free by default",
+    "one fact graph across all surfaces"
+  ],
+  "tokens": {
+    "color": {
+      "ink": "#08131A",
+      "ink_soft": "#23343F",
+      "paper": "#F7F5EF",
+      "surface": "#FFFFFF",
+      "teal": "#006E73",
+      "teal_dark": "#004F53",
+      "amber": "#B86A00",
+      "line": "#CFD8DC",
+      "muted": "#5C6B73"
+    },
+    "type": {
+      "sans": "Arial, Helvetica, sans-serif",
+      "display_weight": 800,
+      "body_weight": 400,
+      "line_length": "68ch"
+    },
+    "space": {
+      "1": "0.25rem",
+      "2": "0.5rem",
+      "3": "0.75rem",
+      "4": "1rem",
+      "6": "1.5rem",
+      "8": "2rem",
+      "12": "3rem"
+    },
+    "radius": {
+      "small": "0.35rem",
+      "medium": "0.75rem",
+      "large": "1.25rem"
+    },
+    "breakpoints": {
+      "compact": "40rem",
+      "wide": "64rem"
+    }
+  },
+  "budgets": {
+    "client_scripts": 0,
+    "trackers": 0,
+    "third_party_fonts": 0,
+    "initial_css_kb_target": 30
+  }
+}
