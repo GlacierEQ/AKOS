@@ -205,7 +205,11 @@ def _mesh_payload(
     del canonical
     nodes: list[dict[str, str]] = [
         {"id": manifest.id, "kind": "stone", "label": manifest.name},
-        {"id": f"domain:{manifest.domain}", "kind": "domain", "label": manifest.domain},
+        {
+            "id": f"domain:{manifest.domain}",
+            "kind": "domain",
+            "label": manifest.domain,
+        },
     ]
     edges: list[dict[str, str]] = [
         {
