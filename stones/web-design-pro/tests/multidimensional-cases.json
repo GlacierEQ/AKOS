@@ -1,0 +1,76 @@
+{
+  "schema": "glaciereq.web-design-pro.multidimensional-cases.v1",
+  "status": "CANDIDATE",
+  "cases": [
+    {
+      "id": "one-canonical-graph",
+      "requirement": "Every human and machine projection resolves to stable graph identifiers and source references.",
+      "failure": "A route contains an unsupported copy-only claim or an entity with no canonical source node."
+    },
+    {
+      "id": "moving-target-discovery",
+      "requirement": "Repository, company, evidence, connector, route, and release sets are loaded from timestamped snapshots rather than fixed application arrays.",
+      "failure": "A mutable inventory is treated as a permanent complete list."
+    },
+    {
+      "id": "typed-interlinking",
+      "requirement": "Cross-links declare a typed relationship and preserve backlinks or equivalent reverse navigation.",
+      "failure": "A visual or navigation relationship has no machine-readable edge."
+    },
+    {
+      "id": "graph-text-equivalence",
+      "requirement": "Every graph projection has a searchable table or adjacency-list representation containing the same nodes, edge types, states, and source links.",
+      "failure": "Meaning exists only in canvas, SVG geometry, hover state, or color."
+    },
+    {
+      "id": "chart-data-equivalence",
+      "requirement": "Every chart exposes source data, units, scope, and a table fallback.",
+      "failure": "A chart implies precision or quantity not present in the source."
+    },
+    {
+      "id": "motion-purpose",
+      "requirement": "Each motion sequence declares state, causality, spatial relationship, or focus-transition purpose.",
+      "failure": "Motion exists only for spectacle or obscures evidence."
+    },
+    {
+      "id": "reduced-motion",
+      "requirement": "All animated explanations remain complete with reduced motion enabled and with client scripting unavailable.",
+      "failure": "A user loses sequence, state, or navigation meaning when motion is reduced."
+    },
+    {
+      "id": "shareable-state",
+      "requirement": "Filters, selected nodes, comparison states, and guided-tour positions are reconstructable from stable route state.",
+      "failure": "An important view cannot be deep-linked, restored, or audited."
+    },
+    {
+      "id": "responsive-transformation",
+      "requirement": "Dense graphs, matrices, timelines, and comparisons transform into usable compact representations without dropping evidence labels.",
+      "failure": "Mobile behavior is horizontal shrinkage, clipping, or hidden proof."
+    },
+    {
+      "id": "privacy-transitive-closure",
+      "requirement": "Public-surface validation follows generated routes, backlinks, graph edges, search records, and machine APIs to detect sensitive exposure.",
+      "failure": "A private node becomes reachable through secondary navigation or generated data."
+    },
+    {
+      "id": "freshness-visible",
+      "requirement": "Every moving-target projection exposes observation time, source revision, scope, and stale state.",
+      "failure": "A snapshot appears current or complete after its freshness rule expires."
+    },
+    {
+      "id": "visual-state-cannot-promote-proof",
+      "requirement": "Size, placement, animation, color, ranking, or narrative order cannot raise an entity above its recorded evidence and promotion state.",
+      "failure": "Presentation makes a candidate, blocked, reference-only, or stale system appear verified."
+    },
+    {
+      "id": "bounded-client-runtime",
+      "requirement": "Every client-side capability declares benefit, data input, privacy impact, performance budget, accessibility behavior, fallback, tests, and removal path.",
+      "failure": "A script is admitted because it is visually impressive or framework-conventional."
+    },
+    {
+      "id": "production-reconstruction",
+      "requirement": "The live site can be rebuilt from the recorded source revision, snapshot set, policy overlay, and artifact manifest.",
+      "failure": "Production contains untracked patches, stale generated data, or unverifiable assets."
+    }
+  ]
+}
