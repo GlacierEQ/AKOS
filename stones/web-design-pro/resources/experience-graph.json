@@ -1,0 +1,177 @@
+{
+  "schema": "glaciereq.web-design-pro.experience-graph.v1",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "purpose": "Render one canonical fact, evidence, repository, capability, and release graph through multiple accessible human and machine projections.",
+  "stable_contract": {
+    "hard_code": [
+      "schema and identifier formats",
+      "node and edge type contracts",
+      "privacy and authority invariants",
+      "evidence-state rules",
+      "accessibility requirements",
+      "performance and failure budgets",
+      "projection validation gates"
+    ],
+    "discover_at_runtime_or_build": [
+      "repositories",
+      "companies",
+      "role families",
+      "capabilities",
+      "evidence states",
+      "connector inventories",
+      "routes",
+      "production revisions",
+      "standards and platform capabilities"
+    ]
+  },
+  "node_types": [
+    "person",
+    "role",
+    "audience",
+    "company",
+    "domain",
+    "bottleneck",
+    "capability",
+    "stone",
+    "gauntlet",
+    "system",
+    "repository",
+    "component",
+    "artifact",
+    "claim",
+    "evidence",
+    "receipt",
+    "release",
+    "connector",
+    "resource"
+  ],
+  "edge_types": [
+    "targets",
+    "solves",
+    "requires",
+    "implements",
+    "contains",
+    "depends_on",
+    "donates_capability_to",
+    "governed_by",
+    "composes_with",
+    "supports",
+    "contradicts",
+    "supersedes",
+    "derived_from",
+    "verified_by",
+    "limited_by",
+    "deployed_as",
+    "relevant_to",
+    "explained_by"
+  ],
+  "required_node_fields": [
+    "id",
+    "type",
+    "label",
+    "source_ref",
+    "visibility",
+    "observed_at"
+  ],
+  "conditional_node_fields": {
+    "evidence_bearing": ["evidence_state", "limitations"],
+    "moving_target": ["source_revision", "fresh_until"],
+    "public": ["privacy_decision"]
+  },
+  "required_edge_fields": [
+    "id",
+    "type",
+    "from",
+    "to",
+    "source_ref"
+  ],
+  "projections": [
+    {
+      "id": "executive-signal",
+      "question": "What value is offered and what is the strongest support?",
+      "forms": ["first-screen summary", "proof spine", "next actions"]
+    },
+    {
+      "id": "company-bottleneck-map",
+      "question": "Which verified capabilities address this company or domain bottleneck?",
+      "forms": ["hierarchy", "comparison matrix", "traceable solution graph"]
+    },
+    {
+      "id": "repository-constellation",
+      "question": "How do systems, components, donors, dependencies, and evidence relate?",
+      "forms": ["zoomable graph", "filtered table", "adjacency list"]
+    },
+    {
+      "id": "system-evolution",
+      "question": "How did this system change and what is current?",
+      "forms": ["timeline", "release ladder", "decision history"]
+    },
+    {
+      "id": "proof-trace",
+      "question": "What exact source and receipt support this claim?",
+      "forms": ["claim-to-proof chain", "receipt viewer", "limitations panel"]
+    },
+    {
+      "id": "stone-academy",
+      "question": "What mentality, skills, tools, resources, and tests govern this domain?",
+      "forms": ["guided master class", "mind map", "skill graph", "machine package"]
+    }
+  ],
+  "interaction_contract": {
+    "state_is_shareable": true,
+    "filters_are_reconstructable": true,
+    "deep_links_use_stable_ids": true,
+    "keyboard_path_required": true,
+    "textual_fallback_required": true,
+    "reduced_motion_required": true,
+    "focus_preserved_on_transition": true,
+    "user_controls_depth": true
+  },
+  "motion_contract": {
+    "allowed_purposes": [
+      "state change",
+      "causal sequence",
+      "spatial relationship",
+      "focus transition"
+    ],
+    "forbidden": [
+      "motion whose only purpose is spectacle",
+      "autoplay motion that blocks comprehension",
+      "animation that changes or hides evidence state",
+      "motion without reduced-motion equivalent"
+    ]
+  },
+  "fallback_contract": {
+    "graph": "searchable adjacency list and table",
+    "timeline": "ordered event list",
+    "chart": "data table with units and source",
+    "animation": "static sequence with captions",
+    "spatial_map": "hierarchical list with typed relationships",
+    "interactive_explainer": "linear narrative plus machine-readable model"
+  },
+  "freshness_contract": {
+    "each_snapshot_records": [
+      "generated_at",
+      "source_revisions",
+      "source_hashes_when_available",
+      "scope",
+      "excluded_sources",
+      "policy_overlay_revision",
+      "fresh_until"
+    ],
+    "stale_behavior": "Display stale state visibly and prevent recruiter-ready or production-ready promotion when a required source is expired."
+  },
+  "release_gates": [
+    "canonical graph validation",
+    "public privacy allowlist",
+    "semantic fallback equivalence",
+    "keyboard and focus verification",
+    "reduced-motion verification",
+    "responsive transformation verification",
+    "performance budget verification",
+    "route and deep-link verification",
+    "artifact and source hash verification",
+    "production reconstruction receipt"
+  ]
+}
