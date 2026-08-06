@@ -1,12 +1,30 @@
 {
   "schema": "glaciereq.infinity-connector-registry.v1",
   "stone": "stone-web-design-pro",
-  "status": "CANDIDATE",
+  "status": "CANDIDATE_EXTENSION",
   "connectors": [
     {
       "id": "github",
-      "role": "canonical web source and release history",
+      "role": "canonical web source, repository graph inputs, and release history",
       "state": "DECLARED"
+    },
+    {
+      "id": "monolith",
+      "role": "timestamped repository, domain, foundation, status, capability-donor, and ownership context",
+      "state": "REQUIRED_FOR_REPOSITORY_SCALE_PROJECTIONS",
+      "boundary": "Monolith provides cartography; owning repositories retain runtime authority."
+    },
+    {
+      "id": "live-discovery",
+      "role": "discover mutable repositories, companies, role families, connector capabilities, routes, and evidence snapshots",
+      "state": "REQUIRED_FOR_MOVING_TARGETS",
+      "boundary": "Every observation records source, time, scope, revision, and freshness."
+    },
+    {
+      "id": "official-standards-resolver",
+      "role": "resolve current accessibility, browser, semantic, performance, visualization, and platform guidance from authoritative sources",
+      "state": "REQUIRED_WHEN_IMPLEMENTATION_DEPENDS_ON_CURRENT_STANDARDS",
+      "boundary": "Cache source references and retrieval metadata; do not treat a remembered version as current."
     },
     {
       "id": "vercel",
@@ -15,13 +33,18 @@
     },
     {
       "id": "browser-preview",
-      "role": "responsive and accessibility inspection",
+      "role": "responsive, interaction, reduced-motion, and accessibility inspection",
       "state": "REQUIRED_FOR_PROMOTION"
     },
     {
       "id": "artifact-source",
-      "role": "exact DOCX, PDF, ATS, and JSON downloads",
+      "role": "exact DOCX, PDF, ATS, JSON, graph, and data downloads",
       "state": "REQUIRED_FOR_PROMOTION"
+    },
+    {
+      "id": "graph-data-source",
+      "role": "canonical fact, evidence, repository, capability, and release graph snapshots",
+      "state": "REQUIRED_FOR_MULTIDIMENSIONAL_PROJECTIONS"
     },
     {
       "id": "dns-and-canonical-url",
@@ -30,9 +53,9 @@
     },
     {
       "id": "security-header-check",
-      "role": "CSP, HSTS, frame, content-type, and permissions policy verification",
+      "role": "CSP, HSTS, frame, content-type, referrer, cross-origin, and permissions policy verification",
       "state": "REQUIRED_FOR_PRODUCTION"
     }
   ],
-  "authority_boundary": "Connectors may retrieve, preview, or verify. Production mutation requires explicit release authority and a passing preview receipt."
+  "authority_boundary": "Connectors may discover, retrieve, preview, and verify. Publication, production mutation, tracking activation, external embeds, or release promotion require explicit authority and passing preview and reconstruction receipts."
 }
