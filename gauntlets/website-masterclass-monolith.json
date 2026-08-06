@@ -1,0 +1,175 @@
+{
+  "schema": "glaciereq.infinity-gauntlet.v1",
+  "id": "gauntlet-website-masterclass-monolith",
+  "version": "0.1.0",
+  "status": "CANDIDATE",
+  "purpose": "Turn the current GlacierEQ fact, evidence, repository, capability, company, and release graph into one accessible multidimensional website that operates as portfolio, technical proof surface, and domain master class.",
+  "stones": [
+    "stone-monolith",
+    "stone-web-design-pro",
+    "stone-psysoc-x",
+    "stone-resume-master"
+  ],
+  "upgrades": [
+    "upgrade-do-it-again",
+    "upgrade-resume-do-it-again"
+  ],
+  "authority": {
+    "truth": "canonical fact and evidence sources plus owning-repository proof",
+    "repository_cartography": "stone-monolith",
+    "experience_architecture": "stone-web-design-pro",
+    "audience_calibration": "stone-psysoc-x",
+    "career_fact_projection": "stone-resume-master",
+    "recursive_improvement": "upgrade-do-it-again",
+    "external_actions": "explicit human authorization"
+  },
+  "activation": [
+    "resolve the latest canonical job website, Helix control plane, Monolith census, resume master, deployment, and prior release receipts",
+    "discover current repositories, companies, role families, connectors, tools, standards, evidence states, and production revisions",
+    "reconcile aliases, duplicates, predecessors, successors, private doctrine, public runtimes, and quarantined surfaces",
+    "build the mission-specific canonical experience graph",
+    "activate PSYSOC-X for each explicit audience and decision path",
+    "select only visualizations, animations, and interactions that materially improve comprehension",
+    "implement semantic and machine fallbacks before enhanced projections",
+    "verify privacy, accessibility, responsive transformations, reduced motion, performance, links, freshness, and production reconstruction"
+  ],
+  "experience_layers": [
+    {
+      "id": "signal",
+      "audience": "recruiter or first-time reviewer",
+      "answers": ["role", "value", "differentiation", "strongest proof", "next action"]
+    },
+    {
+      "id": "company",
+      "audience": "company-specific hiring team",
+      "answers": ["bottlenecks", "required capabilities", "tailored systems", "gaps", "demonstration plan"]
+    },
+    {
+      "id": "system",
+      "audience": "engineer or architect",
+      "answers": ["architecture", "boundaries", "dependencies", "failure modes", "tradeoffs"]
+    },
+    {
+      "id": "repository",
+      "audience": "technical reviewer",
+      "answers": ["ownership", "source", "stack", "native proof", "donor relationships", "current state"]
+    },
+    {
+      "id": "proof",
+      "audience": "skeptical reviewer",
+      "answers": ["claim source", "command", "receipt", "limitations", "freshness", "contradictions"]
+    },
+    {
+      "id": "academy",
+      "audience": "learner, collaborator, or future operator",
+      "answers": ["mentality", "skills", "tools", "resources", "tests", "failure patterns", "reusable prompts"]
+    },
+    {
+      "id": "machine",
+      "audience": "AI system or automation",
+      "answers": ["stable identifiers", "typed edges", "schemas", "source revisions", "policy", "receipts"]
+    }
+  ],
+  "required_projections": [
+    "hierarchical domain and company atlas",
+    "repository constellation",
+    "capability donor graph",
+    "company bottleneck-to-solution map",
+    "flagship and component relationship map",
+    "evidence-state and promotion matrix",
+    "system evolution timelines",
+    "claim-to-proof trace",
+    "Infinity Stone academy mind maps",
+    "responsive text and table fallbacks",
+    "machine-readable graph and snapshot endpoints"
+  ],
+  "dynamic_discovery_rule": {
+    "hard_code_only": [
+      "schemas",
+      "invariants",
+      "authority",
+      "privacy",
+      "evidence semantics",
+      "accessibility gates",
+      "performance budgets",
+      "validation contracts"
+    ],
+    "discover": [
+      "repositories",
+      "companies",
+      "roles",
+      "connectors",
+      "tools",
+      "standards",
+      "routes",
+      "evidence",
+      "deployments",
+      "dependencies",
+      "capability donors",
+      "freshness"
+    ]
+  },
+  "pipeline": [
+    "recover the latest canonical checkpoints and preserve all verified gains",
+    "run live census and identity reconciliation",
+    "construct multi-axis repository and capability graph",
+    "resolve current mission, target audiences, companies, and bottlenecks",
+    "generate the minimum complete experience subgraph",
+    "create semantic route hierarchy and typed interlink map",
+    "generate visual, narrative, and machine projections",
+    "apply design tokens, bounded interaction, and motion grammar",
+    "generate accessible fallbacks and reduced-motion equivalents",
+    "run content, evidence, privacy, accessibility, responsive, interaction, performance, freshness, and route gates",
+    "bind source, snapshots, artifacts, and deployment to one release receipt",
+    "regenerate Monolith, Helix, website, resume, and presentation projections from reconciled state"
+  ],
+  "precedence": [
+    "kernel constitution",
+    "canonical evidence and owning-repository authority",
+    "privacy and human-control gates",
+    "Monolith census, identity, ownership, and dependency context",
+    "evidence and promotion state",
+    "PSYSOC-X dignity and audience calibration",
+    "Resume Master fact and artifact boundaries",
+    "Web Design Pro semantic, accessibility, interaction, and release boundaries",
+    "recursive improvement invariants",
+    "mission instructions",
+    "style"
+  ],
+  "outputs": [
+    "canonical experience graph",
+    "website hierarchy and route map",
+    "typed interlink and backlink index",
+    "repository constellation",
+    "company bottleneck maps",
+    "capability donor graph",
+    "Stone academy",
+    "accessible fallbacks",
+    "machine graph and schemas",
+    "freshness manifest",
+    "privacy allowlist result",
+    "responsive and accessibility receipt",
+    "performance receipt",
+    "production reconstruction receipt"
+  ],
+  "verification": {
+    "evidence_level": "CANDIDATE",
+    "required_before_promotion": [
+      "Infinity Stone registry and schema validation",
+      "deterministic composition tests",
+      "Monolith identity, partition, budget, aggregate failure, and reconciliation tests",
+      "Web Design multidimensional graph, fallback, motion, freshness, and privacy tests",
+      "browser and accessibility verification",
+      "responsive transformation verification",
+      "production reconstruction from exact source and snapshots"
+    ],
+    "non_claims": [
+      "implemented production masterclass website",
+      "complete current repository estate",
+      "accessibility certification",
+      "verified hundred-repository execution",
+      "company affiliation",
+      "hiring or business impact"
+    ]
+  }
+}
