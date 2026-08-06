@@ -74,9 +74,17 @@ class InfinityStoneProjectionTests(unittest.TestCase):
         self.assertIn("PROJECTION_LAYER_MASTER = 2;", proto)
         self.assertIn("PROJECTION_LAYER_MACHINE = 3;", proto)
         self.assertIn("PROJECTION_LAYER_MESH = 4;", proto)
+        projection_message = proto.split(
+            "message InfinityStoneProjection {",
+            maxsplit=1,
+        )[1].split("}", maxsplit=1)[0]
         field_numbers = [
             int(value)
-            for value in re.findall(r"^\s+(?:repeated\s+)?[\w.]+\s+\w+\s+=\s+(\d+);", proto, re.MULTILINE)
+            for value in re.findall(
+                r"^\s+(?:repeated\s+)?[\w.]+\s+\w+\s+=\s+(\d+);",
+                projection_message,
+                re.MULTILINE,
+            )
         ]
         self.assertEqual(len(field_numbers), len(set(field_numbers)))
 
