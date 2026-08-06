@@ -1,6 +1,21 @@
 name: Infinity Stone Forge
 
 on:
+  push:
+    branches: ["main"]
+    paths:
+      - "infinity_stones/**"
+      - "stones/**"
+      - "upgrades/**"
+      - "kernel/**"
+      - "registry/**"
+      - "schemas/infinity-*.json"
+      - "gauntlets/**"
+      - "scripts/verify_stones.py"
+      - "tests/test_infinity_stones.py"
+      - "tests/test_psysoc_x.py"
+      - "pyproject.toml"
+      - ".github/workflows/infinity-stones.yml"
   pull_request:
     paths:
       - "infinity_stones/**"
