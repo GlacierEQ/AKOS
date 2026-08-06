@@ -1,1 +1,43 @@
-{"schema":"glaciereq.infinity-stone-registry.v1","version":"0.2.0","status":"VERIFIED","evidence_level":"TEST","prior_verified_baseline":{"version":"0.1.0","status":"VERIFIED","evidence_level":"TEST","promotion_receipt":"receipts/2026-08-02_psysoc-x_v0.1.0_promotion.json","post_promotion_validation":"receipts/2026-08-02_psysoc-x_v0.1.0_post-promotion-validation.json"},"candidate_receipt":"receipts/2026-08-06_resume-master-psysoc-x-web-design-pro_candidate.json","stones":[{"id":"stone-psysoc-x","path":"stones/psysoc-x/stone.json"},{"id":"stone-resume-master","path":"stones/resume-master/stone.json"},{"id":"stone-web-design-pro","path":"stones/web-design-pro/stone.json"}],"upgrades":[{"id":"upgrade-do-it-again","path":"upgrades/do-it-again/upgrade.json"},{"id":"upgrade-resume-do-it-again","path":"upgrades/resume-do-it-again/upgrade.json"}],"gauntlets":[{"id":"gauntlet-humanized-evidence-presentation","path":"gauntlets/humanized-evidence-presentation.json"},{"id":"gauntlet-resume-master-psysoc-x-web-design-pro","path":"gauntlets/resume-master-psysoc-x-web-design-pro.json"}],"planned":[{"id":"stone-elite-pro-builder","state":"SPECIFICATION_PENDING"},{"id":"stone-juggernaut-jack","state":"SPECIFICATION_PENDING"}],"promotion_receipt":"receipts/2026-08-06_resume-master-psysoc-x-web-design-pro_promotion.json"}
+{
+  "schema": "glaciereq.infinity-stone-registry.v1",
+  "version": "0.3.0",
+  "status": "CANDIDATE_EXTENSION",
+  "evidence_level": "CANDIDATE",
+  "prior_verified_baseline": {
+    "version": "0.2.0",
+    "status": "VERIFIED",
+    "evidence_level": "TEST",
+    "promotion_receipt": "receipts/2026-08-06_resume-master-psysoc-x-web-design-pro_promotion.json",
+    "post_promotion_validation": "receipts/2026-08-02_psysoc-x_v0.1.0_post-promotion-validation.json"
+  },
+  "candidate_extension": {
+    "purpose": "Add multidimensional website experience architecture and repository-scale Monolith cognition without discarding the verified 0.2.0 baseline.",
+    "required_validation": [
+      "registry and schema validation",
+      "deterministic composition tests",
+      "Monolith repository-scale contract tests",
+      "Web Design multidimensional contract tests",
+      "browser, accessibility, privacy, freshness, and production reconstruction receipts"
+    ]
+  },
+  "stones": [
+    {"id": "stone-psysoc-x", "path": "stones/psysoc-x/stone.json"},
+    {"id": "stone-resume-master", "path": "stones/resume-master/stone.json"},
+    {"id": "stone-web-design-pro", "path": "stones/web-design-pro/stone.json"},
+    {"id": "stone-monolith", "path": "stones/monolith/stone.json"}
+  ],
+  "upgrades": [
+    {"id": "upgrade-do-it-again", "path": "upgrades/do-it-again/upgrade.json"},
+    {"id": "upgrade-resume-do-it-again", "path": "upgrades/resume-do-it-again/upgrade.json"}
+  ],
+  "gauntlets": [
+    {"id": "gauntlet-humanized-evidence-presentation", "path": "gauntlets/humanized-evidence-presentation.json"},
+    {"id": "gauntlet-resume-master-psysoc-x-web-design-pro", "path": "gauntlets/resume-master-psysoc-x-web-design-pro.json"},
+    {"id": "gauntlet-website-masterclass-monolith", "path": "gauntlets/website-masterclass-monolith.json"}
+  ],
+  "planned": [
+    {"id": "stone-elite-pro-builder", "state": "SPECIFICATION_PENDING"},
+    {"id": "stone-juggernaut-jack", "state": "SPECIFICATION_PENDING"}
+  ],
+  "promotion_receipt": null
+}
