@@ -1,0 +1,57 @@
+{
+  "schema": "glaciereq.infinity-stone-candidate-receipt.v1",
+  "date": "2026-08-06",
+  "repository": "GlacierEQ/AKOS",
+  "branch": "feature/resume-master-psysoc-x-web-design-pro",
+  "state": "CANDIDATE",
+  "evidence_level": "UNVERIFIED",
+  "loadout": {
+    "stones": [
+      "stone-psysoc-x",
+      "stone-resume-master",
+      "stone-web-design-pro"
+    ],
+    "upgrades": [
+      "upgrade-resume-do-it-again"
+    ],
+    "gauntlet": "gauntlet-resume-master-psysoc-x-web-design-pro",
+    "digest": "68ff7e79d7127bd568d27e700bf3189660ce721b15bf420d17f63ebec298131d"
+  },
+  "resources": {
+    "personas": 7,
+    "resume_skills": 8,
+    "web_skills": 8,
+    "resume_tools": 7,
+    "web_tools": 8,
+    "resume_connectors": 7,
+    "web_connectors": 6,
+    "templates": 4,
+    "schemas": 3,
+    "test_files": 3,
+    "workflow": ".github/workflows/resume-master-stones.yml"
+  },
+  "bound_artifacts": {
+    "docx_sha256": "a458bf7b79aaeb83675cfa1c87305fb8a6c52d3515f26a738fc94a52d9942cbe",
+    "pdf_sha256": "56799cbe9d8ed2a65e72e504490ac94ee3c28a08ead81a81ce577bf59b321ab5",
+    "ats_sha256": "7296e3b1fd952b2a313d4e6ea253346be851e9cee83179516cc041a7cd86cb05",
+    "manifest_sha256": "f98c39f9bddb7b511b7a634f25992512762dfef6b6685e1420386075f0b680b8",
+    "zip_sha256": "d92ed3260e003567a6a7a6756504bfb4838b611dd34ed746f4d301454fc593a9",
+    "binary_bytes_committed_here": false
+  },
+  "promotion_requirements": [
+    "exact-head Python 3.11, 3.12, and 3.13 workflow success",
+    "registry and composition tests pass",
+    "resource and template contract tests pass",
+    "candidate receipt replaced or supplemented by a promotion receipt",
+    "binary artifact integration separately verified before public promotion"
+  ],
+  "non_claims": [
+    "production deployment",
+    "ATS-vendor acceptance",
+    "accessibility certification",
+    "recruiter response",
+    "hiring outcome",
+    "business impact"
+  ],
+  "receipt_digest": "ce53711a1b00b3eb9a8b7f3499715fb2ee7d4c6ad12b55d0736dc23790968e01"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "glaciereq.web-design-pro-cases.v1",
+  "cases": [
+    {
+      "id": "first-screen-role-clarity",
+      "expected_markers": [
+        "Applied AI Systems Architect",
+        "69/69",
+        "Download PDF"
+      ]
+    },
+    {
+      "id": "script-free",
+      "forbidden_markers": [
+        "<script",
+        "analytics",
+        "tracker"
+      ]
+    },
+    {
+      "id": "semantic-landmarks",
+      "expected_markers": [
+        "<header",
+        "<main",
+        "<section",
+        "<footer",
+        "Skip to content"
+      ]
+    },
+    {
+      "id": "responsive-css",
+      "expected_markers": [
+        "@media",
+        "grid-template-columns",
+        "clamp("
+      ]
+    },
+    {
+      "id": "accessibility-boundary",
+      "expected_markers": [
+        ":focus-visible",
+        "prefers-reduced-motion"
+      ],
+      "non_claim": "no certification"
+    },
+    {
+      "id": "artifact-links",
+      "expected_markers": [
+        "/downloads/Casey_Barton_Resume.pdf",
+        "/downloads/Casey_Barton_Resume.docx",
+        "/resume/ats.txt"
+      ]
+    }
+  ]
+}

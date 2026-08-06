@@ -1,0 +1,176 @@
+{
+  "schema": "glaciereq.infinity-stone.v1",
+  "status": "CANDIDATE",
+  "identity": {
+    "id": "stone-resume-master",
+    "name": "Resume Master",
+    "version": "0.1.0",
+    "domain": "evidence-bound-resume-intelligence-and-artifact-generation"
+  },
+  "purpose": {
+    "owns": [
+      "one canonical resume fact graph",
+      "claim-to-source and evidence-state reconciliation",
+      "human, ATS, and machine resume projections",
+      "artifact identity, packaging, and release receipts",
+      "role-specific selection without factual drift"
+    ],
+    "does_not_own": [
+      "inventing experience, credentials, impact, employers, dates, metrics, or affiliations",
+      "deciding psychological presentation strategy without PSYSOC-X",
+      "visual design authority owned by Web Design Pro",
+      "sending applications or external messages without explicit authorization"
+    ]
+  },
+  "activation": {
+    "aliases": [
+      "resume master",
+      "master resume stone",
+      "resume intelligence stone",
+      "evidence-bound resume"
+    ],
+    "core_law": "One fact graph may produce many projections; no projection may exceed its evidence."
+  },
+  "capabilities": {
+    "skills": [
+      "resume-fact-graph-reconciliation",
+      "claim-source-binding",
+      "evidence-state-normalization",
+      "role-fit-projection",
+      "ats-safe-serialization",
+      "human-resume-information-architecture",
+      "artifact-render-verification",
+      "release-receipt-generation"
+    ],
+    "protocols": [
+      "prior-canonical-artifact-first",
+      "source-before-summary",
+      "facts-invariant",
+      "evidence-state-monotonicity",
+      "human-and-machine-parity",
+      "render-before-release",
+      "hash-before-promotion"
+    ]
+  },
+  "judgment": {
+    "governing_laws": [
+      "The canonical fact graph controls every resume projection.",
+      "A source record is not automatically an approved resume claim.",
+      "Reviewed code is not executed proof; execution is not deployment; deployment is not business impact.",
+      "Dates, titles, metrics, artifact identifiers, limits, and non-affiliation language are invariants.",
+      "Selection and sequence may change for audience fit, but factual meaning may not.",
+      "Every released artifact must have a stable identity, exact hash, and explicit evidence state."
+    ],
+    "priority_order": [
+      "truth",
+      "role clarity",
+      "decision relevance",
+      "proof",
+      "scan speed",
+      "ATS compatibility",
+      "visual polish"
+    ]
+  },
+  "interfaces": {
+    "inputs": [
+      "canonical resume data",
+      "prior verified resume artifacts",
+      "job description or target role",
+      "repository-native receipts",
+      "explicit audience context",
+      "artifact format requirements",
+      "privacy and disclosure policy"
+    ],
+    "outputs": [
+      "canonical-resume-master",
+      "human-resume",
+      "ats-resume",
+      "machine-resume-json",
+      "claim-source-matrix",
+      "artifact-manifest",
+      "sha256-checksums",
+      "release-receipt"
+    ],
+    "tools": [
+      "resume-fact-reconciler",
+      "claim-boundary-linter",
+      "ats-serializer",
+      "document-renderer",
+      "visual-qa-inspector",
+      "artifact-hasher",
+      "release-receipt-writer"
+    ]
+  },
+  "resources": {
+    "personas": "stones/resume-master/personas/personas.json",
+    "skills": "stones/resume-master/skills/SKILLS.md",
+    "canonical_data": "stones/resume-master/resources/casey-barton.resume-master.v18.json",
+    "resource_registry": "stones/resume-master/resources/resource-registry.json",
+    "tools": "stones/resume-master/tools/tools.json",
+    "connectors": "stones/resume-master/connectors/connectors.json",
+    "templates": [
+      "stones/resume-master/templates/master-resume.md",
+      "stones/resume-master/templates/ats-resume.txt"
+    ],
+    "tests": "stones/resume-master/tests/cases.json"
+  },
+  "boundaries": {
+    "forbidden": [
+      "fabricating or inflating any resume claim",
+      "silently changing dates, titles, metrics, employers, credentials, or affiliations",
+      "treating repository count, code review, simulation, or generated output as demonstrated impact",
+      "including private legal, family, medical, financial, credential, or dispute material without explicit approval",
+      "publishing an artifact that has not been rendered and inspected",
+      "promoting candidate or blocked evidence to verified"
+    ],
+    "human_control_required": [
+      "final claim approval",
+      "private or sensitive source inclusion",
+      "target-role strategy when tradeoffs materially change positioning",
+      "external application submission",
+      "public production promotion"
+    ],
+    "truth_requirements": [
+      "canonical source data controls",
+      "all claims carry an evidence state",
+      "artifact hashes are computed from exact bytes",
+      "non-claims and blockers remain visible",
+      "PSYSOC-X may calibrate presentation but may not promote a claim"
+    ]
+  },
+  "composition": {
+    "compatible_stones": [
+      "stone-psysoc-x",
+      "stone-web-design-pro"
+    ],
+    "incompatible_stones": [],
+    "compatible_upgrades": [
+      "upgrade-resume-do-it-again"
+    ],
+    "precedence": [
+      "kernel constitution",
+      "canonical evidence authority",
+      "resume master boundaries",
+      "PSYSOC-X calibration",
+      "mission instructions",
+      "style"
+    ]
+  },
+  "verification": {
+    "evidence_level": "UNVERIFIED",
+    "tests": [
+      "tests/test_resume_master_stones.py",
+      "stones/resume-master/tests/cases.json"
+    ],
+    "status_rule": "CANDIDATE until exact-head CI validates registry loading, composition, resources, templates, and refusal cases",
+    "prior_artifact_scope": {
+      "name": "CASEY_BARTON_RESUME_MASTER_PSYSOC_X_V18_WEB_DESIGN_PRO_2026-08-06",
+      "docx_sha256": "a458bf7b79aaeb83675cfa1c87305fb8a6c52d3515f26a738fc94a52d9942cbe",
+      "pdf_sha256": "56799cbe9d8ed2a65e72e504490ac94ee3c28a08ead81a81ce577bf59b321ab5",
+      "ats_sha256": "7296e3b1fd952b2a313d4e6ea253346be851e9cee83179516cc041a7cd86cb05",
+      "zip_sha256": "d92ed3260e003567a6a7a6756504bfb4838b611dd34ed746f4d301454fc593a9",
+      "page_count": 2,
+      "artifact_state": "GENERATED_AND_RENDER_INSPECTED_OUTSIDE_THIS_REPOSITORY"
+    }
+  }
+}

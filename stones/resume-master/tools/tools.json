@@ -1,0 +1,94 @@
+{
+  "schema": "glaciereq.infinity-tool-registry.v1",
+  "stone": "stone-resume-master",
+  "status": "CANDIDATE",
+  "tools": [
+    {
+      "id": "resume-fact-reconciler",
+      "mode": "READ_ANALYZE",
+      "inputs": [
+        "sources",
+        "prior package"
+      ],
+      "outputs": [
+        "canonical fact graph"
+      ],
+      "failure": "unresolved contradiction"
+    },
+    {
+      "id": "claim-boundary-linter",
+      "mode": "READ_ANALYZE",
+      "inputs": [
+        "claims",
+        "evidence states"
+      ],
+      "outputs": [
+        "violations",
+        "approved claims"
+      ],
+      "failure": "unsupported promotion"
+    },
+    {
+      "id": "ats-serializer",
+      "mode": "GENERATE",
+      "inputs": [
+        "approved facts",
+        "role vocabulary"
+      ],
+      "outputs": [
+        "plain text",
+        "machine JSON"
+      ],
+      "failure": "semantic divergence"
+    },
+    {
+      "id": "document-renderer",
+      "mode": "GENERATE",
+      "inputs": [
+        "document source"
+      ],
+      "outputs": [
+        "PDF",
+        "page images"
+      ],
+      "failure": "render error"
+    },
+    {
+      "id": "visual-qa-inspector",
+      "mode": "READ_ANALYZE",
+      "inputs": [
+        "rendered pages"
+      ],
+      "outputs": [
+        "layout findings"
+      ],
+      "failure": "uninspected page"
+    },
+    {
+      "id": "artifact-hasher",
+      "mode": "READ_ANALYZE",
+      "inputs": [
+        "exact bytes"
+      ],
+      "outputs": [
+        "SHA-256",
+        "byte count"
+      ],
+      "failure": "missing bytes"
+    },
+    {
+      "id": "release-receipt-writer",
+      "mode": "GENERATE",
+      "inputs": [
+        "states",
+        "hashes",
+        "tests",
+        "limits"
+      ],
+      "outputs": [
+        "machine-readable receipt"
+      ],
+      "failure": "incomplete gate evidence"
+    }
+  ]
+}

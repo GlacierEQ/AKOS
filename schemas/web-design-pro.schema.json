@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glaciereq.dev/schemas/web-design-pro.design-system.v1.json",
+  "title": "Web Design Pro Design System",
+  "type": "object",
+  "required": [
+    "schema",
+    "version",
+    "status",
+    "principles",
+    "tokens",
+    "budgets"
+  ],
+  "properties": {
+    "schema": {
+      "const": "glaciereq.web-design-pro.design-system.v1"
+    },
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "principles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "tokens": {
+      "type": "object"
+    },
+    "budgets": {
+      "type": "object",
+      "required": [
+        "client_scripts",
+        "trackers",
+        "third_party_fonts"
+      ],
+      "properties": {
+        "client_scripts": {
+          "const": 0
+        },
+        "trackers": {
+          "const": 0
+        },
+        "third_party_fonts": {
+          "const": 0
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

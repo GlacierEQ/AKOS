@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glaciereq.dev/schemas/infinity-persona-registry.v1.json",
+  "title": "Infinity Persona Registry",
+  "type": "object",
+  "required": [
+    "schema",
+    "stone",
+    "status",
+    "personas"
+  ],
+  "properties": {
+    "schema": {
+      "const": "glaciereq.infinity-persona-registry.v1"
+    },
+    "stone": {
+      "type": "string",
+      "pattern": "^stone-[a-z0-9-]+$"
+    },
+    "status": {
+      "type": "string"
+    },
+    "personas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "mission",
+          "priorities",
+          "required_inputs",
+          "outputs",
+          "refusals"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^persona-[a-z0-9-]+$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mission": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priorities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "required_inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "refusals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

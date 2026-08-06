@@ -1,0 +1,38 @@
+{
+  "schema": "glaciereq.infinity-connector-registry.v1",
+  "stone": "stone-web-design-pro",
+  "status": "CANDIDATE",
+  "connectors": [
+    {
+      "id": "github",
+      "role": "canonical web source and release history",
+      "state": "DECLARED"
+    },
+    {
+      "id": "vercel",
+      "role": "preview and production deployment",
+      "state": "OPTIONAL_RUNTIME"
+    },
+    {
+      "id": "browser-preview",
+      "role": "responsive and accessibility inspection",
+      "state": "REQUIRED_FOR_PROMOTION"
+    },
+    {
+      "id": "artifact-source",
+      "role": "exact DOCX, PDF, ATS, and JSON downloads",
+      "state": "REQUIRED_FOR_PROMOTION"
+    },
+    {
+      "id": "dns-and-canonical-url",
+      "role": "canonical identity and redirects",
+      "state": "REQUIRED_FOR_PRODUCTION"
+    },
+    {
+      "id": "security-header-check",
+      "role": "CSP, HSTS, frame, content-type, and permissions policy verification",
+      "state": "REQUIRED_FOR_PRODUCTION"
+    }
+  ],
+  "authority_boundary": "Connectors may retrieve, preview, or verify. Production mutation requires explicit release authority and a passing preview receipt."
+}

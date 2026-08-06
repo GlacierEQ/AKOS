@@ -1,0 +1,68 @@
+{
+  "schema": "glaciereq.infinity-tool-registry.v1",
+  "stone": "stone-web-design-pro",
+  "status": "CANDIDATE",
+  "tools": [
+    {
+      "id": "information-architecture-planner",
+      "mode": "ANALYZE",
+      "outputs": [
+        "page hierarchy",
+        "review paths"
+      ]
+    },
+    {
+      "id": "design-token-compiler",
+      "mode": "GENERATE",
+      "outputs": [
+        "CSS variables",
+        "token manifest"
+      ]
+    },
+    {
+      "id": "semantic-html-linter",
+      "mode": "VERIFY",
+      "outputs": [
+        "semantic findings"
+      ]
+    },
+    {
+      "id": "responsive-preview-runner",
+      "mode": "VERIFY",
+      "outputs": [
+        "viewport captures",
+        "reflow findings"
+      ]
+    },
+    {
+      "id": "accessibility-auditor",
+      "mode": "VERIFY",
+      "outputs": [
+        "severity-classified findings"
+      ],
+      "non_claim": "not a certification"
+    },
+    {
+      "id": "link-and-artifact-validator",
+      "mode": "VERIFY",
+      "outputs": [
+        "route and download status"
+      ]
+    },
+    {
+      "id": "performance-budget-checker",
+      "mode": "VERIFY",
+      "outputs": [
+        "budget findings"
+      ]
+    },
+    {
+      "id": "deployment-verifier",
+      "mode": "VERIFY",
+      "outputs": [
+        "preview receipt",
+        "production receipt"
+      ]
+    }
+  ]
+}
