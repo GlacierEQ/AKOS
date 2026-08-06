@@ -1,0 +1,88 @@
+{
+  "authority": {
+    "audience_calibration": "stone-psysoc-x",
+    "external_actions": "explicit human authorization",
+    "resume_projection": "stone-resume-master",
+    "truth": "canonical career graph",
+    "web_projection": "stone-web-design-pro"
+  },
+  "id": "gauntlet-career-intelligence-platform-v2",
+  "outputs": [
+    "executive resume",
+    "ATS resume",
+    "recruiter resume",
+    "government resume",
+    "startup resume",
+    "one-page resume",
+    "two-page resume",
+    "portfolio PWA",
+    "architecture site",
+    "LinkedIn rewrite",
+    "GitHub profile rewrite",
+    "cover letter",
+    "executive bio",
+    "speaker bio",
+    "ATS report",
+    "gap analysis",
+    "interview packet",
+    "STAR library",
+    "resource index",
+    "deployment bundle"
+  ],
+  "pipeline": [
+    "load canonical graph",
+    "resolve explicit reader profile",
+    "analyze target role and job text",
+    "map ontology skills to evidence",
+    "build five resume variants",
+    "generate profile, letter, bio, interview, and portfolio projections",
+    "run persona council",
+    "hash every declared output",
+    "build deterministic archives",
+    "verify and emit receipt"
+  ],
+  "purpose": "Build a complete, evidence-bound career operating system from one canonical career graph.",
+  "resources": {
+    "ats_systems": "career_intelligence/resources/ats-systems.v1.json",
+    "connectors": "career_intelligence/resources/connector-registry.v1.json",
+    "loadout": "career_intelligence/resources/infinity-gauntlet-v2.json",
+    "persona_council": "career_intelligence/resources/persona-council.v1.json",
+    "reader_profiles": "career_intelligence/resources/reader-profiles.v1.json",
+    "skill_ontology": "career_intelligence/resources/skill-ontology.v1.json"
+  },
+  "schema": "glaciereq.infinity-gauntlet.v1",
+  "status": "CANDIDATE",
+  "stones": [
+    "stone-resume-master",
+    "stone-psysoc-x",
+    "stone-web-design-pro",
+    "stone-skill-intelligence",
+    "stone-career-resources",
+    "stone-persona-council",
+    "stone-career-connectors",
+    "stone-ats-intelligence",
+    "stone-interview-intelligence",
+    "stone-job-intelligence",
+    "stone-portfolio-intelligence"
+  ],
+  "upgrades": [
+    "upgrade-resume-do-it-again"
+  ],
+  "verification": {
+    "evidence_level": "TEST",
+    "non_claims": [
+      "production deployment",
+      "live connector execution",
+      "current salary estimate without market evidence",
+      "ATS-vendor acceptance",
+      "accessibility certification",
+      "recruiter response",
+      "hiring outcome"
+    ],
+    "status_rule": "CANDIDATE until exact-head matrix passes",
+    "tests": [
+      "tests/test_career_platform_v2.py"
+    ]
+  },
+  "version": "0.1.0"
+}
