@@ -1,4 +1,4 @@
-"""Verify the canonical stone registry and emit an atomic receipt."""
+"""Verify the canonical stone registry and emit atomic receipts."""
 
 from __future__ import annotations
 
@@ -9,9 +9,27 @@ from pathlib import Path
 
 from infinity_stones.composition import compose_loadout
 from infinity_stones.models import AudienceContext
+from infinity_stones.projections import ProjectionLayer, build_projection_bundle
 from infinity_stones.psysoc_x import calibrate
 from infinity_stones.receipts import digest, write_atomic_json
 from infinity_stones.registry import StoneRegistry
+
+
+def _projection_receipt(registry: StoneRegistry) -> dict[str, object]:
+    bundles = [
+        build_projection_bundle(registry.stones[stone_id])
+        for stone_id in sorted(registry.stones)
+    ]
+    receipt: dict[str, object] = {
+        "schema": "glaciereq.infinity-stone-projection-receipt.v1",
+        "layers": [layer.value for layer in ProjectionLayer],
+        "stone_count": len(bundles),
+        "projection_count": len(bundles) * len(ProjectionLayer),
+        "bundles": bundles,
+        "conclusion": "VERIFIED",
+    }
+    receipt["digest"] = digest(receipt)
+    return receipt
 
 
 def verify(root: Path) -> dict[str, object]:
@@ -40,8 +58,9 @@ def verify(root: Path) -> dict[str, object]:
             failures.append(case["id"])
         results.append({"id": case["id"], "passed": passed, "actual": actual})
 
+    projection_receipt = _projection_receipt(registry)
     receipt = {
-        "schema": "glaciereq.infinity-stone-verification-receipt.v1",
+        "schema": "glaciereq.infinity-stone-verification-receipt.v2",
         "registry": {
             "stones": sorted(registry.stones),
             "upgrades": sorted(registry.upgrades),
@@ -56,6 +75,7 @@ def verify(root: Path) -> dict[str, object]:
         "passed": len(results) - len(failures),
         "failed": len(failures),
         "failures": failures,
+        "projection_receipt": projection_receipt,
         "conclusion": "VERIFIED" if not failures else "FAILED",
     }
     receipt["digest"] = digest(receipt)
@@ -70,9 +90,15 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         default=Path("artifacts/ci/infinity-stone-receipt.json"),
     )
+    parser.add_argument(
+        "--projection-output",
+        type=Path,
+        default=Path("artifacts/ci/infinity-stone-projections.json"),
+    )
     args = parser.parse_args(argv)
     receipt = verify(args.root.resolve())
     write_atomic_json(args.output, receipt)
+    write_atomic_json(args.projection_output, receipt["projection_receipt"])
     print(json.dumps(receipt, indent=2, sort_keys=True))
     return 0 if receipt["conclusion"] == "VERIFIED" else 1
 
