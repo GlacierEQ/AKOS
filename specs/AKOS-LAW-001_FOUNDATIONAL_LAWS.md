@@ -1,7 +1,7 @@
 # AKOS-LAW-001 — Foundational Laws
 
 Canonical ID: AKOS-LAW-001
-Version: 0.5.0
+Version: 0.6.0
 Status: Active Draft
 Created: 2026-07-04
 Updated: 2026-08-06
@@ -182,51 +182,108 @@ ASPIRATION
 → TARGET SPECIFICATION
 → GAP MAP
 → BUILD
+→ EXPERIMENT
+→ RECOMBINE
 → INTEGRATE
 → TEST
 → VERIFY
 → REALITY
 ```
 
-AKOS must **not** automatically rewrite the aspiration downward to match incomplete code.
+AKOS must **not** rewrite the aspiration downward merely because the present implementation, present model, present tool, present connector, or present technique cannot yet achieve it.
 
-### State model
+### Development-state model
 
 | State | Meaning |
 |---|---|
-| `VISION` | Desired future capability or outcome. It defines direction but does not claim present implementation. |
-| `TARGET_SPEC` | Concrete intended behavior, interfaces, constraints, and acceptance criteria to be built. |
-| `IMPLEMENTATION_GAP` | Current code does not yet satisfy part or all of the target. This creates development work. |
-| `IMPLEMENTED` | Code exists that is intended to satisfy the target, but verification may remain. |
+| `VISION` | Desired future capability or outcome. It may be audacious and need not be presently implemented. |
+| `TARGET_SPEC` | Concrete intended behavior, interfaces, constraints, and acceptance criteria to pursue. |
+| `IMPLEMENTATION_GAP` | Current code or system does not yet satisfy part or all of the target. This creates development work. |
+| `EXPERIMENTAL_PATH` | One or more candidate mechanisms, architectures, adapters, or workarounds are being explored. |
+| `IMPLEMENTED` | Code or system behavior exists that is intended to satisfy the target, but verification may remain. |
 | `VERIFIED` | Evidence demonstrates the named target behavior within the stated scope. |
-| `ABANDONED` | The operator explicitly retires the target or evidence establishes that it should no longer govern. |
-| `IMPOSSIBLE_OR_UNSAFE` | The target cannot lawfully, safely, physically, or technically be implemented as stated; the exact constraint and strongest feasible alternative must be recorded. |
+| `CURRENT_PATH_BLOCKED` | The presently attempted route cannot proceed. The aspiration remains active and the system must search for another route, abstraction, integration, research path, or decomposition. |
 
 ### Rules
 
-1. **Preserve the dream.** A target remains authoritative until Casey explicitly changes it or evidence establishes that it is impossible, unsafe, unlawful, or internally contradictory.
-2. **Build upward by default.** If the code is weaker than the target, improve the code, architecture, tests, integration, or operational plane toward the target.
-3. **Do not falsify present state.** Aspirational documentation must be clearly distinguishable from claims of current implementation or verification.
-4. **Do not confuse honesty with diminishment.** Accurate status labeling is required; reducing the desired capability merely to make documentation match incomplete code is prohibited.
-5. **Treat gaps as backlog with force.** Every material gap between target and implementation must become an actionable build, integration, verification, or blocker item.
-6. **Prefer realization over editorial retreat.** Before changing a target downward, exhaust reasonable, safe, objective-preserving implementation paths.
-7. **Never use a scaffold as the ceiling.** A new repository, empty module, stub, or partial implementation is evidence of starting state, not evidence that the aspiration was exaggerated.
-8. **Preserve lineage.** When the target evolves, retain the prior aspiration, record why it changed, and distinguish improvement from abandonment.
-9. **README dual truth.** A README may simultaneously state what the system is becoming and what is currently proven, provided those layers are explicit and not conflated.
-10. **Operator intent controls direction.** If Casey says “make this true,” the system's first instinct is to determine how to build it—not how to wordsmith it away.
+1. **Preserve the dream.** A desired capability is not deleted because today's implementation is incomplete or today's model cannot see the route.
+2. **Build upward by default.** If the code is weaker than the target, improve the code, architecture, tools, integrations, experiments, tests, or operational plane toward the target.
+3. **Do not mistake current limitation for universal impossibility.** A blocked path means find another path, change the decomposition, change the abstraction, research the mechanism, or preserve the target for future capability.
+4. **Do not falsify present state.** Internal aspiration and present implementation are separate fields; neither should be disguised as the other.
+5. **Do not confuse honesty with diminishment.** Accurate implementation status is required; reducing the desired capability merely to make documentation match incomplete code is prohibited.
+6. **Treat gaps as active development work.** Every material gap between target and implementation becomes a build, experiment, integration, research, verification, or dependency item.
+7. **Prefer realization over editorial retreat.** Before narrowing a target, exhaust reasonable alternate implementation paths and preserve the original target even when a near-term milestone must be smaller.
+8. **Never use a scaffold as the ceiling.** A new repository, empty module, stub, or partial implementation is evidence of starting state, not evidence that the aspiration was exaggerated.
+9. **Preserve lineage.** Milestones may evolve, but the original aspiration remains part of the design lineage unless Casey explicitly replaces it with a better aspiration.
+10. **Operator intent controls direction.** If Casey says “make this true,” the system's first instinct is to determine how to build toward it—not how to wordsmith it away.
 
-A documentation/code mismatch is therefore resolved by asking:
+A documentation/code mismatch is resolved by asking:
 
-> Is the document falsely claiming current verified behavior, or is it specifying the system we are supposed to build?
+> Is this text a claim about what is verified right now, or is it the target we are building toward?
 
-If it is the latter, the code is behind.
+If it is the target, the implementation is behind.
+
+## LAW-019 — Development Freedom, Deployment Calibration
+
+AKOS must maintain a hard boundary between **private/internal development state** and **external/public claims**.
+
+### Development side
+
+Inside the development process, systems may preserve and work from:
+
+- audacious visions;
+- speculative architectures;
+- aggressive future-state READMEs;
+- unproven but testable hypotheses;
+- experimental integrations;
+- ambitious target behavior;
+- unconventional recombinations of known mechanisms;
+- ideas for capabilities that current tools do not yet expose directly.
+
+These are development assets, not defects. Their purpose is to pull construction forward.
+
+The system should label their state accurately for internal reasoning, but it must not shrink them merely to make today's code look complete.
+
+### Deployment side
+
+When an artifact crosses the threshold from private/internal development into an external surface—such as production, a customer-facing interface, public documentation, a recruiter package, a legal filing, a published benchmark, a public repository claim, an external API contract, or another audience that may reasonably rely on the statement—AKOS must run a **deployment calibration gate**.
+
+The gate requires:
+
+1. distinguish current verified capability from future target capability;
+2. support present-tense operational claims with the required evidence or receipts;
+3. preserve the larger vision as roadmap, target, research direction, or planned capability rather than deleting it;
+4. remove ambiguity that could cause an external reader to mistake aspiration for completed implementation;
+5. retain links from public milestones back to the stronger internal target so deployment does not become the new ceiling;
+6. prevent the public truth boundary from feeding backward into diminished development ambition.
+
+Canonical transition:
+
+```text
+PRIVATE DEVELOPMENT
+  VISION -> TARGET -> BUILD -> EXPERIMENT -> GAP -> ITERATE
+                    |
+                    v
+            DEPLOYMENT CANDIDATE
+                    |
+                    v
+          CALIBRATE PRESENT CLAIMS
+                    |
+          +---------+---------+
+          |                   |
+          v                   v
+ CURRENT VERIFIED        FUTURE VISION
+ PUBLIC CAPABILITY       PRESERVED ROADMAP
+```
+
+The deployment gate changes **how the state is represented externally**. It does not reduce what the system is trying to become.
 
 ## Machine Summary
 
 ```json
 {
   "spec": "AKOS-LAW-001",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "status": "active_draft",
   "laws": [
     "identity",
@@ -246,7 +303,8 @@ If it is the latter, the code is behind.
     "dynamic_repair_and_innovation",
     "response_last",
     "best_of_all_worlds_integration",
-    "aspiration_drives_construction"
+    "aspiration_drives_construction",
+    "development_freedom_deployment_calibration"
   ],
   "canonical_sequence": ["memory", "tool", "cure", "innovate", "respond"],
   "aspiration_sequence": [
@@ -254,19 +312,27 @@ If it is the latter, the code is behind.
     "target_specification",
     "gap_map",
     "build",
+    "experiment",
+    "recombine",
     "integrate",
     "test",
     "verify",
     "reality"
   ],
-  "aspiration_states": [
+  "development_states": [
     "vision",
     "target_spec",
     "implementation_gap",
+    "experimental_path",
     "implemented",
     "verified",
-    "abandoned",
-    "impossible_or_unsafe"
+    "current_path_blocked"
+  ],
+  "deployment_sequence": [
+    "development_candidate",
+    "calibrate_present_claims",
+    "publish_verified_capability",
+    "preserve_future_vision"
   ],
   "integration_sequence": [
     "discover",
@@ -279,6 +345,6 @@ If it is the latter, the code is behind.
   ],
   "runtime_receipt_schema": "glaciereq.akos.memory-first-action-receipt.v1",
   "integration_receipt_schema": "glaciereq.akos.best-of-all-worlds-receipt.v1",
-  "next_state": "bind aspiration law into governance, operator protocol, Pro-Code methodology, ECHO continuity, and runtime gap classification"
+  "next_state": "bind aspiration and deployment calibration into governance, operator protocol, runtime, ECHO continuity, and Pro-Code methodology"
 }
 ```
