@@ -72,6 +72,7 @@ known-first-party = [
 "career_intelligence/interview.py" = ["E501"]
 "career_intelligence/job_intelligence.py" = ["E501"]
 "career_intelligence/persona_council.py" = ["E501"]
+"career_intelligence/personas.py" = ["E501"]
 "career_intelligence/platform_artifacts.py" = ["E501", "RUF001"]
 "career_intelligence/platform_builder.py" = ["E501", "UP035"]
 "career_intelligence/platform_common.py" = ["UP035"]
