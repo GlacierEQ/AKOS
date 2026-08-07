@@ -42,11 +42,13 @@ REQUIRED_RESOURCE_PATHS = (
     "stones/web-design-pro/personas/personas.json",
     "stones/web-design-pro/skills/SKILLS.md",
     "stones/web-design-pro/resources/design-system.json",
+    "stones/web-design-pro/resources/experience-graph.json",
     "stones/web-design-pro/tools/tools.json",
     "stones/web-design-pro/connectors/connectors.json",
     "stones/web-design-pro/templates/index.html",
     "stones/web-design-pro/templates/styles.css",
     "stones/web-design-pro/tests/cases.json",
+    "stones/web-design-pro/tests/multidimensional-cases.json",
     "upgrades/resume-do-it-again/upgrade.json",
     "gauntlets/resume-master-psysoc-x-web-design-pro.json",
 )
@@ -109,6 +111,24 @@ def _declared_case_checks(
     return results
 
 
+def _multidimensional_contract_is_well_formed(data: dict[str, Any]) -> bool:
+    cases = data.get("cases")
+    return (
+        data.get("schema") == "glaciereq.web-design-pro.multidimensional-cases.v1"
+        and data.get("status") == "CANDIDATE"
+        and isinstance(cases, list)
+        and bool(cases)
+        and all(
+            isinstance(case, dict)
+            and all(
+                isinstance(case.get(field), str) and bool(case[field].strip())
+                for field in ("id", "requirement", "failure")
+            )
+            for case in cases
+        )
+    )
+
+
 def verify(root: Path) -> dict[str, Any]:
     missing = [path for path in REQUIRED_RESOURCE_PATHS if not (root / path).is_file()]
     errors: list[str] = []
@@ -129,6 +149,7 @@ def verify(root: Path) -> dict[str, Any]:
     design_system: dict[str, Any] = {}
     web_projection: dict[str, Any] = {}
     cases_data: dict[str, Any] = {}
+    multidimensional_cases: dict[str, Any] = {}
     html = ""
     css = ""
 
@@ -158,6 +179,11 @@ def verify(root: Path) -> dict[str, Any]:
                 root / "stones" / "web-design-pro" / "tests" / "cases.json",
                 "json",
             ),
+            "multidimensional-cases": (
+                root / "stones" / "web-design-pro" / "tests" /
+                "multidimensional-cases.json",
+                "json",
+            ),
             "html": (
                 root / "stones" / "web-design-pro" / "templates" / "index.html",
                 "text",
@@ -178,6 +204,7 @@ def verify(root: Path) -> dict[str, Any]:
         design_system = loaded.get("design-system", {})
         web_projection = loaded.get("web-projection", {})
         cases_data = loaded.get("web-cases", {})
+        multidimensional_cases = loaded.get("multidimensional-cases", {})
         html = loaded.get("html", "")
         css = loaded.get("css", "")
 
@@ -236,6 +263,9 @@ def verify(root: Path) -> dict[str, Any]:
         "declared_web_cases_pass": (
             bool(declared_case_checks) and all(declared_case_checks.values())
         ),
+        "multidimensional_contract_declared": (
+            _multidimensional_contract_is_well_formed(multidimensional_cases)
+        ),
     }
 
     conclusion = "VERIFIED" if all(checks.values()) and not errors else "FAILED"
@@ -258,6 +288,8 @@ def verify(root: Path) -> dict[str, Any]:
             "ATS-vendor acceptance",
             "accessibility certification",
             "recruiter response or hiring outcome",
+            "browser execution of multidimensional candidate behaviors",
+            "production reconstruction of the multidimensional candidate extension",
         ],
     }
     receipt["receipt_digest"] = digest(receipt)
