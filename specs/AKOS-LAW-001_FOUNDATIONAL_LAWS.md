@@ -1,10 +1,10 @@
 # AKOS-LAW-001 — Foundational Laws
 
 Canonical ID: AKOS-LAW-001
-Version: 0.4.0
+Version: 0.5.0
 Status: Active Draft
 Created: 2026-07-04
-Updated: 2026-07-30
+Updated: 2026-08-06
 Repository: GlacierEQ/AKOS
 Path: specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md
 
@@ -167,12 +167,66 @@ The canonical decision question is:
 
 A merge is not successful because code combined cleanly. A replacement is not successful because it is newer. Success requires a verified net improvement across the system boundary.
 
+## LAW-018 — Aspiration Drives Construction
+
+A declared aspiration, target architecture, future-state README, design document, specification, or operator statement is not defective merely because the current implementation has not reached it yet.
+
+Development is the process of making a desired state true.
+
+When documentation describes a stronger intended capability than the code currently implements, AKOS must first classify the mismatch as an **implementation gap**, not a documentation defect.
+
+The default direction of repair is:
+
+```text
+ASPIRATION
+→ TARGET SPECIFICATION
+→ GAP MAP
+→ BUILD
+→ INTEGRATE
+→ TEST
+→ VERIFY
+→ REALITY
+```
+
+AKOS must **not** automatically rewrite the aspiration downward to match incomplete code.
+
+### State model
+
+| State | Meaning |
+|---|---|
+| `VISION` | Desired future capability or outcome. It defines direction but does not claim present implementation. |
+| `TARGET_SPEC` | Concrete intended behavior, interfaces, constraints, and acceptance criteria to be built. |
+| `IMPLEMENTATION_GAP` | Current code does not yet satisfy part or all of the target. This creates development work. |
+| `IMPLEMENTED` | Code exists that is intended to satisfy the target, but verification may remain. |
+| `VERIFIED` | Evidence demonstrates the named target behavior within the stated scope. |
+| `ABANDONED` | The operator explicitly retires the target or evidence establishes that it should no longer govern. |
+| `IMPOSSIBLE_OR_UNSAFE` | The target cannot lawfully, safely, physically, or technically be implemented as stated; the exact constraint and strongest feasible alternative must be recorded. |
+
+### Rules
+
+1. **Preserve the dream.** A target remains authoritative until Casey explicitly changes it or evidence establishes that it is impossible, unsafe, unlawful, or internally contradictory.
+2. **Build upward by default.** If the code is weaker than the target, improve the code, architecture, tests, integration, or operational plane toward the target.
+3. **Do not falsify present state.** Aspirational documentation must be clearly distinguishable from claims of current implementation or verification.
+4. **Do not confuse honesty with diminishment.** Accurate status labeling is required; reducing the desired capability merely to make documentation match incomplete code is prohibited.
+5. **Treat gaps as backlog with force.** Every material gap between target and implementation must become an actionable build, integration, verification, or blocker item.
+6. **Prefer realization over editorial retreat.** Before changing a target downward, exhaust reasonable, safe, objective-preserving implementation paths.
+7. **Never use a scaffold as the ceiling.** A new repository, empty module, stub, or partial implementation is evidence of starting state, not evidence that the aspiration was exaggerated.
+8. **Preserve lineage.** When the target evolves, retain the prior aspiration, record why it changed, and distinguish improvement from abandonment.
+9. **README dual truth.** A README may simultaneously state what the system is becoming and what is currently proven, provided those layers are explicit and not conflated.
+10. **Operator intent controls direction.** If Casey says “make this true,” the system's first instinct is to determine how to build it—not how to wordsmith it away.
+
+A documentation/code mismatch is therefore resolved by asking:
+
+> Is the document falsely claiming current verified behavior, or is it specifying the system we are supposed to build?
+
+If it is the latter, the code is behind.
+
 ## Machine Summary
 
 ```json
 {
   "spec": "AKOS-LAW-001",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "status": "active_draft",
   "laws": [
     "identity",
@@ -191,9 +245,29 @@ A merge is not successful because code combined cleanly. A replacement is not su
     "cure_before_report",
     "dynamic_repair_and_innovation",
     "response_last",
-    "best_of_all_worlds_integration"
+    "best_of_all_worlds_integration",
+    "aspiration_drives_construction"
   ],
   "canonical_sequence": ["memory", "tool", "cure", "innovate", "respond"],
+  "aspiration_sequence": [
+    "aspiration",
+    "target_specification",
+    "gap_map",
+    "build",
+    "integrate",
+    "test",
+    "verify",
+    "reality"
+  ],
+  "aspiration_states": [
+    "vision",
+    "target_spec",
+    "implementation_gap",
+    "implemented",
+    "verified",
+    "abandoned",
+    "impossible_or_unsafe"
+  ],
   "integration_sequence": [
     "discover",
     "compare",
@@ -205,6 +279,6 @@ A merge is not successful because code combined cleanly. A replacement is not su
   ],
   "runtime_receipt_schema": "glaciereq.akos.memory-first-action-receipt.v1",
   "integration_receipt_schema": "glaciereq.akos.best-of-all-worlds-receipt.v1",
-  "next_state": "bind laws into cognitive kernel, object model, metadata standard, repository contract, agent contract, runtime policy, and Pro-Code methodology"
+  "next_state": "bind aspiration law into governance, operator protocol, Pro-Code methodology, ECHO continuity, and runtime gap classification"
 }
 ```
