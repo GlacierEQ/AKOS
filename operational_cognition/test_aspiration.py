@@ -4,6 +4,9 @@ from operational_cognition.aspiration import (
     AspirationAction,
     AspirationAssessment,
     AspirationState,
+    AudienceScope,
+    ClaimKind,
+    DeploymentCalibration,
 )
 
 
@@ -23,6 +26,30 @@ def test_target_ahead_of_code_is_an_implementation_gap() -> None:
 
     assert assessment.state is AspirationState.IMPLEMENTATION_GAP
     assert assessment.next_action is AspirationAction.BUILD_TOWARD_TARGET
+    assert assessment.should_rewrite_target_downward is False
+
+
+def test_experimental_path_keeps_aspiration_alive() -> None:
+    assessment = AspirationAssessment(
+        vision="Give a system durable cross-platform memory",
+        target_spec="Continuity survives model and platform boundaries",
+        experimental_ref="experiments/memory-bridge.md",
+    )
+
+    assert assessment.state is AspirationState.EXPERIMENTAL_PATH
+    assert assessment.next_action is AspirationAction.EXPERIMENT_AND_RECOMBINE
+    assert assessment.should_rewrite_target_downward is False
+
+
+def test_blocked_path_triggers_rerouting_not_abandonment() -> None:
+    assessment = AspirationAssessment(
+        vision="Give a system durable cross-platform memory",
+        target_spec="Continuity survives model and platform boundaries",
+        blocked_reason="Current provider API does not expose the needed surface",
+    )
+
+    assert assessment.state is AspirationState.CURRENT_PATH_BLOCKED
+    assert assessment.next_action is AspirationAction.REROUTE_AROUND_BLOCKER
     assert assessment.should_rewrite_target_downward is False
 
 
@@ -49,30 +76,51 @@ def test_verified_target_is_preserved() -> None:
     assert assessment.next_action is AspirationAction.PRESERVE_VERIFIED
 
 
-def test_constraint_records_alternative_instead_of_silent_downgrade() -> None:
-    assessment = AspirationAssessment(
-        vision="Perform a capability that current physics prevents",
-        target_spec="Implement the desired capability",
-        constraint_reason="Physical constraint prevents the target as stated",
+def test_internal_development_can_carry_unverified_vision() -> None:
+    calibration = DeploymentCalibration(
+        scope=AudienceScope.INTERNAL,
+        claim_kind=ClaimKind.FUTURE_VISION,
+        statement="The target system has durable cross-platform memory.",
     )
 
-    assert assessment.state is AspirationState.IMPOSSIBLE_OR_UNSAFE
-    assert (
-        assessment.next_action
-        is AspirationAction.RECORD_CONSTRAINT_AND_ALTERNATIVE
-    )
-    assert assessment.should_rewrite_target_downward is False
+    assert calibration.publishable is True
+    assert calibration.preserves_aspiration is True
 
 
-def test_abandoned_target_preserves_history() -> None:
-    assessment = AspirationAssessment(
-        vision="Retired objective",
-        target_spec="Old target",
-        abandoned=True,
+def test_external_future_vision_is_publishable_when_labeled_as_vision() -> None:
+    calibration = DeploymentCalibration(
+        scope=AudienceScope.EXTERNAL,
+        claim_kind=ClaimKind.FUTURE_VISION,
+        statement="Roadmap: durable cross-platform memory.",
     )
 
-    assert assessment.state is AspirationState.ABANDONED
-    assert assessment.next_action is AspirationAction.PRESERVE_HISTORY
+    assert calibration.publishable is True
+    assert calibration.preserves_aspiration is True
+
+
+def test_external_current_capability_requires_implementation_and_proof() -> None:
+    calibration = DeploymentCalibration(
+        scope=AudienceScope.EXTERNAL,
+        claim_kind=ClaimKind.CURRENT_CAPABILITY,
+        statement="The system currently provides durable cross-platform memory.",
+    )
+
+    assert calibration.publishable is False
+    with pytest.raises(ValueError, match="implementation_ref"):
+        calibration.validate()
+
+
+def test_external_current_capability_passes_with_evidence() -> None:
+    calibration = DeploymentCalibration(
+        scope=AudienceScope.EXTERNAL,
+        claim_kind=ClaimKind.CURRENT_CAPABILITY,
+        statement="The system currently provides the tested continuity behavior.",
+        implementation_ref="echo/service.py",
+        verification_ref="receipts/continuity-test.json",
+    )
+
+    assert calibration.publishable is True
+    assert calibration.preserves_aspiration is True
 
 
 def test_verification_without_implementation_is_invalid() -> None:
