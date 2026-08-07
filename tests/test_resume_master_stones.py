@@ -82,9 +82,10 @@ def test_declared_web_resources_exist() -> None:
         resources["personas"],
         resources["skills"],
         resources["design_system"],
+        resources["experience_graph"],
         resources["tools"],
         resources["connectors"],
-        resources["tests"],
+        *resources["tests"],
         *resources["templates"],
     ]
     assert all((ROOT / path).is_file() for path in paths)
