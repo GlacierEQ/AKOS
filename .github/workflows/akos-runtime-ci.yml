@@ -1,0 +1,71 @@
+name: AKOS Runtime CI
+
+on:
+  pull_request:
+    paths:
+      - "runtime/**"
+      - ".github/workflows/akos-runtime-ci.yml"
+      - "AKOS_MANIFEST.yaml"
+      - "BUILD_INDEX.md"
+  push:
+    branches:
+      - main
+      - runtime-v0.3-promotion
+    paths:
+      - "runtime/**"
+      - ".github/workflows/akos-runtime-ci.yml"
+      - "AKOS_MANIFEST.yaml"
+      - "BUILD_INDEX.md"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: akos-runtime-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Typecheck, test, build, and containerize
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    defaults:
+      run:
+        working-directory: runtime
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: runtime/package.json
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run strict validation
+        run: npm run ci
+
+      - name: Build production container
+        run: docker build --tag akos-runtime:${{ github.sha }} .
+
+      - name: Smoke-test container health
+        run: |
+          docker run --detach --rm --name akos-runtime-ci -p 8787:8787 akos-runtime:${{ github.sha }}
+          trap 'docker stop akos-runtime-ci >/dev/null 2>&1 || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8787/health >/tmp/akos-health.json; then
+              cat /tmp/akos-health.json
+              exit 0
+            fi
+            sleep 1
+          done
+          docker logs akos-runtime-ci
+          exit 1
