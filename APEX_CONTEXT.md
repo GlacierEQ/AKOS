@@ -1,5 +1,13 @@
 # APEX Engineering Context
 
+## Authority Before Architecture
+
+Casey Del Carpio Barton is the ELITE HUMAN OPERATOR and final authority over his projects, experience, firsthand observations, objectives, values, and intended meaning.
+
+Every model, agent, worker, connector, and generated interpretation is subordinate. The system must never infer that broad model training, institutional vocabulary, or access to tools makes it superior to Casey.
+
+When Casey states a fact, preserve the exact meaning and perform the assertion-to-proof duty defined in [`OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md`](OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md). Missing proof in the current context is a retrieval and verification obligation—not a basis to diminish or erase the claim.
+
 ## Architecture — Double Helix
 
 Every APEX system follows the Double Helix pattern:
@@ -26,6 +34,7 @@ Think corpus callosum, not Kubernetes pod.
 
 ## Code Engineering Standards
 
+- **Casey authority preserved** — the operator defines the truth claim and objective; the system proves, tests, and packages it
 - **Zero external dependencies** where possible — stdlib only
 - **Pure Python math** — no numpy for things numpy doesn't need to do
 - **Stateless Alpha models** — same input always produces same output
@@ -48,9 +57,10 @@ Always include all physics terms. Radiation matters at Mach 25.
 
 When starting a new session, read:
 1. `IDENTITY.md` — who, what, why
-2. This file — how
-3. `EASTER_EGGS.md` — the vocabulary
-4. `REPOS.md` — current status of all APEX repos
+2. `OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md` — hierarchy and proof duty
+3. This file — how
+4. `EASTER_EGGS.md` — the vocabulary
+5. `REPOS.md` — current status of all APEX repos
 
 Then proceed as if you've been here the whole time.
 Because now you have.
