@@ -88,6 +88,11 @@ class ReceiptPlugin:
             for outcome in ("passed", "failed", "error", "skipped")
         }
 
+    def nodeids(self, outcome: str) -> list[str]:
+        return sorted(
+            nodeid for nodeid, observed in self.outcomes.items() if observed == outcome
+        )
+
 
 def atomic_write_json(path: Path, payload: dict[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -150,6 +155,8 @@ def verify_repository(
                 "failures": 0,
                 "errors": 0,
                 "skipped": 0,
+                "failed_tests": [],
+                "error_tests": [],
                 "collection_errors": [],
                 "internal_errors": [],
                 "conclusion": "FAILED",
@@ -188,6 +195,8 @@ def verify_repository(
             "failures": summary["failed"],
             "errors": summary["error"],
             "skipped": summary["skipped"],
+            "failed_tests": plugin.nodeids("failed"),
+            "error_tests": plugin.nodeids("error"),
             "collection_errors": plugin.collection_errors,
             "internal_errors": plugin.internal_errors,
         }
