@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "akos-operational-cognition"
-version = "0.8.0"
+version = "0.9.0"
 description = "Evidence-bound governance, reversible Infinity Stone specializations, and deterministic career intelligence."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -26,6 +26,7 @@ akos-verify = "scripts.verify_repository:main"
 akos-verify-readme = "scripts.verify_readme_contract:main"
 akos-verify-stones = "scripts.verify_stones:main"
 akos-career = "career_intelligence.cli:main"
+build-career = "career_intelligence.gauntlet_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -68,4 +69,9 @@ known-first-party = [
 "career_intelligence/documents.py" = ["E501"]
 "career_intelligence/renderers.py" = ["E501"]
 "career_intelligence/validation.py" = ["E501"]
+"career_intelligence/platform_builder.py" = ["E501"]
+"career_intelligence/portfolio.py" = ["E501"]
+"career_intelligence/persona_council.py" = ["E501"]
+"career_intelligence/gauntlet_cli.py" = ["E501"]
 "tests/test_career_intelligence.py" = ["E501"]
+"tests/test_career_platform_v2.py" = ["E501"]
