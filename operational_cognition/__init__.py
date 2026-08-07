@@ -18,6 +18,11 @@ from .adaptation import (
     RankedCapability,
     RuntimeSignal,
 )
+from .aspiration import (
+    AspirationAction,
+    AspirationAssessment,
+    AspirationState,
+)
 from .engine import (
     ArtifactReceipt,
     ArtifactStage,
@@ -94,6 +99,9 @@ __all__ = [
     "ArtifactClosureResult",
     "ArtifactReceipt",
     "ArtifactStage",
+    "AspirationAction",
+    "AspirationAssessment",
+    "AspirationState",
     "AttemptOutcome",
     "AuthorityDisposition",
     "BranchAssessment",
