@@ -82,5 +82,5 @@ known-first-party = [
 "career_intelligence/resources_index.py" = ["UP035"]
 "career_intelligence/skill_ontology.py" = ["E501", "UP035"]
 "career_intelligence/validation.py" = ["E501"]
-"tests/test_career_intelligence.py" = ["E501"]
+"tests/test_career_intelligence.py" = ["E501", "UP012"]
 "tests/test_career_platform_v2.py" = ["E501", "I001"]
