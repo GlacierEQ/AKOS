@@ -41,6 +41,8 @@ class RepositoryVerificationToolTests(unittest.TestCase):
 
             self.assertEqual(receipt["conclusion"], "FAILED")
             self.assertEqual(receipt["tests_run"], 0)
+            self.assertEqual(receipt["failed_tests"], [])
+            self.assertEqual(receipt["error_tests"], [])
             self.assertTrue(output.is_file())
             self.assertEqual(
                 json.loads(output.read_text(encoding="utf-8"))["conclusion"],
@@ -89,6 +91,37 @@ class RepositoryVerificationToolTests(unittest.TestCase):
             self.assertEqual(receipt["collected"], 2)
             self.assertEqual(receipt["tests_run"], 2)
             self.assertEqual(receipt["passed"], 2)
+            self.assertEqual(receipt["failed_tests"], [])
+            self.assertEqual(receipt["error_tests"], [])
+
+    def test_failed_receipt_names_exact_failing_test(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tests = root / "tests"
+            tests.mkdir()
+            (tests / "test_outcomes.py").write_text(
+                "def test_passes():\n    assert True\n\n"
+                "def test_fails():\n    assert False\n",
+                encoding="utf-8",
+            )
+            output = root / "receipt.json"
+
+            receipt = verify_repository(root, output, stream=io.StringIO())
+
+            self.assertEqual(receipt["conclusion"], "FAILED")
+            self.assertEqual(receipt["passed"], 1)
+            self.assertEqual(receipt["failures"], 1)
+            self.assertEqual(receipt["errors"], 0)
+            self.assertEqual(
+                receipt["failed_tests"],
+                ["tests/test_outcomes.py::test_fails"],
+            )
+            self.assertEqual(receipt["error_tests"], [])
+            persisted = json.loads(output.read_text(encoding="utf-8"))
+            self.assertEqual(
+                persisted["failed_tests"],
+                ["tests/test_outcomes.py::test_fails"],
+            )
 
     def test_atomic_write_replaces_content_without_shared_temp_name(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
