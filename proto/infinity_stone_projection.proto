@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package glaciereq.akos.v1;
+
+// The layer changes presentation, never canonical identity or truth state.
+enum ProjectionLayer {
+  PROJECTION_LAYER_UNSPECIFIED = 0;
+  PROJECTION_LAYER_RECRUITER = 1;
+  PROJECTION_LAYER_MASTER = 2;
+  PROJECTION_LAYER_MACHINE = 3;
+  PROJECTION_LAYER_MESH = 4;
+}
+
+// A deterministic wire envelope for one projection of a canonical Infinity Stone.
+message InfinityStoneProjection {
+  string schema = 1;
+  string stone_id = 2;
+  string stone_version = 3;
+  string canonical_digest = 4;
+  string projection_digest = 5;
+  ProjectionLayer layer = 6;
+  bytes canonical_json = 7;
+  bytes payload_json = 8;
+  string source_path = 9;
+  string status = 10;
+}
+
+// All four projections for one Stone must share canonical_digest.
+message InfinityStoneProjectionBundle {
+  string schema = 1;
+  string stone_id = 2;
+  string stone_version = 3;
+  string canonical_digest = 4;
+  repeated InfinityStoneProjection projections = 5;
+}
