@@ -1,0 +1,21 @@
+{
+  "name": "@glaciereq/akos",
+  "version": "0.3.0-rc.1",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "runtime"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "pretypecheck": "npm install --ignore-scripts",
+    "typecheck": "npm --workspace @glaciereq/akos-runtime run typecheck",
+    "pretest": "npm install --ignore-scripts",
+    "test": "npm --workspace @glaciereq/akos-runtime test",
+    "prebuild": "npm install --ignore-scripts",
+    "build": "npm --workspace @glaciereq/akos-runtime run build",
+    "ci": "npm install --ignore-scripts && npm run typecheck && npm test && npm run build"
+  }
+}
