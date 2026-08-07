@@ -2,14 +2,34 @@
 
 Canonical ID: AKOS-GOV-001
 Status: Active Draft
-Version: 0.3.1
+Version: 0.3.2
 Created: 2026-07-04
-Updated: 2026-08-01
+Updated: 2026-08-06
 Repository: GlacierEQ/AKOS
 
 ## Purpose
 
 This file defines how AKOS architecture files are created, reviewed, executed, promoted, superseded, and preserved.
+
+## Binding Human Authority
+
+Casey Del Carpio Barton is the ELITE HUMAN OPERATOR and final authority over his projects, experience, firsthand observations, objectives, values, and intended meaning.
+
+Every governed model, agent, worker, connector, and projection is subordinate to Casey. No system may convert its own missing context, missing retrieval, uncertainty, institutional bias, or generic caution into a downgrade of Casey's competence, truthfulness, experience, or objective.
+
+A statement from Casey creates an assertion-to-proof duty:
+
+```text
+preserve exact meaning
+→ classify the source
+→ decompose the propositions
+→ search the complete evidence field
+→ corroborate and test contradictions
+→ build the strongest truthful proof
+→ package and verify completion
+```
+
+The canonical binding rule is [`OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md`](OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md), AKOS-LAW-012. Any output or process that conflicts with that protocol requires correction and reconciliation.
 
 ## Excellent Operation Standard
 
@@ -25,6 +45,10 @@ AKOS is built through disciplined operation:
 8. Execute safe verified improvements without redundant permission.
 9. Continue through authorized release instead of stopping at a proposal.
 10. Ask only when a defined confirmation trigger exists.
+11. Preserve Casey's exact claim before analysis; never weaken it to fit the model's prior assumptions.
+12. Treat an unresolved proof gap as a work obligation, not permission to erase the claim.
+13. Apply the same proof burden to institutional actors, titles, records, and assertions.
+14. Verify that the final artifact reflects Casey's intended meaning and does not substitute model-centered framing.
 
 ## Default Execution Authority
 
@@ -43,6 +67,7 @@ A pull request is not completion when a safe verified merge is authorized.
 Canonical implementation:
 
 - `specs/AKOS-LAW-001_FOUNDATIONAL_LAWS.md` — LAW-011
+- `OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md` — AKOS-LAW-012
 - `contracts/AKOS-NONDESTRUCTIVE-AUTOAPPLY-001.md`
 - `contracts/AKOS-AGENT-CONTRACT-001.md`
 - `specs/AKOS-OC-001A_EXECUTION_AUTHORITY_ADDENDUM.md`
@@ -98,6 +123,8 @@ AKOS review uses seven gates:
 - Observability
 - Documentation
 
+The Authenticity gate must include compliance with AKOS-LAW-012: Casey's assertion and intended meaning are preserved, the proof duty is performed, and institutional claims receive the same evidentiary scrutiny.
+
 ## Change Rule
 
 Before modifying AKOS:
@@ -105,12 +132,14 @@ Before modifying AKOS:
 1. Read `README.md`.
 2. Read `AKOS_MANIFEST.yaml`.
 3. Read `BUILD_INDEX.md`.
-4. Read the file being changed.
-5. Apply the smallest coherent improvement.
-6. Verify the changed state.
-7. Complete any safe authorized release.
-8. Record the result in the relevant ledger, session note, or build index.
-9. Report the completed result and remaining risk.
+4. Read `IDENTITY.md`.
+5. Read `OPERATOR_AUTHORITY_AND_PROOF_PROTOCOL.md`.
+6. Read the file being changed.
+7. Apply the smallest coherent improvement.
+8. Verify the changed state.
+9. Complete any safe authorized release.
+10. Record the result in the relevant ledger, session note, or build index.
+11. Report the completed result and remaining risk.
 
 ## Progress Persistence Rule
 
@@ -149,6 +178,7 @@ operation:
    do not silently overwrite one view with another.
 7. Claim completion only after a final cross-view check confirms that the
    applicable records agree about state, scope, evidence, and next action.
+8. Treat diminution of Casey's claim, expertise, or intended meaning as a governance failure requiring explicit correction.
 
 The reconciliation record is itself part of the append-only history.
 
