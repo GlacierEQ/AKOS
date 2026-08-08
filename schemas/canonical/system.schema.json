@@ -1,0 +1,259 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GlacierEQ/AKOS/schemas/canonical/system.schema.json",
+  "title": "System",
+  "description": "A canonical system in the GlacierEQ estate. Not a repository — a conceptual system that may be realized by one or more repositories across lineages. The system is the durable unit of intelligence; repositories are ephemeral observations.",
+  "type": "object",
+  "required": [
+    "system_id",
+    "name",
+    "domain",
+    "evolution_state"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "system_id": {
+      "type": "string",
+      "description": "Stable slug. e.g. distributed-scheduler, mcp-connector-registry, legal-document-pipeline",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable canonical name"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "agent-orchestration",
+        "mcp-infrastructure",
+        "ci-cd-automation",
+        "document-processing",
+        "memory-intelligence",
+        "legal-automation",
+        "data-pipeline",
+        "api-integration",
+        "devops-tooling",
+        "career-intelligence",
+        "security",
+        "other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "What this system can do. Each capability is a named, falsifiable function.",
+      "items": {
+        "type": "object",
+        "required": ["capability_id", "name", "proven"],
+        "additionalProperties": false,
+        "properties": {
+          "capability_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "proven": {
+            "type": "boolean",
+            "description": "true only if at least one VERIFIED evidence object supports this capability"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "References to evidence.schema.json claim_ids"
+          }
+        }
+      },
+      "default": []
+    },
+    "mechanisms": {
+      "type": "array",
+      "description": "Technical mechanisms that implement capabilities. Named building blocks.",
+      "items": {
+        "type": "object",
+        "required": ["mechanism_id", "name"],
+        "additionalProperties": false,
+        "properties": {
+          "mechanism_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "implements_capability_ids": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "implementation_refs": {
+            "type": "array",
+            "description": "Pinned file:line references at a specific source_head",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "default": []
+    },
+    "bottlenecks": {
+      "type": "array",
+      "description": "Currently known constraints that limit system performance, correctness, or value. The innovation engine targets these.",
+      "items": {
+        "type": "object",
+        "required": ["bottleneck_id", "description", "severity", "status"],
+        "additionalProperties": false,
+        "properties": {
+          "bottleneck_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "description": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "in-experiment", "resolved", "accepted-limitation"]
+          },
+          "hypothesis_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Active hypotheses attacking this bottleneck"
+          },
+          "identified_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resolved_by_evidence_id": {
+            "type": "string",
+            "description": "Set when status=resolved. References evidence.schema.json claim_id."
+          }
+        }
+      },
+      "default": []
+    },
+    "repositories": {
+      "type": "array",
+      "description": "GitHub repos that realize this system. Multiple repos may realize the same system across lineages.",
+      "items": {
+        "type": "object",
+        "required": ["repo", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "repo": {
+            "type": "string",
+            "description": "owner/repo slug",
+            "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["primary", "fork", "backup", "experiment", "deprecated"],
+            "description": "primary = canonical implementation. fork/backup = derivations. experiment = hypothesis branch."
+          },
+          "lineage_id": {
+            "type": "string",
+            "description": "References lineage.schema.json lineage_id"
+          },
+          "head_sha": {
+            "type": "string",
+            "description": "Last inspected HEAD SHA for this repo",
+            "pattern": "^[0-9a-f]{7,40}$"
+          },
+          "last_inspected_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "default": []
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other system_ids this system depends on. Enables impact analysis.",
+      "items": {
+        "type": "object",
+        "required": ["system_id", "coupling"],
+        "additionalProperties": false,
+        "properties": {
+          "system_id": { "type": "string" },
+          "coupling": {
+            "type": "string",
+            "enum": ["hard", "soft", "optional"]
+          },
+          "description": { "type": "string" }
+        }
+      },
+      "default": []
+    },
+    "evidence": {
+      "type": "array",
+      "description": "claim_ids from evidence.schema.json that support this system's capabilities. Denormalized for fast querying.",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "evolution_state": {
+      "type": "object",
+      "description": "Where this system currently sits in its lifecycle",
+      "required": ["phase", "updated_at"],
+      "additionalProperties": false,
+      "properties": {
+        "phase": {
+          "type": "string",
+          "enum": [
+            "concept",
+            "prototyped",
+            "functional",
+            "verified",
+            "production",
+            "deprecated",
+            "archived"
+          ]
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "next_target_phase": {
+          "type": "string",
+          "enum": [
+            "concept",
+            "prototyped",
+            "functional",
+            "verified",
+            "production",
+            "deprecated",
+            "archived"
+          ]
+        },
+        "blocking_bottleneck_id": {
+          "type": "string",
+          "description": "The single bottleneck_id currently preventing phase advancement"
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "priority_score": {
+      "type": "number",
+      "description": "Computed by the estate engine. Do not set manually. Higher = more leverage for next engineering run.",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
