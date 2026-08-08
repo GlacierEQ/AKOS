@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GlacierEQ/AKOS/schemas/canonical/capability.schema.json",
+  "title": "Capability",
+  "description": "A named, falsifiable function that one or more systems can perform. Capabilities are the vocabulary of the portfolio compiler. A capability is only considered proven when at least one VERIFIED evidence object references it. Duplicated capabilities across lineages are a consolidation signal.",
+  "type": "object",
+  "required": ["capability_id", "name", "domain", "proven"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "capability_id": {
+      "type": "string",
+      "description": "Stable slug. e.g. stale-worker-fencing, multi-tenant-auth, vector-similarity-search",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Short human-readable label. Used in resume/portfolio projection."
+    },
+    "description": {
+      "type": "string",
+      "description": "One paragraph. What does this capability let the system do and why does it matter?"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "agent-orchestration",
+        "mcp-infrastructure",
+        "ci-cd-automation",
+        "document-processing",
+        "memory-intelligence",
+        "legal-automation",
+        "data-pipeline",
+        "api-integration",
+        "devops-tooling",
+        "career-intelligence",
+        "security",
+        "concurrency",
+        "distributed-systems",
+        "performance",
+        "other"
+      ]
+    },
+    "proven": {
+      "type": "boolean",
+      "description": "Computed field. true only when evidence_ids contains at least one VERIFIED evidence object. Do not set manually."
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "claim_ids from evidence.schema.json that support this capability",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "system_ids": {
+      "type": "array",
+      "description": "system_ids from system.schema.json that expose this capability",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "mechanism_ids": {
+      "type": "array",
+      "description": "mechanism_ids that implement this capability",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "resume_label": {
+      "type": "string",
+      "description": "The exact phrase the portfolio compiler should emit when projecting this capability onto a resume. e.g. 'Designed generation-fenced lease protocol for distributed job scheduler'"
+    },
+    "resume_eligible": {
+      "type": "boolean",
+      "description": "Only true when proven=true AND resume_label is set. The compiler enforces this gate.",
+      "default": false
+    },
+    "duplicated_in_lineages": {
+      "type": "array",
+      "description": "lineage_ids where an equivalent capability exists. Populated by the estate engine as a consolidation signal.",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "maturity": {
+      "type": "string",
+      "enum": ["experimental", "functional", "verified", "production-grade"],
+      "description": "Derived from the highest-status evidence object referencing this capability."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

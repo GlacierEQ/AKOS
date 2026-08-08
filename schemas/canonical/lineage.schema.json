@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GlacierEQ/AKOS/schemas/canonical/lineage.schema.json",
+  "title": "Lineage",
+  "description": "A family of related repositories that evolved from a common origin or share a conceptual purpose. Lineage grouping is the first compression step that turns 598 repository observations into N manageable families. The lineage object tracks family health, identifies the canonical primary repo, and surfaces consolidation opportunities.",
+  "type": "object",
+  "required": ["lineage_id", "name", "domain", "primary_repo", "repositories"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "lineage_id": {
+      "type": "string",
+      "description": "Stable slug. e.g. apex-orchestration, mcp-connectors, legal-automation, memory-systems",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "agent-orchestration",
+        "mcp-infrastructure",
+        "ci-cd-automation",
+        "document-processing",
+        "memory-intelligence",
+        "legal-automation",
+        "data-pipeline",
+        "api-integration",
+        "devops-tooling",
+        "career-intelligence",
+        "security",
+        "other"
+      ]
+    },
+    "primary_repo": {
+      "type": "string",
+      "description": "owner/repo slug of the single canonical implementation for this lineage. Must match a repo with role=primary in repository.schema.json",
+      "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
+    "repositories": {
+      "type": "array",
+      "description": "All repos in this family, ordered by role priority (primary first)",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["repo", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "repo": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["primary", "fork", "backup", "experiment", "deprecated"]
+          },
+          "divergence_commits": {
+            "type": "integer",
+            "description": "How many commits ahead of primary this repo is. 0 for primary itself.",
+            "minimum": 0
+          },
+          "merge_candidate": {
+            "type": "boolean",
+            "description": "true if this repo has valuable divergence that should be merged back to primary"
+          },
+          "deprecation_candidate": {
+            "type": "boolean",
+            "description": "true if this repo adds no unique value and should be archived"
+          }
+        }
+      }
+    },
+    "systems": {
+      "type": "array",
+      "description": "system_ids realized by repos in this lineage",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "shared_capabilities": {
+      "type": "array",
+      "description": "capability_ids present in multiple repos in this lineage. Indicates consolidation opportunity or intentional replication.",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "health": {
+      "type": "object",
+      "description": "Lineage-level health roll-up. Computed by estate engine.",
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Overall health. Factors: evidence density, consolidation ratio, staleness, primary repo maturity."
+        },
+        "repo_count": { "type": "integer", "minimum": 1 },
+        "active_repo_count": {
+          "type": "integer",
+          "description": "Repos not deprecated/archived"
+        },
+        "verified_capability_count": { "type": "integer", "minimum": 0 },
+        "total_evidence_count": { "type": "integer", "minimum": 0 },
+        "stale_evidence_count": { "type": "integer", "minimum": 0 },
+        "consolidation_debt": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high", "critical"],
+          "description": "How much redundancy/duplication exists within this lineage that should be resolved"
+        },
+        "computed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "origin": {
+      "type": "object",
+      "description": "Where this lineage came from",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["greenfield", "fork", "migration", "extraction", "consolidation"]
+        },
+        "source_repo": {
+          "type": "string",
+          "description": "If fork or migration, the upstream owner/repo"
+        },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "consolidation_plan": {
+      "type": "object",
+      "description": "Active plan to reduce repo count in this lineage",
+      "additionalProperties": false,
+      "properties": {
+        "target_repo_count": { "type": "integer", "minimum": 1 },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["action", "repo"],
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": ["archive", "merge-into-primary", "extract-to-library", "keep"]
+              },
+              "repo": { "type": "string" },
+              "rationale": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["planned", "in-progress", "complete"]
+              }
+            }
+          }
+        },
+        "estimated_completion": { "type": "string", "format": "date" }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

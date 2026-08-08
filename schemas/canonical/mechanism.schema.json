@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/GlacierEQ/AKOS/schemas/canonical/mechanism.schema.json",
+  "title": "Mechanism",
+  "description": "A named technical building block that implements one or more capabilities. Mechanisms are the implementation vocabulary — they live below capabilities but above raw code. Naming mechanisms explicitly allows the estate to detect when the same pattern is re-implemented across multiple systems.",
+  "type": "object",
+  "required": ["mechanism_id", "name", "pattern_class"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "mechanism_id": {
+      "type": "string",
+      "description": "Stable slug. e.g. generation-fenced-leases, vector-similarity-index, mcp-tool-registry",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "pattern_class": {
+      "type": "string",
+      "enum": [
+        "consensus",
+        "fencing",
+        "caching",
+        "indexing",
+        "routing",
+        "orchestration",
+        "transformation",
+        "validation",
+        "authentication",
+        "authorization",
+        "retry-backoff",
+        "circuit-breaker",
+        "event-sourcing",
+        "cqrs",
+        "streaming",
+        "batching",
+        "embedding",
+        "retrieval",
+        "agent-delegation",
+        "tool-dispatch",
+        "schema-enforcement",
+        "state-machine",
+        "other"
+      ],
+      "description": "The abstract design pattern this mechanism belongs to. Enables cross-system pattern queries."
+    },
+    "implements_capability_ids": {
+      "type": "array",
+      "description": "capability_ids this mechanism fulfills",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "system_ids": {
+      "type": "array",
+      "description": "system_ids that use this mechanism",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "implementation_refs": {
+      "type": "array",
+      "description": "Pinned file:line-range references at a specific source_head. Format: owner/repo@sha:path/to/file.ext:L84-L161",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{7,40}:.+:\\d+(-\\d+)?$"
+      },
+      "default": []
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "claim_ids from evidence.schema.json that verify this mechanism works",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "reuse_count": {
+      "type": "integer",
+      "description": "Number of distinct systems using this mechanism. Computed by estate engine. High reuse = extraction candidate.",
+      "minimum": 0,
+      "default": 0
+    },
+    "extraction_candidate": {
+      "type": "boolean",
+      "description": "true when reuse_count >= 2 and mechanism is not yet in a shared library. Populated by estate engine.",
+      "default": false
+    },
+    "language": {
+      "type": "string",
+      "description": "Primary implementation language"
+    },
+    "complexity": {
+      "type": "string",
+      "enum": ["trivial", "low", "medium", "high", "research-grade"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
